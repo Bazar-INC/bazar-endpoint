@@ -1,5 +1,7 @@
 using Core.Entities;
 using Infrastructure;
+using Infrastructure.UnitOfWork;
+using Infrastructure.UnitOfWork.Abstract;
 using Microsoft.EntityFrameworkCore;
 using Web;
 
@@ -15,6 +17,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services
     .AddIdentity<UserEntity, RoleEntity>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
