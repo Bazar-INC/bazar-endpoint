@@ -1,7 +1,9 @@
+using Application;
 using Core.Entities;
 using Infrastructure;
 using Infrastructure.UnitOfWork;
 using Infrastructure.UnitOfWork.Abstract;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Web;
 
@@ -19,6 +21,8 @@ builder.Services
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+builder.Services.AddMediatR(typeof(MediatrAssemblyReference).Assembly);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
