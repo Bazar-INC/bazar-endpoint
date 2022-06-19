@@ -32,7 +32,7 @@ public static partial class WebApplicationExtensions
                 Name = roleField.GetValue(roleField)?.ToString()
             };
 
-            var isRoleExist = !await roleManager.RoleExistsAsync(role.Name);
+            var isRoleExist = await roleManager.RoleExistsAsync(role.Name);
 
             if(!isRoleExist)
             {

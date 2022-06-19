@@ -6,25 +6,27 @@ using Infrastructure.UnitOfWork.Abstract;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Web;
+using Web.Extensions;
+using Web.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-{
-    options.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
-});
+builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 
-builder.Services
-    .AddIdentity<UserEntity, RoleEntity>()
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.AddBearer(builder.Configuration.GetValue<string>("Jwt:Secret"));
+
+builder.Services.AddIdentity<UserEntity, RoleEntity>()
+                .AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<JwtService>();
 
 builder.Services.AddMediatR(typeof(MediatrAssemblyReference).Assembly);
 
 builder.Services.AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -42,6 +44,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
