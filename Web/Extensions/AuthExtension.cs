@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Web.Extensions;
 
-public static class AuthExtension
+public static partial class ServiceCollectionExtensions
 {
     public static IServiceCollection AddBearer(this IServiceCollection services, string jwtSecret)
     {
