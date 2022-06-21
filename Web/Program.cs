@@ -25,6 +25,8 @@ builder.Services.AddScoped<JwtService>();
 
 builder.Services.AddMediatR(typeof(MediatrAssemblyReference).Assembly);
 
+builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
+
 builder.Services.AddControllers();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

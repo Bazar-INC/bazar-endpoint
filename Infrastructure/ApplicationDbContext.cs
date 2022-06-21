@@ -7,6 +7,8 @@ namespace Infrastructure;
 
 public class ApplicationDbContext : IdentityDbContext<UserEntity, RoleEntity, Guid>
 {
+    public virtual DbSet<CodeEntity>? Codes { get; set; }
+
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
     {

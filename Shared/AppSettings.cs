@@ -6,4 +6,10 @@ public class AppSettings
     {
         public const string Customer = "Customer";
     }
+
+    public static class Sms
+    {
+        public const string BaseUrl = @"https://api.mobizon.ua/service/message/sendSmsMessage?output=json&api=v1&apiKey=";
+        public const string ApiKey = @"";
+    }
 }

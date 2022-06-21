@@ -1,10 +1,26 @@
-﻿using Infrastructure.UnitOfWork.Abstract;
+﻿using Core.Entities;
+using Infrastructure.Repositories;
+using Infrastructure.Repositories.Abstract;
+using Infrastructure.UnitOfWork.Abstract;
 
 namespace Infrastructure.UnitOfWork;
 
 public class UnitOfWork : IUnitOfWork, IDisposable
 {
     private readonly ApplicationDbContext _context;
+    private IRepository<CodeEntity>? codes;
+
+    public IRepository<CodeEntity> Codes
+    {
+        get
+        {
+            if (codes is null)
+            {
+                codes = new Repository<CodeEntity>(_context);
+            }
+            return codes;
+        }
+    }
 
     public UnitOfWork(ApplicationDbContext context)
     {
