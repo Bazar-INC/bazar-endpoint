@@ -1,0 +1,20 @@
+2022-06-23 09:34:43.4804 Info Message Template Auto Format enabled
+2022-06-23 09:34:43.4882 Info Loading assembly: NLog.Web.AspNetCore
+2022-06-23 09:34:43.5483 Info Adding target FileTarget(Name=logFile)
+2022-06-23 09:34:43.5676 Info Validating config: TargetNames=logFile, ConfigItems=20, FilePath=D:\Users\Mike\Desktop\Zar\Web\bin\Debug\net6.0\Logging\nlog.config
+2022-06-23 09:34:43.7737 Info Validating config: TargetNames=logFile, ConfigItems=20, FilePath=D:\Users\Mike\Desktop\Zar\Web\bin\Debug\net6.0\Logging\nlog.config
+2022-06-23 09:36:01.9575 Info Message Template Auto Format enabled
+2022-06-23 09:36:01.9575 Info Loading assembly: NLog.Web.AspNetCore
+2022-06-23 09:36:02.0281 Info Adding target FileTarget(Name=logFile)
+2022-06-23 09:36:02.0532 Info Validating config: TargetNames=logFile, ConfigItems=20, FilePath=D:\Users\Mike\Desktop\Zar\Web\bin\Debug\net6.0\Logging\nlog.config
+2022-06-23 09:36:02.2287 Info Validating config: TargetNames=logFile, ConfigItems=20, FilePath=D:\Users\Mike\Desktop\Zar\Web\bin\Debug\net6.0\Logging\nlog.config
+2022-06-23 09:37:24.0294 Info Message Template Auto Format enabled
+2022-06-23 09:37:24.0376 Info Loading assembly: NLog.Web.AspNetCore
+2022-06-23 09:37:24.0946 Info Adding target FileTarget(Name=logFile)
+2022-06-23 09:37:24.1120 Info Validating config: TargetNames=logFile, ConfigItems=20, FilePath=D:\Users\Mike\Desktop\Zar\Web\bin\Debug\net6.0\Logging\nlog.config
+2022-06-23 09:37:24.2765 Info Validating config: TargetNames=logFile, ConfigItems=20, FilePath=D:\Users\Mike\Desktop\Zar\Web\bin\Debug\net6.0\Logging\nlog.config
+2022-06-23 09:40:02.2648 Info Message Template Auto Format enabled
+2022-06-23 09:40:02.2762 Info Loading assembly: NLog.Web.AspNetCore
+2022-06-23 09:40:02.3581 Info Adding target FileTarget(Name=logFile)
+2022-06-23 09:40:02.3833 Info Validating config: TargetNames=logFile, ConfigItems=20, FilePath=D:\Users\Mike\Desktop\Zar\Web\bin\Debug\net6.0\Logging\nlog.config
+2022-06-23 09:40:02.5894 Info Validating config: TargetNames=logFile, ConfigItems=20, FilePath=D:\Users\Mike\Desktop\Zar\Web\bin\Debug\net6.0\Logging\nlog.config

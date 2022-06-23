@@ -19,4 +19,9 @@ public class AppSettings
         public static readonly TimeSpan DefaultExpirationTime = TimeSpan.FromHours(12);
         public static readonly TimeSpan LongerExpirationTime = TimeSpan.FromDays(7);
     }
+
+    public static class Constants
+    {
+        public const string NLogConfigPath = "Logging/nlog.config";
+    }
 }

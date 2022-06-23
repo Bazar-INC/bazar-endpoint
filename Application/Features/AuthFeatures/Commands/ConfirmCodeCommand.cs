@@ -1,11 +1,11 @@
 ﻿using Application.Features.AuthFeatures.Dtos;
 using Application.Features.AuthFeatures.Services;
-using AutoMapper;
 using Core.Entities;
 using Infrastructure.UnitOfWork.Abstract;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Shared;
+using Shared.CommonExceptions;
 
 namespace Application.Features.AuthFeatures.Commands;
 
@@ -13,14 +13,12 @@ public record ConfirmCodeCommand(string Code, string PhoneNumber) : IRequest<Con
 
 public class ConfirmCodeHandler : IRequestHandler<ConfirmCodeCommand, ConfirmResponseDto>
 {
-    private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
     private readonly UserManager<UserEntity> _userManager;
     private readonly JwtService _jwtService;
 
-    public ConfirmCodeHandler(IMapper mapper, IUnitOfWork unitOfWork, UserManager<UserEntity> userManager, JwtService jwtService)
+    public ConfirmCodeHandler(IUnitOfWork unitOfWork, UserManager<UserEntity> userManager, JwtService jwtService)
     {
-        _mapper = mapper;
         _unitOfWork = unitOfWork;
         _userManager = userManager;
         _jwtService = jwtService;
@@ -37,16 +35,17 @@ public class ConfirmCodeHandler : IRequestHandler<ConfirmCodeCommand, ConfirmRes
 
         if(code is null)
         {
-            // wrong phone number
-            // TODO: throw
-            return null;
+            throw new BadRequestRestException("Wrong phone number");
         }
 
-        if(DateTime.UtcNow.Subtract(code.CreatedAt) > AppSettings.Sms.CodeLifetime)
+        if(code.Code != request.Code)
         {
-            // code is expired
-            // TODO: throw
-            return null;
+            throw new BadRequestRestException("Wrong code");
+        }
+
+        if (DateTime.UtcNow.Subtract(code.CreatedAt) > AppSettings.Sms.CodeLifetime)
+        {
+            throw new BadRequestRestException("Code is expired");
         }
 
         var user = _userManager.Users.FirstOrDefault(u => u.PhoneNumber == phoneNumber);
