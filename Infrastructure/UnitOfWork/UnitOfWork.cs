@@ -8,23 +8,14 @@ namespace Infrastructure.UnitOfWork;
 public class UnitOfWork : IUnitOfWork, IDisposable
 {
     private readonly ApplicationDbContext _context;
-    private IRepository<CodeEntity>? codes;
 
-    public IRepository<CodeEntity> Codes
-    {
-        get
-        {
-            if (codes is null)
-            {
-                codes = new Repository<CodeEntity>(_context);
-            }
-            return codes;
-        }
-    }
-
+    public IRepository<CodeEntity> Codes { get; } 
+    
     public UnitOfWork(ApplicationDbContext context)
     {
         _context = context;
+
+        Codes = new Repository<CodeEntity>(_context);
     }
 
     public async Task<int> SaveChangesAsync()

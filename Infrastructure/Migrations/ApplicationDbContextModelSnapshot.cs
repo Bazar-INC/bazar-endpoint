@@ -50,7 +50,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CodeEntity");
+                    b.ToTable("UsrCodes");
                 });
 
             modelBuilder.Entity("Core.Entities.RoleEntity", b =>

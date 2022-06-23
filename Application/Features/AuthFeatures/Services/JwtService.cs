@@ -2,7 +2,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
-namespace Web.Services;
+namespace Application.Features.AuthFeatures.Services;
 
 public class JwtService
 {

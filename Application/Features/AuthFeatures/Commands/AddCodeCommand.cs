@@ -5,29 +5,32 @@ using MediatR;
 
 namespace Application.Features.AuthFeatures.Commands;
 
-public record AddCodeCommand(string Phone) : IRequest;
+public record AddCodeCommand(string PhoneNumber) : IRequest;
 
 public class AddCodeHandler : IRequestHandler<AddCodeCommand>
 {
-    private readonly IUnitOfWork unitOfWork;
-    private readonly IMapper mapper;
+    private readonly IUnitOfWork _unitOfWork;
+    private readonly IMapper _mapper;
 
     public AddCodeHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {
-        this.unitOfWork = unitOfWork;
-        this.mapper = mapper;
+        _unitOfWork = unitOfWork;
+        _mapper = mapper;
     }
 
     public async Task<Unit> Handle(AddCodeCommand request, CancellationToken cancellationToken)
     {
-        var entity = mapper.Map<CodeEntity>(request);
+        var entity = _mapper.Map<CodeEntity>(request);
 
-        var code = "1234";//var code = CodeGeneratorService.GenerateCode(); 
+        var code = "1234"; // TODO: delete line
+        //var code = CodeGeneratorService.GenerateCode();  // TODO: uncomment line
 
         entity.Code = code;
 
-        //await SmsSenderService.SendMessageAsync("1234", request.Phone);
-        await unitOfWork.Codes.InsertAsync(entity);
+        //await SmsSenderService.SendMessageAsync("1234", request.Phone); // TODO: uncomment line
+        await _unitOfWork.Codes.InsertAsync(entity);
+
+        await _unitOfWork.SaveChangesAsync();
 
         return default;
     }

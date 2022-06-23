@@ -15,10 +15,15 @@ public class AuthController : BaseController
     }
 
     [HttpPost("request")]
-    public async Task<IActionResult> RequestAsync(AddCodeCommand command)
+    public async Task<IActionResult> RequestAsync([FromBody] AddCodeCommand command)
     {
         return Ok(await _mediator.Send(command));
     }
 
+    [HttpPost("confirm")]
+    public async Task<IActionResult> ConfirmAsync([FromBody] ConfirmCodeCommand command)
+    {
+        return Ok(await _mediator.Send(command));
+    }
 
 }

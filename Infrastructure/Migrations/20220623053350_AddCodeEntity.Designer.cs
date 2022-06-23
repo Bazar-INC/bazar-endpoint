@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220621051125_AddCodeEntity")]
+    [Migration("20220623053350_AddCodeEntity")]
     partial class AddCodeEntity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -52,7 +52,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CodeEntity");
+                    b.ToTable("UsrCodes");
                 });
 
             modelBuilder.Entity("Core.Entities.RoleEntity", b =>

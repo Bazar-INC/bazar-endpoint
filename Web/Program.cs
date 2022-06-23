@@ -1,4 +1,5 @@
 using Application;
+using Application.Features.AuthFeatures.Services;
 using Core.Entities;
 using Infrastructure;
 using Infrastructure.UnitOfWork;
@@ -7,7 +8,6 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Web;
 using Web.Extensions;
-using Web.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

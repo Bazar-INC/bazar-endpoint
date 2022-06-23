@@ -1,7 +1,9 @@
 ﻿using Core.Entities.Abstract;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Core.Entities;
 
+[Table("UsrCodes")]
 public class CodeEntity : BaseEntity
 {
     public string? PhoneNumber { get; set; }
