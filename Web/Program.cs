@@ -5,7 +5,9 @@ using Infrastructure;
 using Infrastructure.UnitOfWork;
 using Infrastructure.UnitOfWork.Abstract;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using NLog;
 using NLog.Web;
 using Shared;
@@ -29,10 +31,11 @@ try
 
     builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 
-    builder.Services.AddBearer(builder.Configuration.GetValue<string>("Jwt:Secret"));
-
     builder.Services.AddIdentity<UserEntity, RoleEntity>()
+                    .AddDefaultTokenProviders()
                     .AddEntityFrameworkStores<ApplicationDbContext>();
+
+    builder.Services.AddBearer(builder.Configuration.GetValue<string>("Jwt:Secret"));
 
     builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
     builder.Services.AddScoped<JwtService>();
@@ -45,7 +48,36 @@ try
 
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddSwaggerGen();
+    //builder.Services.AddSwaggerGen();
+    builder.Services.AddSwaggerGen(c =>
+    {
+        // First we define the security scheme
+        c.AddSecurityDefinition(
+            "Bearer", // Name the security scheme
+            new OpenApiSecurityScheme
+            {
+                Description = "JWT Authorization header using the Bearer scheme.",
+                Type = SecuritySchemeType.Http, // We set the scheme type to http since we're using bearer authentication
+                Scheme = "bearer" // The name of the HTTP Authorization scheme to be used in the Authorization header. In this case "bearer".
+            });
+
+        c.AddSecurityRequirement(
+            new OpenApiSecurityRequirement
+            {
+            {
+                new OpenApiSecurityScheme
+                {
+                    Reference = new OpenApiReference
+                    {
+                        Id = "Bearer",
+                        Type = ReferenceType.SecurityScheme
+                    }
+                },
+                new List<string>()
+            }
+        });
+    });
+
 
     builder.Services.AddCors(options =>
     {

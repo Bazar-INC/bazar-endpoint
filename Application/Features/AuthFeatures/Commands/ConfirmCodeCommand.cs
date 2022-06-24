@@ -56,6 +56,7 @@ public class ConfirmCodeHandler : IRequestHandler<ConfirmCodeCommand, ConfirmRes
             {
                 PhoneNumber = phoneNumber,
                 PhoneNumberConfirmed = true,
+                UserName = phoneNumber
             };
 
             await _userManager.CreateAsync(user);
