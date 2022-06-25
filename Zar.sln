@@ -12,9 +12,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web", "Web\Web.csproj", "{E667CC75-B6A4-4E5A-B704-0A7EB5AF8B7A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{205E83BF-E620-4538-92B1-10862588BEED}"
-	ProjectSection(SolutionItems) = preProject
-		FluentValidationAssemblyReference.cs = FluentValidationAssemblyReference.cs
-	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "Shared\Shared.csproj", "{A8652A4A-96BC-4510-871C-DB2D8B5D668D}"
 EndProject
