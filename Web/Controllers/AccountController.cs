@@ -1,8 +1,6 @@
 ﻿using Application.Features.AccountFeatures.Queries;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Shared;
 using Web.AuthorizeAttributes;
 using Web.Controllers.Abstract;
 
@@ -20,7 +18,7 @@ public class AccountController : BaseController
 
     [HttpGet("profile")]
     [AuthorizeCustomer]
-    public async Task<IActionResult> GetUser()
+    public async Task<IActionResult> GetUserAsync()
     {
         var userId = User.Claims.FirstOrDefault(c => c.Type == "id")?.Value;
 

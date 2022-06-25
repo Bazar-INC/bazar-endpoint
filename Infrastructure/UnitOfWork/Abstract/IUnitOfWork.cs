@@ -8,4 +8,6 @@ public interface IUnitOfWork
     Task<int> SaveChangesAsync();
 
     IRepository<CodeEntity> Codes { get; }
+    IRepository<ProductEntity> Products { get; }
+    IRepository<CategoryEntity> Categories { get; }
 }

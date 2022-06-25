@@ -36,12 +36,12 @@ namespace Infrastructure.Migrations
                     b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("ParentId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Title")
+                    b.Property<string>("Name")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
+
+                    b.Property<Guid?>("ParentId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("UpdatedAt")
                         .ValueGeneratedOnAddOrUpdate()
@@ -52,7 +52,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("ParentId");
 
-                    b.ToTable("CategoryEntity");
+                    b.ToTable("UsrCategories");
                 });
 
             modelBuilder.Entity("Core.Entities.CodeEntity", b =>
@@ -108,7 +108,7 @@ namespace Infrastructure.Migrations
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,4)");
 
                     b.Property<DateTime>("UpdatedAt")
                         .ValueGeneratedOnAddOrUpdate()
@@ -119,7 +119,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("ProductEntity");
+                    b.ToTable("UsrProducts");
                 });
 
             modelBuilder.Entity("Core.Entities.RoleEntity", b =>

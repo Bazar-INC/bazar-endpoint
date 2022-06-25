@@ -5,6 +5,7 @@ namespace Core.Entities;
 
 public class UserEntity : IdentityUser<Guid>, IEntity
 {
+    // props
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
 }

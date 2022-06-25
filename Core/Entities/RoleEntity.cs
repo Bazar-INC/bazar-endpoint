@@ -5,6 +5,7 @@ namespace Core.Entities;
 
 public class RoleEntity : IdentityRole<Guid>, IEntity
 {
+    // props
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
 }

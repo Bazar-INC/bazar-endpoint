@@ -1,11 +1,13 @@
 ﻿using Core.Entities.Abstract;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Core.Entities;
 
+[Table("UsrCategories")]
 public class CategoryEntity : BaseEntity
 {
     // props
-    public string? Title { get; set; }
+    public string? Name { get; set; }
     public string? Image { get; set; }
     public Guid? ParentId { get; set; }
 
