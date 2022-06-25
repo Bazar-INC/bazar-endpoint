@@ -10,7 +10,7 @@ using Shared.Validators;
 
 namespace Application.Features.AuthFeatures.Commands;
 
-public record ConfirmCodeCommand(string Code, string PhoneNumber) : IRequest<ConfirmResponseDto>;
+public record ConfirmCodeCommand(string Code, string Phone) : IRequest<ConfirmResponseDto>;
 
 public class ConfirmCodeHandler : IRequestHandler<ConfirmCodeCommand, ConfirmResponseDto>
 {
@@ -27,7 +27,7 @@ public class ConfirmCodeHandler : IRequestHandler<ConfirmCodeCommand, ConfirmRes
 
     public async Task<ConfirmResponseDto> Handle(ConfirmCodeCommand request, CancellationToken cancellationToken)
     {
-        var phoneNumber = PhoneValidator.RemoveWhiteSpaces(request.PhoneNumber);
+        var phoneNumber = PhoneValidator.RemoveWhiteSpaces(request.Phone);
 
         if (!PhoneValidator.IsValidPhoneNumber(phoneNumber))
         {
