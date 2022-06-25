@@ -6,6 +6,7 @@ using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Shared;
 using Shared.CommonExceptions;
+using Shared.Validators;
 
 namespace Application.Features.AuthFeatures.Commands;
 
@@ -26,7 +27,12 @@ public class ConfirmCodeHandler : IRequestHandler<ConfirmCodeCommand, ConfirmRes
 
     public async Task<ConfirmResponseDto> Handle(ConfirmCodeCommand request, CancellationToken cancellationToken)
     {
-        var phoneNumber = request.PhoneNumber;
+        var phoneNumber = PhoneValidator.RemoveWhiteSpaces(request.PhoneNumber);
+
+        if (!PhoneValidator.IsValidPhoneNumber(phoneNumber))
+        {
+            throw new BadRequestRestException("Invalid phone number");
+        }
         
         var code = _unitOfWork.Codes.Get()
                                     .Where(p => p.PhoneNumber == phoneNumber)

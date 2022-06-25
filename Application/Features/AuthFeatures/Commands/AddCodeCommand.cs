@@ -2,6 +2,8 @@
 using Core.Entities;
 using Infrastructure.UnitOfWork.Abstract;
 using MediatR;
+using Shared.CommonExceptions;
+using Shared.Validators;
 
 namespace Application.Features.AuthFeatures.Commands;
 
@@ -21,6 +23,13 @@ public class AddCodeHandler : IRequestHandler<AddCodeCommand>
     public async Task<Unit> Handle(AddCodeCommand request, CancellationToken cancellationToken)
     {
         var entity = _mapper.Map<CodeEntity>(request);
+
+        entity.PhoneNumber = PhoneValidator.RemoveWhiteSpaces(entity.PhoneNumber!);
+
+        if (!PhoneValidator.IsValidPhoneNumber(entity.PhoneNumber))
+        {
+            throw new BadRequestRestException("Invalid phone number");
+        }
 
         var code = "1234"; // TODO: delete line
         //var code = CodeGeneratorService.GenerateCode();  // TODO: uncomment line

@@ -118,3 +118,77 @@
 2022-06-24 11:08:52.8067 Info Adding target FileTarget(Name=logFile)
 2022-06-24 11:08:52.8253 Info Validating config: TargetNames=logFile, ConfigItems=20, FilePath=D:\Users\Mike\Desktop\Zar\Web\bin\Debug\net6.0\Logging\nlog.config
 2022-06-24 11:08:53.0120 Info Validating config: TargetNames=logFile, ConfigItems=20, FilePath=D:\Users\Mike\Desktop\Zar\Web\bin\Debug\net6.0\Logging\nlog.config
+2022-06-25 07:55:03.4432 Info Message Template Auto Format enabled
+2022-06-25 07:55:03.5384 Info Loading assembly: NLog.Web.AspNetCore
+2022-06-25 07:55:03.6875 Info AppDomain Shutting down. LogFactory closing...
+2022-06-25 07:55:03.9337 Info LogFactory has been closed.
+2022-06-25 07:55:26.7031 Info Message Template Auto Format enabled
+2022-06-25 07:55:26.7495 Info Loading assembly: NLog.Web.AspNetCore
+2022-06-25 07:55:28.1264 Info Adding target FileTarget(Name=logFile)
+2022-06-25 07:55:28.2465 Info Validating config: TargetNames=logFile, ConfigItems=20, FilePath=D:\Users\Mike\Desktop\Zar\Web\bin\Debug\net6.0\Logging\nlog.config
+2022-06-25 07:55:46.3759 Info Validating config: TargetNames=logFile, ConfigItems=20, FilePath=D:\Users\Mike\Desktop\Zar\Web\bin\Debug\net6.0\Logging\nlog.config
+2022-06-25 07:58:00.0892 Info Message Template Auto Format enabled
+2022-06-25 07:58:00.6446 Info Loading assembly: NLog.Web.AspNetCore
+2022-06-25 07:58:01.4086 Info Adding target FileTarget(Name=logFile)
+2022-06-25 07:58:01.5087 Info Validating config: TargetNames=logFile, ConfigItems=20, FilePath=D:\Users\Mike\Desktop\Zar\Web\bin\Debug\net6.0\Logging\nlog.config
+2022-06-25 07:58:03.6743 Info Validating config: TargetNames=logFile, ConfigItems=20, FilePath=D:\Users\Mike\Desktop\Zar\Web\bin\Debug\net6.0\Logging\nlog.config
+2022-06-25 08:01:40.1179 Info Message Template Auto Format enabled
+2022-06-25 08:01:40.1945 Info Loading assembly: NLog.Web.AspNetCore
+2022-06-25 08:01:40.4495 Info Adding target FileTarget(Name=logFile)
+2022-06-25 08:01:40.4495 Info Adding target ConsoleTarget(Name=console)
+2022-06-25 08:01:40.5038 Info Validating config: TargetNames=logFile, console, ConfigItems=30, FilePath=D:\Users\Mike\Desktop\Zar\Web\bin\Debug\net6.0\Logging\nlog.config
+2022-06-25 08:01:41.1542 Info Validating config: TargetNames=logFile, console, ConfigItems=30, FilePath=D:\Users\Mike\Desktop\Zar\Web\bin\Debug\net6.0\Logging\nlog.config
+2022-06-25 08:03:13.7952 Info Message Template Auto Format enabled
+2022-06-25 08:03:13.8198 Info Loading assembly: NLog.Web.AspNetCore
+2022-06-25 08:03:14.0350 Info Adding target FileTarget(Name=logFile)
+2022-06-25 08:03:14.0350 Info Adding target ConsoleTarget(Name=console)
+2022-06-25 08:03:14.1047 Info Validating config: TargetNames=logFile, console, ConfigItems=30, FilePath=D:\Users\Mike\Desktop\Zar\Web\bin\Debug\net6.0\Logging\nlog.config
+2022-06-25 08:03:14.6228 Info Validating config: TargetNames=logFile, console, ConfigItems=30, FilePath=D:\Users\Mike\Desktop\Zar\Web\bin\Debug\net6.0\Logging\nlog.config
+2022-06-25 08:06:41.9472 Info Message Template Auto Format enabled
+2022-06-25 08:06:41.9749 Info Loading assembly: NLog.Web.AspNetCore
+2022-06-25 08:06:42.1734 Info Adding target FileTarget(Name=logFile)
+2022-06-25 08:06:42.1734 Info Adding target ConsoleTarget(Name=console)
+2022-06-25 08:06:42.2409 Info Validating config: TargetNames=logFile, console, ConfigItems=30, FilePath=D:\Users\Mike\Desktop\Zar\Web\bin\Debug\net6.0\Logging\nlog.config
+2022-06-25 08:06:42.7057 Info Validating config: TargetNames=logFile, console, ConfigItems=30, FilePath=D:\Users\Mike\Desktop\Zar\Web\bin\Debug\net6.0\Logging\nlog.config
+2022-06-25 08:11:38.1622 Info Message Template Auto Format enabled
+2022-06-25 08:11:38.1857 Info Loading assembly: NLog.Web.AspNetCore
+2022-06-25 08:11:38.4013 Info Adding target FileTarget(Name=logFile)
+2022-06-25 08:11:38.4013 Info Adding target ConsoleTarget(Name=console)
+2022-06-25 08:11:38.4587 Info Validating config: TargetNames=logFile, console, ConfigItems=30, FilePath=D:\Users\Mike\Desktop\Zar\Web\bin\Debug\net6.0\Logging\nlog.config
+2022-06-25 08:11:38.9244 Info Validating config: TargetNames=logFile, console, ConfigItems=30, FilePath=D:\Users\Mike\Desktop\Zar\Web\bin\Debug\net6.0\Logging\nlog.config
+2022-06-25 08:13:17.2659 Info Message Template Auto Format enabled
+2022-06-25 08:13:17.3525 Info Loading assembly: NLog.Web.AspNetCore
+2022-06-25 08:13:17.5935 Info Adding target FileTarget(Name=logFile)
+2022-06-25 08:13:17.5935 Info Adding target ConsoleTarget(Name=console)
+2022-06-25 08:13:17.6584 Info Validating config: TargetNames=logFile, console, ConfigItems=30, FilePath=D:\Users\Mike\Desktop\Zar\Web\bin\Debug\net6.0\Logging\nlog.config
+2022-06-25 08:13:18.0933 Info Validating config: TargetNames=logFile, console, ConfigItems=30, FilePath=D:\Users\Mike\Desktop\Zar\Web\bin\Debug\net6.0\Logging\nlog.config
+2022-06-25 08:15:14.0270 Info Message Template Auto Format enabled
+2022-06-25 08:15:14.0677 Info Loading assembly: NLog.Web.AspNetCore
+2022-06-25 08:15:14.3648 Info Adding target FileTarget(Name=logFile)
+2022-06-25 08:15:14.3676 Info Adding target ConsoleTarget(Name=console)
+2022-06-25 08:15:14.4296 Info Validating config: TargetNames=logFile, console, ConfigItems=30, FilePath=D:\Users\Mike\Desktop\Zar\Web\bin\Debug\net6.0\Logging\nlog.config
+2022-06-25 08:15:14.9550 Info Validating config: TargetNames=logFile, console, ConfigItems=30, FilePath=D:\Users\Mike\Desktop\Zar\Web\bin\Debug\net6.0\Logging\nlog.config
+2022-06-25 08:19:30.1805 Info Message Template Auto Format enabled
+2022-06-25 08:19:30.2199 Info Loading assembly: NLog.Web.AspNetCore
+2022-06-25 08:19:30.5377 Info Adding target FileTarget(Name=logFile)
+2022-06-25 08:19:30.5406 Info Adding target ConsoleTarget(Name=console)
+2022-06-25 08:19:30.6132 Info Validating config: TargetNames=logFile, console, ConfigItems=30, FilePath=D:\Users\Mike\Desktop\Zar\Web\bin\Debug\net6.0\Logging\nlog.config
+2022-06-25 08:19:31.0794 Info Validating config: TargetNames=logFile, console, ConfigItems=30, FilePath=D:\Users\Mike\Desktop\Zar\Web\bin\Debug\net6.0\Logging\nlog.config
+2022-06-25 08:21:15.0533 Info Message Template Auto Format enabled
+2022-06-25 08:21:15.0968 Info Loading assembly: NLog.Web.AspNetCore
+2022-06-25 08:21:15.3203 Info Adding target FileTarget(Name=logFile)
+2022-06-25 08:21:15.3222 Info Adding target ConsoleTarget(Name=console)
+2022-06-25 08:21:15.4046 Info Validating config: TargetNames=logFile, console, ConfigItems=30, FilePath=D:\Users\Mike\Desktop\Zar\Web\bin\Debug\net6.0\Logging\nlog.config
+2022-06-25 08:21:16.0092 Info Validating config: TargetNames=logFile, console, ConfigItems=30, FilePath=D:\Users\Mike\Desktop\Zar\Web\bin\Debug\net6.0\Logging\nlog.config
+2022-06-25 08:22:43.6336 Info Message Template Auto Format enabled
+2022-06-25 08:22:43.7228 Info Loading assembly: NLog.Web.AspNetCore
+2022-06-25 08:22:44.2700 Info Adding target FileTarget(Name=logFile)
+2022-06-25 08:22:44.2747 Info Adding target ConsoleTarget(Name=console)
+2022-06-25 08:22:44.3695 Info Validating config: TargetNames=logFile, console, ConfigItems=30, FilePath=D:\Users\Mike\Desktop\Zar\Web\bin\Debug\net6.0\Logging\nlog.config
+2022-06-25 08:22:46.6915 Info Validating config: TargetNames=logFile, console, ConfigItems=30, FilePath=D:\Users\Mike\Desktop\Zar\Web\bin\Debug\net6.0\Logging\nlog.config
+2022-06-25 08:24:41.7933 Info Message Template Auto Format enabled
+2022-06-25 08:24:41.8230 Info Loading assembly: NLog.Web.AspNetCore
+2022-06-25 08:24:42.0531 Info Adding target FileTarget(Name=logFile)
+2022-06-25 08:24:42.0560 Info Adding target ConsoleTarget(Name=console)
+2022-06-25 08:24:42.1236 Info Validating config: TargetNames=logFile, console, ConfigItems=30, FilePath=D:\Users\Mike\Desktop\Zar\Web\bin\Debug\net6.0\Logging\nlog.config
+2022-06-25 08:24:42.5545 Info Validating config: TargetNames=logFile, console, ConfigItems=30, FilePath=D:\Users\Mike\Desktop\Zar\Web\bin\Debug\net6.0\Logging\nlog.config
