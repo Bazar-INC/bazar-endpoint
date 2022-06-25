@@ -23,6 +23,10 @@ public class GetUserHandler : IRequestHandler<GetUserQuery, UserDto>
     {
         var userEntity = await _userManager.FindByIdAsync(request.Id);
 
-        return _mapper.Map<UserDto>(userEntity);
+        var userDto = _mapper.Map<UserDto>(userEntity);
+
+        userDto.Name = "380" + userDto.Name;
+
+        return userDto;
     }
 }
