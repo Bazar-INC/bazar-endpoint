@@ -192,3 +192,30 @@
 2022-06-25 08:24:42.0560 Info Adding target ConsoleTarget(Name=console)
 2022-06-25 08:24:42.1236 Info Validating config: TargetNames=logFile, console, ConfigItems=30, FilePath=D:\Users\Mike\Desktop\Zar\Web\bin\Debug\net6.0\Logging\nlog.config
 2022-06-25 08:24:42.5545 Info Validating config: TargetNames=logFile, console, ConfigItems=30, FilePath=D:\Users\Mike\Desktop\Zar\Web\bin\Debug\net6.0\Logging\nlog.config
+2022-06-25 09:53:05.1855 Info Message Template Auto Format enabled
+2022-06-25 09:53:05.2277 Info Loading assembly: NLog.Web.AspNetCore
+2022-06-25 09:53:05.3561 Info Adding target FileTarget(Name=logFile)
+2022-06-25 09:53:05.3561 Info Adding target ConsoleTarget(Name=console)
+2022-06-25 09:53:05.3866 Info Validating config: TargetNames=logFile, console, ConfigItems=30, FilePath=D:\Users\Mike\Desktop\Zar\Web\bin\Debug\net6.0\Logging\nlog.config
+2022-06-25 09:53:05.9023 Info Validating config: TargetNames=logFile, console, ConfigItems=30, FilePath=D:\Users\Mike\Desktop\Zar\Web\bin\Debug\net6.0\Logging\nlog.config
+2022-06-25 09:53:06.3138 Info Shutdown() called. Logger closing...
+2022-06-25 09:53:06.3138 Info Closing old configuration.
+2022-06-25 09:53:06.3279 Info Logger has been closed down.
+2022-06-25 09:53:12.1869 Info Message Template Auto Format enabled
+2022-06-25 09:53:12.1869 Info Loading assembly: NLog.Web.AspNetCore
+2022-06-25 09:53:12.2579 Info Adding target FileTarget(Name=logFile)
+2022-06-25 09:53:12.2579 Info Adding target ConsoleTarget(Name=console)
+2022-06-25 09:53:12.2805 Info Validating config: TargetNames=logFile, console, ConfigItems=30, FilePath=D:\Users\Mike\Desktop\Zar\Web\bin\Debug\net6.0\Logging\nlog.config
+2022-06-25 09:53:12.4021 Info Validating config: TargetNames=logFile, console, ConfigItems=30, FilePath=D:\Users\Mike\Desktop\Zar\Web\bin\Debug\net6.0\Logging\nlog.config
+2022-06-25 09:53:12.4474 Info Shutdown() called. Logger closing...
+2022-06-25 09:53:12.4474 Info Closing old configuration.
+2022-06-25 09:53:12.4474 Info Logger has been closed down.
+2022-06-25 09:53:21.6642 Info Message Template Auto Format enabled
+2022-06-25 09:53:21.6642 Info Loading assembly: NLog.Web.AspNetCore
+2022-06-25 09:53:21.7517 Info Adding target FileTarget(Name=logFile)
+2022-06-25 09:53:21.7517 Info Adding target ConsoleTarget(Name=console)
+2022-06-25 09:53:21.7712 Info Validating config: TargetNames=logFile, console, ConfigItems=30, FilePath=D:\Users\Mike\Desktop\Zar\Web\bin\Debug\net6.0\Logging\nlog.config
+2022-06-25 09:53:21.8955 Info Validating config: TargetNames=logFile, console, ConfigItems=30, FilePath=D:\Users\Mike\Desktop\Zar\Web\bin\Debug\net6.0\Logging\nlog.config
+2022-06-25 09:53:21.9491 Info Shutdown() called. Logger closing...
+2022-06-25 09:53:21.9491 Info Closing old configuration.
+2022-06-25 09:53:21.9617 Info Logger has been closed down.
