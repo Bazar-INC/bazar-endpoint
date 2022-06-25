@@ -14,7 +14,7 @@ public class ProductsController : BaseController
         _mediator = mediator;
     }
 
-    [HttpGet("")]
+    [HttpGet]
     public async Task<IActionResult> GetProductsAsync([FromQuery] GetProductsQuery query)
     {
         return Ok(await _mediator.Send(query));

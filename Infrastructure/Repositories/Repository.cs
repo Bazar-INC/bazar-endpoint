@@ -1,6 +1,7 @@
 ﻿using Core.Entities.Abstract;
 using Infrastructure.Repositories.Abstract;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace Infrastructure.Repositories;
 
@@ -33,9 +34,32 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class, I
         _context.Remove(entity);
     }
 
-    public IQueryable<TEntity> Get()
+    public IQueryable<TEntity> Get(
+            Expression<Func<TEntity, bool>> filter = null,
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+            string includeProperties = "")
     {
-        return _context.Set<TEntity>();
+        IQueryable<TEntity> query = _context.Set<TEntity>();
+
+        if (filter != null)
+        {
+            query = query.Where(filter);
+        }
+
+        foreach (var includeProperty in includeProperties.Split
+            (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+        {
+            query = query.Include(includeProperty);
+        }
+
+        if (orderBy != null)
+        {
+            return orderBy(query);
+        }
+        else
+        {
+            return query;
+        }
     }
 }
 
