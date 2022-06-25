@@ -7,7 +7,7 @@ using Shared.Validators;
 
 namespace Application.Features.AuthFeatures.Commands;
 
-public record AddCodeCommand(string PhoneNumber) : IRequest;
+public record AddCodeCommand(string Phone) : IRequest;
 
 public class AddCodeHandler : IRequestHandler<AddCodeCommand>
 {
