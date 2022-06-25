@@ -35,8 +35,8 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class, I
     }
 
     public IQueryable<TEntity> Get(
-            Expression<Func<TEntity, bool>> filter = null,
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+            Expression<Func<TEntity, bool>> filter = null!,
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null!,
             string includeProperties = "")
     {
         IQueryable<TEntity> query = _context.Set<TEntity>();
