@@ -1,14 +1,15 @@
 ﻿
+using Shared;
+
 namespace Application.Features.AuthFeatures.Services;
 
 public static class CodeGeneratorService
 {
     public static string GenerateCode()
     {
-        const int codeLenght = 4;
         string code = "";
 
-        for (int i = 0; i < codeLenght; i++)
+        for (int i = 0; i < AppSettings.Sms.CodeLength; i++)
         {
             code += GenerateRandomNumber();
         }

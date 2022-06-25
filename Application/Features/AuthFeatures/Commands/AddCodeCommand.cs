@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Core.Entities;
+using FluentValidation;
 using Infrastructure.UnitOfWork.Abstract;
 using MediatR;
+using Shared;
 using Shared.CommonExceptions;
 using Shared.Validators;
 
@@ -26,11 +28,6 @@ public class AddCodeHandler : IRequestHandler<AddCodeCommand>
 
         entity.PhoneNumber = PhoneValidator.RemoveWhiteSpaces(entity.PhoneNumber!);
 
-        if (!PhoneValidator.IsValidPhoneNumber(entity.PhoneNumber))
-        {
-            throw new BadRequestRestException("Invalid phone number");
-        }
-
         var code = "1234"; // TODO: delete line
         //var code = CodeGeneratorService.GenerateCode();  // TODO: uncomment line
 
@@ -42,5 +39,14 @@ public class AddCodeHandler : IRequestHandler<AddCodeCommand>
         await _unitOfWork.SaveChangesAsync();
 
         return default;
+    }
+}
+
+public class AddCodeCommandValidator : AbstractValidator<AddCodeCommand>
+{
+    public AddCodeCommandValidator()
+    {
+        RuleFor(x => x.Phone).NotNull().Length(AppSettings.Sms.PhoneLength)
+                             .Must((a,b) => a.Phone.All(char.IsDigit));
     }
 }

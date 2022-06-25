@@ -12,6 +12,8 @@ public class AppSettings
         public const string BaseUrl = @"https://api.mobizon.ua/service/message/sendSmsMessage?output=json&api=v1&apiKey=";
         public const string ApiKey = @"";
         public static readonly TimeSpan CodeLifetime = TimeSpan.FromSeconds(30);
+        public const int PhoneLength = 9; // 67 363 00 11
+        public const int CodeLength = 4; // 1234
     }
 
     public static class JwtTokenLifetimes

@@ -1,6 +1,7 @@
 ﻿using Application.Features.AuthFeatures.Dtos;
 using Application.Features.AuthFeatures.Services;
 using Core.Entities;
+using FluentValidation;
 using Infrastructure.UnitOfWork.Abstract;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -29,11 +30,6 @@ public class ConfirmCodeHandler : IRequestHandler<ConfirmCodeCommand, ConfirmRes
     {
         var phoneNumber = PhoneValidator.RemoveWhiteSpaces(request.Phone);
 
-        if (!PhoneValidator.IsValidPhoneNumber(phoneNumber))
-        {
-            throw new BadRequestRestException("Invalid phone number");
-        }
-        
         var code = _unitOfWork.Codes.Get()
                                     .Where(p => p.PhoneNumber == phoneNumber)
                                     .OrderByDescending(c => c.CreatedAt)
@@ -77,5 +73,17 @@ public class ConfirmCodeHandler : IRequestHandler<ConfirmCodeCommand, ConfirmRes
             string.Join(", ", await _userManager.GetRolesAsync(user)),
             AppSettings.JwtTokenLifetimes.DefaultExpirationTime)
         };
+    }
+}
+
+public class ConfirmCodeCommandValidator : AbstractValidator<ConfirmCodeCommand>
+{
+    public ConfirmCodeCommandValidator()
+    {
+        RuleFor(x => x.Phone).NotNull().Length(AppSettings.Sms.PhoneLength)
+                             .Must((a, b) => a.Phone.All(char.IsDigit));
+
+        RuleFor(x => x.Code).NotNull().Length(AppSettings.Sms.CodeLength)
+                             .Must((a, b) => a.Code.All(char.IsDigit));
     }
 }
