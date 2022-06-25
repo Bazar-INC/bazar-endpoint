@@ -32,6 +32,7 @@ public class GetProductsHandler : IRequestHandler<GetProductsQuery, ProductsResp
         int perPage = request.PerPage;
 
         products = products.OrderBy(p => p.Name);
+
         products = products.Skip((request.Page - 1) * perPage).Take(perPage);
 
         int totalPages = count / perPage;

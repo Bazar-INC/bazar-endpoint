@@ -117,9 +117,7 @@ try
 }
 catch (Exception exception)
 {
-    //// NLog: catch setup errors
-    //logger.Error(exception, "Stopped program because of exception");
-    //throw;
+    // NLog: catch setup errors
     string type = exception.GetType().Name;
     if (type.Equals("StopTheHostException", StringComparison.Ordinal))
     {
