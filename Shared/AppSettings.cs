@@ -25,5 +25,7 @@ public class AppSettings
     public static class Constants
     {
         public const string NLogConfigPath = "Logging/nlog.config";
+        public const int DefaultPerPage = 12;
+        public const int DefaultPage = 1;
     }
 }

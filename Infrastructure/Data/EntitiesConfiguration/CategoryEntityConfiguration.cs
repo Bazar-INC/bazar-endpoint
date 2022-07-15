@@ -1,5 +1,6 @@
 ﻿using Core.Entities;
 using Infrastructure.Data.EntitiesConfiguration.Abstract;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Data.EntitiesConfiguration;
@@ -14,5 +15,6 @@ internal class CategoryEntityConfiguration : BaseEntityConfiguration<CategoryEnt
 
         builder.HasMany(c => c.Products).WithOne(p => p.Category).IsRequired();
         builder.HasMany(c => c.Children).WithOne(c => c.Parent);
+        builder.HasMany(c => c.FilterValues).WithMany(f => f.Categories).UsingEntity(u => u.ToTable("UsrCategoriesFilterValues"));
     }
 }

@@ -3,20 +3,18 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Core.Entities;
 
-[Table("UsrProducts")]
-public class ProductEntity : BaseEntity
+[Table("UsrFilterNames")]
+public class FilterNameEntity : BaseEntity
 {
     // props
     public string? Name { get; set; }
-    public decimal Price { get; set; }
-    public string? Description { get; set; }
+    public string? Code { get; set; }
 
     // nav props
-    public virtual CategoryEntity? Category { get; set; }
     public virtual ICollection<FilterValueEntity> FilterValues { get; set; }
 
     // init
-    public ProductEntity()
+    public FilterNameEntity()
     {
         FilterValues = new HashSet<FilterValueEntity>();
     }
