@@ -10,4 +10,5 @@ public interface IUnitOfWork
     IRepository<CodeEntity> Codes { get; }
     IRepository<ProductEntity> Products { get; }
     IRepository<CategoryEntity> Categories { get; }
+    IRepository<FilterNameEntity> FilterNames { get; }
 }

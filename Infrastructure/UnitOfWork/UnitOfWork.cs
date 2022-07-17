@@ -12,6 +12,7 @@ public class UnitOfWork : IUnitOfWork, IDisposable
     public IRepository<CodeEntity> Codes { get; } 
     public IRepository<ProductEntity> Products { get; }
     public IRepository<CategoryEntity> Categories { get; }
+    public IRepository<FilterNameEntity> FilterNames { get; }
 
     public UnitOfWork(ApplicationDbContext context)
     {
@@ -20,6 +21,7 @@ public class UnitOfWork : IUnitOfWork, IDisposable
         Codes = new Repository<CodeEntity>(_context);
         Products = new Repository<ProductEntity>(_context);
         Categories = new Repository<CategoryEntity>(_context);
+        FilterNames = new Repository<FilterNameEntity>(_context);
     }
 
     public async Task<int> SaveChangesAsync()

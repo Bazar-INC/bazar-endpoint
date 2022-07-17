@@ -15,5 +15,6 @@ internal class ProductEntityConfiguration : BaseEntityConfiguration<ProductEntit
         builder.Property(p => p.Price).HasColumnType("decimal(18,4)");
 
         builder.HasOne(p => p.Category).WithMany(c => c.Products);
+        builder.HasMany(p => p.FilterValues).WithMany(f => f.Products).UsingEntity(u => u.ToTable("UsrProductsFilterValues"));
     }
 }

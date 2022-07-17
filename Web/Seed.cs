@@ -1,5 +1,7 @@
 ﻿using Core.Entities;
+using Infrastructure;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Shared;
 
 namespace Web;
@@ -10,7 +12,10 @@ public static partial class WebApplicationExtensions
     {
         using (var scope = app.Services.CreateScope())
         {
+            var context = scope.ServiceProvider.GetService<ApplicationDbContext>();
             var roleManager = scope.ServiceProvider.GetService<RoleManager<RoleEntity>>();
+
+            context!.Database.Migrate();
 
             Seed(roleManager!).Wait();
         }
