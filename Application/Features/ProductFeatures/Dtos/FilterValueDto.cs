@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+namespace Application.Features.ProductFeatures.Dtos;
 
-namespace Application.Features.ProductFeatures.Dtos
+public record FilterValueDto
 {
-    public class FilterValueDto
-    {
-    }
+    public string? Value { get; set; }
+    public string? Code { get; set; }
 }

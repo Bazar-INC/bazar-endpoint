@@ -15,6 +15,8 @@ namespace Web
             CreateMap<UserEntity, UserDto>().ForMember(dest => dest.Name, act => act.MapFrom(src => src.PhoneNumber));
             CreateMap<CategoryEntity, CategoryDto>();
             CreateMap<ProductEntity, ProductDto>();
+            CreateMap<FilterValueEntity, FilterValueDto>().ReverseMap();
+            CreateMap<FilterNameEntity, FilterNameDto>().ReverseMap();
         }
     }
 }
