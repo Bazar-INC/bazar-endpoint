@@ -29,7 +29,7 @@ public class GetProductsHandler : IRequestHandler<GetProductsQuery, ProductsResp
         _mapper = mapper;
     }
 
-    public Task<ProductsResponseDto> Handle(GetProductsQuery request, CancellationToken cancellationToken)
+    public async Task<ProductsResponseDto> Handle(GetProductsQuery request, CancellationToken cancellationToken)
     {
         var products = _unitOfWork.Products.Get()
             .Include(p => p.Category)
@@ -41,28 +41,33 @@ public class GetProductsHandler : IRequestHandler<GetProductsQuery, ProductsResp
         var page = request.Page ?? AppSettings.Constants.DefaultPage;
         int totalPages = 0;
 
+        Tuple<decimal, decimal> minMaxPrices;
+
         var response = new ProductsResponseDto()
         {
             Products = new List<ProductDto>(),
-            TotalPages = totalPages
+            TotalPages = totalPages,
         };
 
         if(request.Category == null)
         {
             products = Paginate(products, perPage, page, out totalPages);
+            minMaxPrices = getMinAndMaxPrice(products);
 
             response.Products = _mapper.Map<ICollection<ProductDto>>(products);
             response.TotalPages = totalPages;
             response.Filters = GetProductsFilters(products);
-            
-            return Task.FromResult(response);
+            response.MinPrice = minMaxPrices.Item1;
+            response.MaxPrice = minMaxPrices.Item2;
+
+            return await Task.FromResult(response);
         }
 
         products = products.Where(p => p.Category!.Name == request.Category);
 
         if (!products.Any())
         {
-            return Task.FromResult(response);
+            return await Task.FromResult(response);
         }
 
         if (!string.IsNullOrEmpty(request.FilterString))
@@ -71,17 +76,28 @@ public class GetProductsHandler : IRequestHandler<GetProductsQuery, ProductsResp
 
             if (!products.Any())
             {
-                return Task.FromResult(response);
+                return await Task.FromResult(response);
             }
         }
         
         products = Paginate(products, perPage, page, out totalPages);
+        minMaxPrices = getMinAndMaxPrice(products);
 
         response.Products = _mapper.Map<ICollection<ProductDto>>(products);
         response.TotalPages = totalPages;
         response.Filters = GetProductsFilters(products);
+        response.MinPrice = minMaxPrices.Item1;
+        response.MaxPrice = minMaxPrices.Item2;
 
-        return Task.FromResult(response);
+        return await Task.FromResult(response);
+    }
+
+    private Tuple<decimal, decimal> getMinAndMaxPrice(IQueryable<ProductEntity> products)
+    {
+        var minPrice = products.Min(p => p.Price);
+        var maxPrice = products.Max(p => p.Price);
+
+        return Tuple.Create(minPrice, maxPrice);
     }
 
     private IQueryable<ProductEntity> Filter(IQueryable<ProductEntity> products, string? filterString)
