@@ -16,6 +16,8 @@ public record GetProductsQuery : IRequest<ProductsResponseDto>
     public int? PerPage { get; set; }
     public string? Category { get; set; }
     public string? FilterString { get; set; }
+    public decimal? MinPrice { get; set; }
+    public decimal? MaxPrice { get; set; }
 }
 
 public class GetProductsHandler : IRequestHandler<GetProductsQuery, ProductsResponseDto>
@@ -43,9 +45,10 @@ public class GetProductsHandler : IRequestHandler<GetProductsQuery, ProductsResp
 
         if (request.Category == null)
         {
+            products = FilterProductsByPrice(products, request.MinPrice, request.MaxPrice);
             products = Paginate(products, perPage, page, out totalPages);
 
-            var response = GenerateProductsResponse(products.ToList(), totalPages, GetProductsFilters(products), GetMinAndMaxPrices(products));
+            var response = GenerateProductsResponse(products.ToList(), totalPages, GetProductsFilters(products));
 
             return Task.FromResult(response);
         }
@@ -67,10 +70,11 @@ public class GetProductsHandler : IRequestHandler<GetProductsQuery, ProductsResp
             }
         }
 
+        products = FilterProductsByPrice(products, request.MinPrice, request.MaxPrice);
         products = Paginate(products, perPage, page, out totalPages);
 
         {
-            var response = GenerateProductsResponse(products.ToList(), totalPages, GetProductsFilters(products), GetMinAndMaxPrices(products));
+            var response = GenerateProductsResponse(products.ToList(), totalPages, GetProductsFilters(products));
 
             return Task.FromResult(response);
         }
@@ -81,10 +85,9 @@ public class GetProductsHandler : IRequestHandler<GetProductsQuery, ProductsResp
     private ProductsResponseDto GenerateProductsResponse(
         ICollection<ProductEntity>? products = null!,
         int totalPages = 0,
-        ICollection<FilterNameDto> filters = null!,
-        (decimal minPrice, decimal maxPrice) prices = default((decimal, decimal)))
+        ICollection<FilterNameDto> filters = null!)
     {
-        if(products == null)
+        if(products == null || !products.Any())
         {
             return new ProductsResponseDto();
         }
@@ -94,10 +97,12 @@ public class GetProductsHandler : IRequestHandler<GetProductsQuery, ProductsResp
             Products = _mapper.Map<ICollection<ProductDto>>(products)
         };
 
+        var prices = GetMinAndMaxPrices(products);
+
         response.TotalPages = totalPages;
 
-        response.MinPrice = prices.minPrice;
-        response.MaxPrice = prices.maxPrice;
+        response.MinPrice = prices.Item1;
+        response.MaxPrice = prices.Item2;
 
         if(filters != null)
         {
@@ -107,12 +112,27 @@ public class GetProductsHandler : IRequestHandler<GetProductsQuery, ProductsResp
         return response;
     }
     
-    private (decimal, decimal) GetMinAndMaxPrices(IQueryable<ProductEntity> products)
+    private (decimal, decimal) GetMinAndMaxPrices(ICollection<ProductEntity> products)
     {
         var minPrice = products.Min(p => p.Price);
         var maxPrice = products.Max(p => p.Price);
 
         return (minPrice, maxPrice);
+    }
+
+    private IQueryable<ProductEntity> FilterProductsByPrice(IQueryable<ProductEntity> products, decimal? minPrice, decimal? maxPrice)
+    {
+        if(minPrice != null)
+        {
+            products = products.Where(p => p.Price >= minPrice);
+        }
+
+        if (maxPrice != null)
+        {
+            products = products.Where(p => p.Price <= maxPrice);
+        }
+
+        return products;
     }
 
     private IQueryable<ProductEntity> Filter(IQueryable<ProductEntity> products, string? filterString)
