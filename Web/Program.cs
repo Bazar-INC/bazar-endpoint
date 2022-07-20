@@ -1,5 +1,4 @@
 using Application;
-using Application.Features.AuthFeatures.Commands;
 using Application.Features.AuthFeatures.Services;
 using Core.Entities;
 using FluentValidation;

@@ -3,6 +3,9 @@ using Shared;
 
 namespace Web.AuthorizeAttributes;
 
+/// <summary>
+/// custom [AuthorizeCustomer] that gives access to methods to users who have Customer role
+/// </summary>
 public class AuthorizeCustomerAttribute : AuthorizeAttribute
 {
     public AuthorizeCustomerAttribute()

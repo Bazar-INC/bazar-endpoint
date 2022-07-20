@@ -6,23 +6,15 @@ namespace Core.Entities;
 [Table("UsrCategories")]
 public class CategoryEntity : BaseEntity
 {
-    // props
+    // properties
     public string? Name { get; set; }
     public string? Code { get; set; }
     public string? Image { get; set; }
     public Guid? ParentId { get; set; }
 
-    // nav props
-    public virtual ICollection<ProductEntity> Products { get; set; }
-    public virtual ICollection<CategoryEntity> Children { get; set; }
-    public virtual ICollection<FilterValueEntity> FilterValues { get; set; }
+    // navigation properies
+    public virtual ICollection<ProductEntity> Products { get; set; } = new HashSet<ProductEntity>();
+    public virtual ICollection<CategoryEntity> Children { get; set; } = new HashSet<CategoryEntity>();
+    public virtual ICollection<FilterValueEntity> FilterValues { get; set; } = new HashSet<FilterValueEntity>();
     public virtual CategoryEntity? Parent { get; set; }
-
-    // init
-    public CategoryEntity()
-    {
-        Products = new HashSet<ProductEntity>();
-        Children = new HashSet<CategoryEntity>();
-        FilterValues = new HashSet<FilterValueEntity>();
-    }
 }

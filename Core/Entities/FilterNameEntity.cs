@@ -6,16 +6,10 @@ namespace Core.Entities;
 [Table("UsrFilterNames")]
 public class FilterNameEntity : BaseEntity
 {
-    // props
+    // properties
     public string? Name { get; set; }
     public string? Code { get; set; }
 
-    // nav props
-    public virtual ICollection<FilterValueEntity> FilterValues { get; set; }
-
-    // init
-    public FilterNameEntity()
-    {
-        FilterValues = new HashSet<FilterValueEntity>();
-    }
+    // navigation properties
+    public virtual ICollection<FilterValueEntity> FilterValues { get; set; } = new HashSet<FilterValueEntity>();
 }

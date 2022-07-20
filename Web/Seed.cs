@@ -26,6 +26,11 @@ public static partial class WebApplicationExtensions
         await SeedRoles(roleManager);
     }
 
+    /// <summary>
+    /// seed roles using reflection
+    /// </summary>
+    /// <param name="roleManager">role manager to manage roles</param>
+    /// <returns>awaited Task</returns>
     private static async Task SeedRoles(RoleManager<RoleEntity> roleManager)
     {
         Type type = typeof(AppSettings.Roles);

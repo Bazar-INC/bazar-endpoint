@@ -3,6 +3,7 @@ using AutoMapper;
 using Core.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using static Shared.AppSettings;
 
 namespace Application.Features.AccountFeatures.Queries;
 
@@ -25,7 +26,7 @@ public class GetUserHandler : IRequestHandler<GetUserQuery, UserDto>
 
         var userDto = _mapper.Map<UserDto>(userEntity);
 
-        userDto.Name = "380" + userDto.Name;
+        userDto.Name = CountryCodes.Ukraine + userDto.Name;
 
         return userDto;
     }

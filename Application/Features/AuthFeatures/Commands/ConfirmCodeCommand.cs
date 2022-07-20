@@ -44,7 +44,7 @@ public class ConfirmCodeHandler : IRequestHandler<ConfirmCodeCommand, ConfirmRes
             throw new BadRequestRestException("Wrong code");
         }
 
-        if (DateTime.UtcNow.Subtract(code.CreatedAt) > AppSettings.Sms.CodeLifetime)
+        if (isCodeExpired(code))
         {
             throw new BadRequestRestException("Code is expired");
         }
@@ -72,6 +72,11 @@ public class ConfirmCodeHandler : IRequestHandler<ConfirmCodeCommand, ConfirmRes
             string.Join(", ", await _userManager.GetRolesAsync(user)),
             AppSettings.JwtTokenLifetimes.DefaultExpirationTime)
         };
+    }
+
+    private bool isCodeExpired(CodeEntity code)
+    {
+        return DateTime.UtcNow.Subtract(code.CreatedAt) > AppSettings.Sms.CodeLifetime;
     }
 }
 
