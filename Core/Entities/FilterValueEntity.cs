@@ -7,19 +7,11 @@ namespace Core.Entities;
 [Table("UsrFilterValues")]
 public class FilterValueEntity : BaseEntity
 {
-    // props
+    // properties
     public string? Value { get; set; }
     public string? Code { get; set; }
 
-    // nav props
+    // navigation properties
     public virtual FilterNameEntity? FilterName { get; set; }
-    public virtual ICollection<CategoryEntity> Categories { get; set; }
-    public virtual ICollection<ProductEntity> Products { get; set; }
-
-    // init
-    public FilterValueEntity()
-    {
-        Categories = new HashSet<CategoryEntity>();
-        Products = new HashSet<ProductEntity>();
-    }
+    public virtual ICollection<ProductEntity> Products { get; set; } = new HashSet<ProductEntity>();
 }

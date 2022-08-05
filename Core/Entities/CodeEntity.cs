@@ -6,7 +6,7 @@ namespace Core.Entities;
 [Table("UsrCodes")]
 public class CodeEntity : BaseEntity
 {
-    // props
+    // properties
     public string? PhoneNumber { get; set; }
     public string? Code { get; set; }
 }

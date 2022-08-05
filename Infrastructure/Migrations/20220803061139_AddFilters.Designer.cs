@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220715150537_AddFilterEntities")]
-    partial class AddFilterEntities
+    [Migration("20220803061139_AddFilters")]
+    partial class AddFilters
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,21 +23,6 @@ namespace Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("CategoryEntityFilterValueEntity", b =>
-                {
-                    b.Property<Guid>("CategoriesId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("FilterValuesId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("CategoriesId", "FilterValuesId");
-
-                    b.HasIndex("FilterValuesId");
-
-                    b.ToTable("UsrCategoriesFilterValues", (string)null);
-                });
 
             modelBuilder.Entity("Core.Entities.CategoryEntity", b =>
                 {
@@ -113,6 +98,9 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("CategoryId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Code")
                         .HasColumnType("nvarchar(max)");
 
@@ -130,6 +118,8 @@ namespace Infrastructure.Migrations
                         .HasDefaultValueSql("getutcdate()");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("UsrFilterNames");
                 });
@@ -434,21 +424,6 @@ namespace Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("CategoryEntityFilterValueEntity", b =>
-                {
-                    b.HasOne("Core.Entities.CategoryEntity", null)
-                        .WithMany()
-                        .HasForeignKey("CategoriesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Core.Entities.FilterValueEntity", null)
-                        .WithMany()
-                        .HasForeignKey("FilterValuesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Core.Entities.CategoryEntity", b =>
                 {
                     b.HasOne("Core.Entities.CategoryEntity", "Parent")
@@ -456,6 +431,17 @@ namespace Infrastructure.Migrations
                         .HasForeignKey("ParentId");
 
                     b.Navigation("Parent");
+                });
+
+            modelBuilder.Entity("Core.Entities.FilterNameEntity", b =>
+                {
+                    b.HasOne("Core.Entities.CategoryEntity", "Category")
+                        .WithMany("FilterNames")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("Core.Entities.FilterValueEntity", b =>
@@ -547,6 +533,8 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Core.Entities.CategoryEntity", b =>
                 {
                     b.Navigation("Children");
+
+                    b.Navigation("FilterNames");
 
                     b.Navigation("Products");
                 });

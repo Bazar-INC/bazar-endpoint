@@ -6,18 +6,12 @@ namespace Core.Entities;
 [Table("UsrProducts")]
 public class ProductEntity : BaseEntity
 {
-    // props
+    // properties
     public string? Name { get; set; }
     public decimal Price { get; set; }
     public string? Description { get; set; }
 
-    // nav props
+    // navigation properties
     public virtual CategoryEntity? Category { get; set; }
-    public virtual ICollection<FilterValueEntity> FilterValues { get; set; }
-
-    // init
-    public ProductEntity()
-    {
-        FilterValues = new HashSet<FilterValueEntity>();
-    }
+    public virtual ICollection<FilterValueEntity> FilterValues { get; set; } = new HashSet<FilterValueEntity>();
 }

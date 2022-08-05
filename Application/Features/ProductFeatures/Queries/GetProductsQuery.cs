@@ -16,6 +16,8 @@ public record GetProductsQuery : IRequest<ProductsResponseDto>
     public int? PerPage { get; set; }
     public string? Category { get; set; }
     public string? FilterString { get; set; }
+    public decimal? MinPrice { get; set; }
+    public decimal? MaxPrice { get; set; }
 }
 
 public class GetProductsHandler : IRequestHandler<GetProductsQuery, ProductsResponseDto>
@@ -29,7 +31,7 @@ public class GetProductsHandler : IRequestHandler<GetProductsQuery, ProductsResp
         _mapper = mapper;
     }
 
-    public async Task<ProductsResponseDto> Handle(GetProductsQuery request, CancellationToken cancellationToken)
+    public Task<ProductsResponseDto> Handle(GetProductsQuery request, CancellationToken cancellationToken)
     {
         var products = _unitOfWork.Products.Get()
             .Include(p => p.Category)
@@ -37,67 +39,85 @@ public class GetProductsHandler : IRequestHandler<GetProductsQuery, ProductsResp
             .ThenInclude(f => f.FilterName)
             .AsQueryable();
 
-        var perPage = request.PerPage ?? AppSettings.Constants.DefaultPerPage;
-        var page = request.Page ?? AppSettings.Constants.DefaultPage;
-        int totalPages = 0;
-
-        Tuple<decimal, decimal> minMaxPrices;
-
-        var response = new ProductsResponseDto()
+        if(string.IsNullOrEmpty(request.Category))
         {
-            Products = new List<ProductDto>(),
-            TotalPages = totalPages,
-        };
-
-        if(request.Category == null)
-        {
-            products = Paginate(products, perPage, page, out totalPages);
-            minMaxPrices = getMinAndMaxPrice(products);
-
-            response.Products = _mapper.Map<ICollection<ProductDto>>(products);
-            response.TotalPages = totalPages;
-            response.Filters = GetProductsFilters(products);
-            response.MinPrice = minMaxPrices.Item1;
-            response.MaxPrice = minMaxPrices.Item2;
-
-            return await Task.FromResult(response);
+            return Task.FromResult(GenerateProductsResponse(products, request));
         }
 
-        products = products.Where(p => p.Category!.Name == request.Category);
+        products = products.Where(p => p.Category!.Code == request.Category);
 
-        if (!products.Any())
+        return Task.FromResult(GenerateProductsResponse(products, request));
+    }
+
+    #region Private
+
+    private ProductsResponseDto GenerateProductsResponse(IQueryable<ProductEntity>? products = default, GetProductsQuery? request = default)
+    {
+        if (products == null || !products.Any())
         {
-            return await Task.FromResult(response);
+            return new ProductsResponseDto();
         }
 
-        if (!string.IsNullOrEmpty(request.FilterString))
+        var allProductsFilters = GetProductsFilters(products);
+
+        if (!string.IsNullOrEmpty(request!.FilterString) && !string.IsNullOrEmpty(request.Category))
         {
             products = Filter(products, request.FilterString);
 
             if (!products.Any())
             {
-                return await Task.FromResult(response);
+                return new ProductsResponseDto();
             }
         }
-        
-        products = Paginate(products, perPage, page, out totalPages);
-        minMaxPrices = getMinAndMaxPrice(products);
 
-        response.Products = _mapper.Map<ICollection<ProductDto>>(products);
+        products = FilterProductsByPrice(products, request!.MinPrice, request.MaxPrice);
+        var prices = GetMinAndMaxPrices(products);
+
+        products = Paginate(products,
+            request!.PerPage ?? AppSettings.Constants.DefaultPerPage,
+            request!.Page ?? AppSettings.Constants.DefaultPage,
+            out int totalPages);
+
+        var response = new ProductsResponseDto()
+        {
+            Products = _mapper.Map<ICollection<ProductDto>>(products),
+            Filters = allProductsFilters
+        };
+
         response.TotalPages = totalPages;
-        response.Filters = GetProductsFilters(products);
-        response.MinPrice = minMaxPrices.Item1;
-        response.MaxPrice = minMaxPrices.Item2;
 
-        return await Task.FromResult(response);
+        response.MinPrice = prices.Item1;
+        response.MaxPrice = prices.Item2;
+
+        return response;
     }
 
-    private Tuple<decimal, decimal> getMinAndMaxPrice(IQueryable<ProductEntity> products)
+    private (decimal, decimal) GetMinAndMaxPrices(IQueryable<ProductEntity> products)
     {
+        if(!products.Any())
+        {
+            return default;
+        }
+
         var minPrice = products.Min(p => p.Price);
         var maxPrice = products.Max(p => p.Price);
 
-        return Tuple.Create(minPrice, maxPrice);
+        return (minPrice, maxPrice);
+    }
+
+    private IQueryable<ProductEntity> FilterProductsByPrice(IQueryable<ProductEntity> products, decimal? minPrice, decimal? maxPrice)
+    {
+        if (minPrice != null)
+        {
+            products = products.Where(p => p.Price >= minPrice);
+        }
+
+        if (maxPrice != null)
+        {
+            products = products.Where(p => p.Price <= maxPrice);
+        }
+
+        return products;
     }
 
     private IQueryable<ProductEntity> Filter(IQueryable<ProductEntity> products, string? filterString)
@@ -166,13 +186,18 @@ public class GetProductsHandler : IRequestHandler<GetProductsQuery, ProductsResp
 
         products = products.Skip((page - 1) * perPage).Take(perPage);
 
+        if(count <= perPage && count != 0)
+        {
+            totalPages = 1;
+            return products;
+        }
+
         totalPages = count / perPage;
 
         if (totalPages % perPage > 0)
         {
             ++totalPages;
         }
-
         return products;
     }
 
@@ -229,7 +254,7 @@ public class GetProductsHandler : IRequestHandler<GetProductsQuery, ProductsResp
         return filterTuple;
     }
 
-    public ICollection<FilterNameDto> GetProductsFilters(IQueryable<ProductEntity> products)
+    private ICollection<FilterNameDto> GetProductsFilters(IQueryable<ProductEntity> products)
     {
         var filters = new List<FilterNameDto>();
 
@@ -259,4 +284,5 @@ public class GetProductsHandler : IRequestHandler<GetProductsQuery, ProductsResp
 
         return filters;
     }
+    #endregion
 }

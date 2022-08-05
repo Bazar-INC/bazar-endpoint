@@ -2,10 +2,10 @@
 
 public abstract class BaseEntity : IEntity
 {
-    // key
+    // unique key
     public Guid Id { get; set; }
 
-    // props
+    // properties
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
 }
