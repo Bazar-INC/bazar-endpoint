@@ -39,81 +39,66 @@ public class GetProductsHandler : IRequestHandler<GetProductsQuery, ProductsResp
             .ThenInclude(f => f.FilterName)
             .AsQueryable();
 
-        var perPage = request.PerPage ?? AppSettings.Constants.DefaultPerPage;
-        var page = request.Page ?? AppSettings.Constants.DefaultPage;
-        int totalPages = 0;
-
-        if (request.Category == null)
+        if(string.IsNullOrEmpty(request.Category))
         {
-            products = FilterProductsByPrice(products, request.MinPrice, request.MaxPrice);
-            products = Paginate(products, perPage, page, out totalPages);
-
-            var response = GenerateProductsResponse(products.ToList(), totalPages, GetProductsFilters(products));
-
-            return Task.FromResult(response);
+            return Task.FromResult(GenerateProductsResponse(products, request));
         }
 
-        products = products.Where(p => p.Category!.Name == request.Category);
+        products = products.Where(p => p.Category!.Code == request.Category);
 
-        if (!products.Any())
+        return Task.FromResult(GenerateProductsResponse(products, request));
+    }
+
+    #region Private
+
+    private ProductsResponseDto GenerateProductsResponse(IQueryable<ProductEntity>? products = default, GetProductsQuery? request = default)
+    {
+        if (products == null || !products.Any())
         {
-            return Task.FromResult(GenerateProductsResponse());
+            return new ProductsResponseDto();
         }
 
-        if (!string.IsNullOrEmpty(request.FilterString))
+        var allProductsFilters = GetProductsFilters(products);
+
+        if (!string.IsNullOrEmpty(request!.FilterString) && !string.IsNullOrEmpty(request.Category))
         {
             products = Filter(products, request.FilterString);
 
             if (!products.Any())
             {
-                return Task.FromResult(GenerateProductsResponse());
+                return new ProductsResponseDto();
             }
         }
 
-        products = FilterProductsByPrice(products, request.MinPrice, request.MaxPrice);
-        products = Paginate(products, perPage, page, out totalPages);
+        products = FilterProductsByPrice(products, request!.MinPrice, request.MaxPrice);
+        var prices = GetMinAndMaxPrices(products);
 
-        {
-            var response = GenerateProductsResponse(products.ToList(), totalPages, GetProductsFilters(products));
-
-            return Task.FromResult(response);
-        }
-    }
-
-    #region Private
-
-    private ProductsResponseDto GenerateProductsResponse(
-        ICollection<ProductEntity>? products = null!,
-        int totalPages = 0,
-        ICollection<FilterNameDto> filters = null!)
-    {
-        if(products == null || !products.Any())
-        {
-            return new ProductsResponseDto();
-        }
+        products = Paginate(products,
+            request!.PerPage ?? AppSettings.Constants.DefaultPerPage,
+            request!.Page ?? AppSettings.Constants.DefaultPage,
+            out int totalPages);
 
         var response = new ProductsResponseDto()
         {
-            Products = _mapper.Map<ICollection<ProductDto>>(products)
+            Products = _mapper.Map<ICollection<ProductDto>>(products),
+            Filters = allProductsFilters
         };
-
-        var prices = GetMinAndMaxPrices(products);
 
         response.TotalPages = totalPages;
 
         response.MinPrice = prices.Item1;
         response.MaxPrice = prices.Item2;
 
-        if(filters != null)
-        {
-            response.Filters = filters;
-        }
-
         return response;
     }
-    
-    private (decimal, decimal) GetMinAndMaxPrices(ICollection<ProductEntity> products)
+
+    private (decimal, decimal) GetMinAndMaxPrices(IQueryable<ProductEntity> products)
     {
+        if(!products.Any())
+        {
+            return default;
+        }
+
         var minPrice = products.Min(p => p.Price);
         var maxPrice = products.Max(p => p.Price);
 
@@ -122,7 +107,7 @@ public class GetProductsHandler : IRequestHandler<GetProductsQuery, ProductsResp
 
     private IQueryable<ProductEntity> FilterProductsByPrice(IQueryable<ProductEntity> products, decimal? minPrice, decimal? maxPrice)
     {
-        if(minPrice != null)
+        if (minPrice != null)
         {
             products = products.Where(p => p.Price >= minPrice);
         }
@@ -201,13 +186,18 @@ public class GetProductsHandler : IRequestHandler<GetProductsQuery, ProductsResp
 
         products = products.Skip((page - 1) * perPage).Take(perPage);
 
+        if(count <= perPage && count != 0)
+        {
+            totalPages = 1;
+            return products;
+        }
+
         totalPages = count / perPage;
 
         if (totalPages % perPage > 0)
         {
             ++totalPages;
         }
-
         return products;
     }
 

@@ -15,6 +15,6 @@ public class CategoryEntity : BaseEntity
     // navigation properies
     public virtual ICollection<ProductEntity> Products { get; set; } = new HashSet<ProductEntity>();
     public virtual ICollection<CategoryEntity> Children { get; set; } = new HashSet<CategoryEntity>();
-    public virtual ICollection<FilterValueEntity> FilterValues { get; set; } = new HashSet<FilterValueEntity>();
+    public virtual ICollection<FilterNameEntity> FilterNames { get; set; } = new HashSet<FilterNameEntity>();
     public virtual CategoryEntity? Parent { get; set; }
 }

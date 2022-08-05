@@ -13,6 +13,5 @@ public class FilterValueEntity : BaseEntity
 
     // navigation properties
     public virtual FilterNameEntity? FilterName { get; set; }
-    public virtual ICollection<CategoryEntity> Categories { get; set; } = new HashSet<CategoryEntity>();
     public virtual ICollection<ProductEntity> Products { get; set; } = new HashSet<ProductEntity>();
 }

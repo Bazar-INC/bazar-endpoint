@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Infrastructure.Migrations
 {
-    public partial class AddFilterEntities : Migration
+    public partial class AddFilters : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -22,12 +22,19 @@ namespace Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()"),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getutcdate()")
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UsrFilterNames", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UsrFilterNames_UsrCategories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "UsrCategories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -49,30 +56,6 @@ namespace Infrastructure.Migrations
                         column: x => x.FilterNameId,
                         principalTable: "UsrFilterNames",
                         principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "UsrCategoriesFilterValues",
-                columns: table => new
-                {
-                    CategoriesId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    FilterValuesId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UsrCategoriesFilterValues", x => new { x.CategoriesId, x.FilterValuesId });
-                    table.ForeignKey(
-                        name: "FK_UsrCategoriesFilterValues_UsrCategories_CategoriesId",
-                        column: x => x.CategoriesId,
-                        principalTable: "UsrCategories",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_UsrCategoriesFilterValues_UsrFilterValues_FilterValuesId",
-                        column: x => x.FilterValuesId,
-                        principalTable: "UsrFilterValues",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -100,9 +83,9 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_UsrCategoriesFilterValues_FilterValuesId",
-                table: "UsrCategoriesFilterValues",
-                column: "FilterValuesId");
+                name: "IX_UsrFilterNames_CategoryId",
+                table: "UsrFilterNames",
+                column: "CategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UsrFilterValues_FilterNameId",
@@ -117,9 +100,6 @@ namespace Infrastructure.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "UsrCategoriesFilterValues");
-
             migrationBuilder.DropTable(
                 name: "UsrProductsFilterValues");
 
