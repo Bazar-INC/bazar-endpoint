@@ -88,7 +88,8 @@ try
     builder.Services.AddCors(options =>
     {
         options.AddDefaultPolicy(policy => policy
-            .WithOrigins("http://localhost:3000")
+            .WithOrigins("http://localhost:3000",
+                         "https://rozetka-clone.herokuapp.com")
             .AllowAnyHeader()
             .AllowAnyMethod()
             .AllowCredentials()
@@ -100,12 +101,8 @@ try
 
     app.UseSeed();
 
-    // Configure the HTTP request pipeline.
-    if (app.Environment.IsDevelopment())
-    {
-        app.UseSwagger();
-        app.UseSwaggerUI();
-    }
+    app.UseSwagger();
+    app.UseSwaggerUI();
 
     app.UseCors();
 
