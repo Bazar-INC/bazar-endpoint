@@ -35,6 +35,7 @@ public class GetProductsHandler : IRequestHandler<GetProductsQuery, ProductsResp
     {
         var products = _unitOfWork.Products.Get()
             .Include(p => p.Category)
+            .Include(p => p.Images)
             .Include(p => p.FilterValues)
             .ThenInclude(f => f.FilterName)
             .AsQueryable();
