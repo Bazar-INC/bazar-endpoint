@@ -19,4 +19,10 @@ public class CategoriesController : BaseController
     {
         return Ok(await _mediator.Send(new GetCategoriesQuery()));
     }
+
+    [HttpGet("{code}")]
+    public async Task<IActionResult> GetCategoryAsync([FromRoute] string code)
+    {
+        return Ok(await _mediator.Send(new GetCategoryQuery(code)));
+    }
 }

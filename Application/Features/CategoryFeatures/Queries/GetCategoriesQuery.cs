@@ -23,7 +23,7 @@ public class GetCategoriesHandler : IRequestHandler<GetCategoriesQuery, Categori
     {
         return Task.FromResult(new CategoriesResponseDto
         { 
-            Categories = _mapper.Map<ICollection<CategoryDto>>(_unitOfWork.Categories.Get(null!, null!, "Children"))
+            Categories = _mapper.Map<ICollection<CategoryDto>>(_unitOfWork.Categories.Get(includeProperties: "Children"))
         });
     }
 }
