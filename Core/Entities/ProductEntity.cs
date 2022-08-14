@@ -14,4 +14,5 @@ public class ProductEntity : BaseEntity
     // navigation properties
     public virtual CategoryEntity? Category { get; set; }
     public virtual ICollection<FilterValueEntity> FilterValues { get; set; } = new HashSet<FilterValueEntity>();
+    public virtual ICollection<ImageEntity> Images { get; set; } = new HashSet<ImageEntity>();
 }

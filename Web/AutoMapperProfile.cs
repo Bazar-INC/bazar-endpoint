@@ -14,7 +14,7 @@ namespace Web
             CreateMap<AddCodeCommand, CodeEntity>().ForMember(dest => dest.PhoneNumber, act => act.MapFrom(src => src.Phone));
             CreateMap<UserEntity, UserDto>().ForMember(dest => dest.Name, act => act.MapFrom(src => src.PhoneNumber));
             CreateMap<CategoryEntity, CategoryDto>();
-            CreateMap<ProductEntity, ProductDto>();
+            CreateMap<ProductEntity, ProductDto>().ForMember(dest => dest.Images, act => act.MapFrom(src => src.Images.Select(i => i.Path)));
             CreateMap<FilterValueEntity, FilterValueDto>().ReverseMap();
             CreateMap<FilterNameEntity, FilterNameDto>().ReverseMap();
         }
