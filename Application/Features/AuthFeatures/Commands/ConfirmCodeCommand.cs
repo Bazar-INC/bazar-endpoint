@@ -1,5 +1,7 @@
-﻿using Application.Features.AuthFeatures.Dtos;
+﻿using Application.Features.AccountFeatures.Dtos;
+using Application.Features.AuthFeatures.Dtos;
 using Application.Features.AuthFeatures.Services;
+using AutoMapper;
 using Core.Entities;
 using FluentValidation;
 using Infrastructure.UnitOfWork.Abstract;
@@ -15,12 +17,14 @@ public record ConfirmCodeCommand(string Code, string Phone) : IRequest<ConfirmRe
 public class ConfirmCodeHandler : IRequestHandler<ConfirmCodeCommand, ConfirmResponseDto>
 {
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IMapper _mapper;
     private readonly UserManager<UserEntity> _userManager;
     private readonly JwtService _jwtService;
 
-    public ConfirmCodeHandler(IUnitOfWork unitOfWork, UserManager<UserEntity> userManager, JwtService jwtService)
+    public ConfirmCodeHandler(IUnitOfWork unitOfWork, IMapper mapper, UserManager<UserEntity> userManager, JwtService jwtService)
     {
         _unitOfWork = unitOfWork;
+        _mapper = mapper;
         _userManager = userManager;
         _jwtService = jwtService;
     }
@@ -70,7 +74,8 @@ public class ConfirmCodeHandler : IRequestHandler<ConfirmCodeCommand, ConfirmRes
             Token = _jwtService.GenerateToken(
             user.Id.ToString(),
             string.Join(", ", await _userManager.GetRolesAsync(user)),
-            AppSettings.JwtTokenLifetimes.DefaultExpirationTime)
+            AppSettings.JwtTokenLifetimes.DefaultExpirationTime),
+            Profile = _mapper.Map<UserDto>(user)
         };
     }
 
