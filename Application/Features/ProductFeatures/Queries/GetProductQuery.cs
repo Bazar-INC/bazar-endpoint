@@ -3,6 +3,7 @@ using Application.Features.ProductFeatures.Dtos;
 using AutoMapper;
 using Infrastructure.UnitOfWork.Abstract;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Shared.CommonExceptions;
 
 namespace Application.Features.ProductFeatures.Queries;
@@ -22,7 +23,8 @@ public class GetProductCommand : IRequestHandler<GetProductQuery, ProductDto>
 
     public async Task<ProductDto> Handle(GetProductQuery request, CancellationToken cancellationToken)
     {
-        var product = await _unitOfWork.Products.FindAsync(request.Id);
+        var product = await _unitOfWork.Products.Get(p => p.Id == request.Id, includeProperties: "Images").FirstOrDefaultAsync();
+
         if(product == null)
         {
             throw new BadRequestRestException("Product wasn`t found");
