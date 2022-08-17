@@ -23,11 +23,7 @@ public class GetUserHandler : IRequestHandler<GetUserQuery, UserDto>
     public async Task<UserDto> Handle(GetUserQuery request, CancellationToken cancellationToken)
     {
         var userEntity = await _userManager.FindByIdAsync(request.Id);
-
-        var userDto = _mapper.Map<UserDto>(userEntity);
-
-        userDto.Name = CountryCodes.Ukraine + userDto.Name;
-
-        return userDto;
+        
+        return _mapper.Map<UserDto>(userEntity);
     }
 }
