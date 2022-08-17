@@ -21,8 +21,14 @@ public class ProductsController : BaseController
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetProduct([FromRoute] Guid id)
+    public async Task<IActionResult> GetProductAsync([FromRoute] Guid id)
     {
         return Ok(await _mediator.Send(new GetProductQuery(id)));
+    }
+
+    [HttpGet("ids/")]
+    public async Task<IActionResult> GetProductsByIdsAsync([FromQuery] GetProductsByIdsQuery query)
+    {
+        return Ok(await _mediator.Send(query));
     }
 }
