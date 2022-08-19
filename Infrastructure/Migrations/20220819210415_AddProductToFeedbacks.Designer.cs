@@ -4,6 +4,7 @@ using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220819210415_AddProductToFeedbacks")]
+    partial class AddProductToFeedbacks
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -59,7 +61,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("ParentId");
 
-                    b.ToTable("UsrCategories", (string)null);
+                    b.ToTable("UsrCategories");
                 });
 
             modelBuilder.Entity("Core.Entities.CodeEntity", b =>
@@ -90,7 +92,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UsrCodes", (string)null);
+                    b.ToTable("UsrCodes");
                 });
 
             modelBuilder.Entity("Core.Entities.FeedbackAnswerEntity", b =>
@@ -129,7 +131,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("FeedbackAnswerEntity", (string)null);
+                    b.ToTable("FeedbackAnswerEntity");
                 });
 
             modelBuilder.Entity("Core.Entities.FeedbackEntity", b =>
@@ -163,7 +165,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("FeedbackEntity", (string)null);
+                    b.ToTable("FeedbackEntity");
                 });
 
             modelBuilder.Entity("Core.Entities.FilterNameEntity", b =>
@@ -195,7 +197,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("UsrFilterNames", (string)null);
+                    b.ToTable("UsrFilterNames");
                 });
 
             modelBuilder.Entity("Core.Entities.FilterValueEntity", b =>
@@ -227,7 +229,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("FilterNameId");
 
-                    b.ToTable("UsrFilterValues", (string)null);
+                    b.ToTable("UsrFilterValues");
                 });
 
             modelBuilder.Entity("Core.Entities.ImageEntity", b =>
@@ -259,7 +261,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("UsrImages", (string)null);
+                    b.ToTable("UsrImages");
                 });
 
             modelBuilder.Entity("Core.Entities.ProductEntity", b =>
@@ -295,7 +297,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("UsrProducts", (string)null);
+                    b.ToTable("UsrProducts");
                 });
 
             modelBuilder.Entity("Core.Entities.RoleEntity", b =>

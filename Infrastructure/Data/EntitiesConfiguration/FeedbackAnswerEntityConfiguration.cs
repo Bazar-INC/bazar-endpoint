@@ -13,5 +13,6 @@ internal class FeedbackAnswerEntityConfiguration : BaseEntityConfiguration<Feedb
         base.Configure(builder);
 
         builder.HasOne(f => f.Owner).WithMany(o => o.FeedbackAnswers);
+        builder.HasOne(f => f.Product).WithMany(p => p.FeedbackAnswers);
     }
 }
