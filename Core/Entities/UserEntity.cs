@@ -9,4 +9,7 @@ public class UserEntity : IdentityUser<Guid>, IEntity
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
     public string? Image { get; set; }
+
+    public virtual ICollection<FeedbackEntity> Feedbacks { get; set; } = new HashSet<FeedbackEntity>();
+    public virtual ICollection<FeedbackAnswerEntity> FeedbackAnswers { get; set; } = new HashSet<FeedbackAnswerEntity>();
 }
