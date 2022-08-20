@@ -14,8 +14,9 @@ public class UnitOfWork : IUnitOfWork, IDisposable
     public IRepository<CategoryEntity> Categories { get; }
     public IRepository<FilterNameEntity> FilterNames { get; }
     public IRepository<FeedbackEntity> Feedbacks { get; }
-
     public IRepository<FeedbackAnswerEntity> FeedbackAnswers { get; }
+    public IRepository<QuestionEntity> Questions { get; }
+    public IRepository<QuestionAnswerEntity> QuestionAnswers { get; }
 
     public UnitOfWork(ApplicationDbContext context)
     {
@@ -27,6 +28,8 @@ public class UnitOfWork : IUnitOfWork, IDisposable
         FilterNames = new Repository<FilterNameEntity>(_context);
         Feedbacks = new Repository<FeedbackEntity>(_context);
         FeedbackAnswers = new Repository<FeedbackAnswerEntity>(_context);
+        Questions = new Repository<QuestionEntity>(_context);
+        QuestionAnswers = new Repository<QuestionAnswerEntity>(_context);
     }
 
     public async Task<int> SaveChangesAsync()
