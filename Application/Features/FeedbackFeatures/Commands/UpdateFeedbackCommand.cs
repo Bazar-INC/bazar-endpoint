@@ -17,12 +17,10 @@ public record UpdateFeedbackCommand : IRequest
 public class UpdateFeedbackHandler : IRequestHandler<UpdateFeedbackCommand>
 {
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IMapper _mapper;
 
-    public UpdateFeedbackHandler(IUnitOfWork unitOfWork, IMapper mapper)
+    public UpdateFeedbackHandler(IUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
-        _mapper = mapper;
     }
 
     public async Task<Unit> Handle(UpdateFeedbackCommand request, CancellationToken cancellationToken)

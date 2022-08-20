@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Application.Features.FeedbackFeatures.Dtos;
+using AutoMapper;
 using Core.Entities;
 using FluentValidation;
 using Infrastructure.UnitOfWork.Abstract;
@@ -8,11 +9,9 @@ using Shared.CommonExceptions;
 
 namespace Application.Features.FeedbackFeatures.Commands;
 
-public record AddFeedbackAnswerCommand : IRequest
+public record AddFeedbackAnswerCommand : AddFeedbackAnswerRequest, IRequest
 {
-    public Guid FeedbackId { get; set; }
     public Guid OwnerId { get; set; }
-    public string? Text { get; set; }
 }
 
 public class AddFeedbackAnswerHandler : IRequestHandler<AddFeedbackAnswerCommand>

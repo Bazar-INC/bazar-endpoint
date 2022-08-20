@@ -34,6 +34,10 @@ namespace Web
                 .ForMember(dest => dest.CreatedAt, act => act.MapFrom(src => src.CreatedAt.ToString(Formats.CommentDateFormat)));
 
             CreateMap<AddFeedbackCommand, FeedbackEntity>();
+            CreateMap<AddFeedbackRequest, AddFeedbackCommand>();
+
+            CreateMap<AddFeedbackAnswerRequest, AddFeedbackAnswerCommand>();
+
         }
     }
 }

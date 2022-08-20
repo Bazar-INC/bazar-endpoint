@@ -1,4 +1,5 @@
 ﻿
+using Application.Features.FeedbackFeatures.Dtos;
 using AutoMapper;
 using Core.Entities;
 using FluentValidation;
@@ -10,12 +11,9 @@ using static Shared.AppSettings;
 
 namespace Application.Features.FeedbackFeatures.Commands;
 
-public record AddFeedbackCommand : IRequest
+public record AddFeedbackCommand : AddFeedbackRequest, IRequest
 {
-    public string? Text { get; set; }
-    public int Stars { get; set; }
     public Guid OwnerId { get; set; }
-    public Guid ProductId { get; set; }
 }
 
 public class AddFeedbackHandler : IRequestHandler<AddFeedbackCommand>
