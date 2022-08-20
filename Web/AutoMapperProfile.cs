@@ -38,6 +38,9 @@ namespace Web
 
             CreateMap<AddFeedbackAnswerRequest, AddFeedbackAnswerCommand>();
 
+            CreateMap<UpdateFeedbackRequest, UpdateFeedbackCommand>();
+            CreateMap<UpdateFeedbackAnswerRequest, UpdateFeedbackAnswerCommand>();
+
         }
     }
 }

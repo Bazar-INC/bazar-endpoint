@@ -1,5 +1,5 @@
 ﻿
-using AutoMapper;
+using Application.Features.FeedbackFeatures.Dtos;
 using FluentValidation;
 using Infrastructure.UnitOfWork.Abstract;
 using MediatR;
@@ -7,11 +7,9 @@ using Shared.CommonExceptions;
 using static Shared.AppSettings;
 
 namespace Application.Features.FeedbackFeatures.Commands;
-public record UpdateFeedbackCommand : IRequest
+public record UpdateFeedbackCommand : UpdateFeedbackRequest, IRequest
 {
-    public Guid FeedbackId { get; set; }
-    public string? Text { get; set; }
-    public int Stars { get; set; }
+    public Guid OwnerId { get; set; }
 }
 
 public class UpdateFeedbackHandler : IRequestHandler<UpdateFeedbackCommand>
@@ -30,6 +28,11 @@ public class UpdateFeedbackHandler : IRequestHandler<UpdateFeedbackCommand>
         if(feedback == null)
         {
             throw new BadRequestRestException($"Feedback with id {request.FeedbackId} wasn`t found.");
+        }
+
+        if(feedback.OwnerId != request.OwnerId)
+        {
+            throw new BadRequestRestException($"You don`t have permission to edit the feedback because the other user have created it.");
         }
 
         feedback.Stars = request.Stars;

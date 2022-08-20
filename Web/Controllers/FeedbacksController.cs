@@ -52,15 +52,25 @@ public class FeedbacksController : BaseController
 
     [Authorize]
     [HttpPatch("edit-feedback/")]
-    public async Task<IActionResult> EditFeedbackAsync([FromBody] UpdateFeedbackCommand command)
+    public async Task<IActionResult> EditFeedbackAsync([FromBody] UpdateFeedbackRequest request)
     {
+        var userId = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == "id")!.Value!);
+
+        var command = _mapper.Map<UpdateFeedbackCommand>(request);
+        command.OwnerId = userId;
+
         return Ok(await _mediator.Send(command));
     }
 
     [Authorize]
     [HttpPatch("edit-feedback-answer/")]
-    public async Task<IActionResult> EditFeedbackAnswerAsync([FromBody] UpdateFeedbackAnswerCommand command)
+    public async Task<IActionResult> EditFeedbackAnswerAsync([FromBody] UpdateFeedbackAnswerRequest request)
     {
+        var userId = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == "id")!.Value!);
+
+        var command = _mapper.Map<UpdateFeedbackAnswerCommand>(request);
+        command.OwnerId = userId;
+
         return Ok(await _mediator.Send(command));
     }
 }

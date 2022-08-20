@@ -1,16 +1,15 @@
 ﻿
-using AutoMapper;
+using Application.Features.FeedbackFeatures.Dtos;
 using FluentValidation;
 using Infrastructure.UnitOfWork.Abstract;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Shared.CommonExceptions;
-using static Shared.AppSettings;
 
 namespace Application.Features.FeedbackFeatures.Commands;
-public record UpdateFeedbackAnswerCommand : IRequest
+public record UpdateFeedbackAnswerCommand : UpdateFeedbackAnswerRequest, IRequest
 {
-    public Guid FeedbackAnswerId { get; set; }
-    public string? Text { get; set; }
+    public Guid OwnerId { get; set; }
 }
 
 public class UpdateFeedbackAnswerHandler : IRequestHandler<UpdateFeedbackAnswerCommand>
@@ -25,11 +24,17 @@ public class UpdateFeedbackAnswerHandler : IRequestHandler<UpdateFeedbackAnswerC
     public async Task<Unit> Handle(UpdateFeedbackAnswerCommand request, CancellationToken cancellationToken)
     {
         var feedbackAnswerId = request.FeedbackAnswerId;
-        var feedbackAnswer = await _unitOfWork.FeedbackAnswers.FindAsync(feedbackAnswerId);
+        var feedbackAnswer = await _unitOfWork.FeedbackAnswers.Get(f => f.Id == feedbackAnswerId)
+            .Include(f => f.Owner).FirstOrDefaultAsync();
 
         if (feedbackAnswer == null)
         {
             throw new BadRequestRestException($"Feedback with id {feedbackAnswerId} wasn`t found.");
+        }
+
+        if(feedbackAnswer.Owner!.Id != request.OwnerId)
+        {
+            throw new BadRequestRestException($"You don`t have permission to edit the feedback answer because the other user have created it.");
         }
 
         feedbackAnswer.Text = request.Text;
