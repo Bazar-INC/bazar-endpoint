@@ -52,6 +52,8 @@ namespace Web
             CreateMap<AddQuestionCommand, QuestionEntity>();
             CreateMap<AddQuestionRequest, AddQuestionCommand>();
 
+            CreateMap<UpdateQuestionRequest, UpdateQuestionCommand>();
+
         }
     }
 }
