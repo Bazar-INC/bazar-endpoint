@@ -59,9 +59,11 @@ namespace Web
             CreateMap<AddQuestionCommand, QuestionEntity>();
             CreateMap<AddQuestionRequest, AddQuestionCommand>();
 
-            CreateMap<UpdateQuestionRequest, UpdateQuestionCommand>();
-
             CreateMap<AddQuestionAnswerRequest, AddQuestionAnswerCommand>();
+
+            CreateMap<UpdateQuestionRequest, UpdateQuestionCommand>();
+            CreateMap<UpdateQuestionAnswerRequest, UpdateQuestionAnswerCommand>();
+
         }
     }
 }

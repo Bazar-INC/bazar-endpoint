@@ -61,4 +61,16 @@ public class QuestionsController : BaseController
 
         return Ok(await _mediator.Send(command));
     }
+
+    [Authorize]
+    [HttpPatch("edit-question-answer/")]
+    public async Task<IActionResult> EditQuestionAnswerAsync([FromBody] UpdateQuestionAnswerRequest request)
+    {
+        var userId = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == "id")!.Value!);
+
+        var command = _mapper.Map<UpdateQuestionAnswerCommand>(request);
+        command.OwnerId = userId;
+
+        return Ok(await _mediator.Send(command));
+    }
 }
