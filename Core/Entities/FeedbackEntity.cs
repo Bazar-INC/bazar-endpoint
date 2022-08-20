@@ -9,6 +9,7 @@ public class FeedbackEntity : BaseEntity
     // properties
     public string? Text { get; set; }
     public int Stars { get; set; }
+    public bool IsEdited { get; set; }
 
     // foreign keys
     public Guid OwnerId { get; set; }

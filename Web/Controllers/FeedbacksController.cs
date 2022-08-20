@@ -27,4 +27,9 @@ public class FeedbacksController : BaseController
         return Ok(await _mediator.Send(command));
     }
 
+    [HttpPatch("edit-feedback/")]
+    public async Task<IActionResult> EditFeedbackAsync([FromBody] UpdateFeedbackCommand command)
+    {
+        return Ok(await _mediator.Send(command));
+    }
 }
