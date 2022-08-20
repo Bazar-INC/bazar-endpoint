@@ -49,6 +49,13 @@ namespace Web
 
             /*                          Questions                           */
 
+            CreateMap<QuestionEntity, QuestionResponseDto>()
+                .ForMember(dest => dest.Answers, act => act.MapFrom(src => src.Answers.OrderBy(a => a.CreatedAt)))
+                .ForMember(dest => dest.CreatedAt, act => act.MapFrom(src => src.CreatedAt.ToString(Formats.CommentDateFormat)));
+
+            CreateMap<QuestionAnswerEntity, QuestionAnswerResponseDto>()
+                .ForMember(dest => dest.CreatedAt, act => act.MapFrom(src => src.CreatedAt.ToString(Formats.CommentDateFormat)));
+
             CreateMap<AddQuestionCommand, QuestionEntity>();
             CreateMap<AddQuestionRequest, AddQuestionCommand>();
 

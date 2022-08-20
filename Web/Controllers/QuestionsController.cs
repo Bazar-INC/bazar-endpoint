@@ -1,5 +1,6 @@
 ﻿using Application.Features.QuestionFeatures.Commands;
 using Application.Features.QuestionFeatures.Dtos;
+using Application.Features.QuestionFeatures.Queries;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -17,6 +18,12 @@ public class QuestionsController : BaseController
     {
         _mediator = mediator;
         _mapper = mapper;
+    }
+
+    [HttpGet("{productId}")]
+    public async Task<IActionResult> GetQuestionsByProductAsync([FromRoute] Guid productId)
+    {
+        return Ok(await _mediator.Send(new GetQuestionsByProductQuery(productId)));
     }
 
     [Authorize]
