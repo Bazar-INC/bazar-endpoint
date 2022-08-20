@@ -61,6 +61,7 @@ namespace Web
 
             CreateMap<UpdateQuestionRequest, UpdateQuestionCommand>();
 
+            CreateMap<AddQuestionAnswerRequest, AddQuestionAnswerCommand>();
         }
     }
 }

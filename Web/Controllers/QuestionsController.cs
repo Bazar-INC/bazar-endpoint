@@ -39,6 +39,18 @@ public class QuestionsController : BaseController
     }
 
     [Authorize]
+    [HttpPost("add-question-answer/")]
+    public async Task<IActionResult> AddQuestionAnswerAsync([FromBody] AddQuestionAnswerRequest request)
+    {
+        var userId = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == "id")!.Value!);
+
+        var command = _mapper.Map<AddQuestionAnswerCommand>(request);
+        command.OwnerId = userId;
+
+        return Ok(await _mediator.Send(command));
+    }
+
+    [Authorize]
     [HttpPatch("edit-question/")]
     public async Task<IActionResult> EditQuestionAsync([FromBody] UpdateQuestionRequest request)
     {
