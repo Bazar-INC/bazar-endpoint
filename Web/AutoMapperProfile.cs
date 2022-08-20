@@ -5,6 +5,8 @@ using Application.Features.CategoryFeatures.Dtos;
 using Application.Features.FeedbackFeatures.Commands;
 using Application.Features.FeedbackFeatures.Dtos;
 using Application.Features.ProductFeatures.Dtos;
+using Application.Features.QuestionFeatures.Commands;
+using Application.Features.QuestionFeatures.Dtos;
 using AutoMapper;
 using Core.Entities;
 using static Shared.AppSettings;
@@ -23,8 +25,12 @@ namespace Web
                 .ForMember(dest => dest.Images, act => act.MapFrom(src => src.Images.Select(i => i.Path)))
                 .ForMember(dest => dest.CategoryName, act => act.MapFrom(src => src.Category!.Name));
 
+            /*                          Filters                             */
+
             CreateMap<FilterValueEntity, FilterValueDto>().ReverseMap();
             CreateMap<FilterNameEntity, FilterNameDto>().ReverseMap();
+
+            /*                          Feedbacks                           */
 
             CreateMap<FeedbackEntity, FeedbackResponseDto>()
                 .ForMember(dest => dest.Answers, act => act.MapFrom(src => src.Answers.OrderBy(a => a.CreatedAt)))
@@ -40,6 +46,11 @@ namespace Web
 
             CreateMap<UpdateFeedbackRequest, UpdateFeedbackCommand>();
             CreateMap<UpdateFeedbackAnswerRequest, UpdateFeedbackAnswerCommand>();
+
+            /*                          Questions                           */
+
+            CreateMap<AddQuestionCommand, QuestionEntity>();
+            CreateMap<AddQuestionRequest, AddQuestionCommand>();
 
         }
     }
