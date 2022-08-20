@@ -10,5 +10,6 @@ public interface IUnitOfWork
     IRepository<CategoryEntity> Categories { get; }
     IRepository<FilterNameEntity> FilterNames { get; }
     IRepository<FeedbackEntity> Feedbacks { get; }
+    IRepository<FeedbackAnswerEntity> FeedbackAnswers { get; }
     Task<int> SaveChangesAsync();
 }

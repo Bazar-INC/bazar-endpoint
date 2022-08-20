@@ -15,6 +15,8 @@ public class UnitOfWork : IUnitOfWork, IDisposable
     public IRepository<FilterNameEntity> FilterNames { get; }
     public IRepository<FeedbackEntity> Feedbacks { get; }
 
+    public IRepository<FeedbackAnswerEntity> FeedbackAnswers { get; }
+
     public UnitOfWork(ApplicationDbContext context)
     {
         _context = context;
@@ -24,6 +26,7 @@ public class UnitOfWork : IUnitOfWork, IDisposable
         Categories = new Repository<CategoryEntity>(_context);
         FilterNames = new Repository<FilterNameEntity>(_context);
         Feedbacks = new Repository<FeedbackEntity>(_context);
+        FeedbackAnswers = new Repository<FeedbackAnswerEntity>(_context);
     }
 
     public async Task<int> SaveChangesAsync()

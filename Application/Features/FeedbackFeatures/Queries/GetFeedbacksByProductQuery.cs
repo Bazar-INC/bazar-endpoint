@@ -3,7 +3,7 @@ using Application.Features.FeedbackFeatures.Dtos;
 using AutoMapper;
 using Infrastructure.UnitOfWork.Abstract;
 using MediatR;
-using Shared.CommonExceptions;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Features.FeedbackFeatures.Queries;
 
@@ -22,7 +22,10 @@ public class GetFeedbackByProductHandler : IRequestHandler<GetFeedbacksByProduct
 
     public async Task<GetFeedbackByProductResponse> Handle(GetFeedbacksByProductQuery request, CancellationToken cancellationToken)
     {
-        var feedbacks = _unitOfWork.Feedbacks.Get(f => f.Product!.Id == request.ProductId, includeProperties: "Answers,Owner");
+        var feedbacks = _unitOfWork.Feedbacks.Get(f => f.Product!.Id == request.ProductId)
+            .Include(f => f.Owner)
+            .Include(e => e.Answers)
+            .ThenInclude(e => e.Owner);
 
         return await Task.FromResult(new GetFeedbackByProductResponse()
         {

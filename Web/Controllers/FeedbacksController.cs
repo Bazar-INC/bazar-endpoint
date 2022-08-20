@@ -22,7 +22,13 @@ public class FeedbacksController : BaseController
     }
 
     [HttpPost("add-feedback/")]
-    public async Task<IActionResult> AddFeedback([FromBody] AddFeedbackCommand command)
+    public async Task<IActionResult> AddFeedbackAsync([FromBody] AddFeedbackCommand command)
+    {
+        return Ok(await _mediator.Send(command));
+    }
+
+    [HttpPost("add-feedback-answer/")]
+    public async Task<IActionResult> AddFeedbackAnswerAsync([FromBody] AddFeedbackAnswerCommand command)
     {
         return Ok(await _mediator.Send(command));
     }
