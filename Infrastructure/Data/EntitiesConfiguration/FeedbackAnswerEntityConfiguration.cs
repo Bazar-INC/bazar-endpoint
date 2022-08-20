@@ -1,6 +1,5 @@
 ﻿
 using Core.Entities;
-using Core.Entities.Abstract;
 using Infrastructure.Data.EntitiesConfiguration.Abstract;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -12,7 +11,6 @@ internal class FeedbackAnswerEntityConfiguration : BaseEntityConfiguration<Feedb
     {
         base.Configure(builder);
 
-        builder.HasOne(f => f.Owner).WithMany(o => o.FeedbackAnswers);
-        builder.HasOne(f => f.Product).WithMany(p => p.FeedbackAnswers);
+        builder.HasOne(f => f.Owner).WithMany(o => o.FeedbackAnswers).IsRequired();
     }
 }

@@ -72,4 +72,9 @@ public class AppSettings
     {
         public const string Ukraine = "380";
     }
+
+    public static class Formats
+    {
+        public const string CommentDateFormat = "dd.MM.yyyy";
+    }
 }

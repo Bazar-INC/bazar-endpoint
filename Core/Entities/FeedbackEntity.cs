@@ -1,7 +1,9 @@
 ﻿using Core.Entities.Abstract;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Core.Entities;
 
+[Table("UsrFeedbacks")]
 public class FeedbackEntity : BaseEntity
 {
     public string? Text { get; set; }
