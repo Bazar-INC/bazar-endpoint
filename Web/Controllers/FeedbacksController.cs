@@ -1,4 +1,5 @@
-﻿using Application.Features.FeedbackFeatures.Queries;
+﻿using Application.Features.FeedbackFeatures.Commands;
+using Application.Features.FeedbackFeatures.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Web.Controllers.Abstract;
@@ -19,4 +20,11 @@ public class FeedbacksController : BaseController
     {
         return Ok(await _mediator.Send(new GetFeedbacksByProductQuery(productId)));
     }
+
+    [HttpPost("add-feedback/")]
+    public async Task<IActionResult> AddFeedback([FromBody] AddFeedbackCommand command)
+    {
+        return Ok(await _mediator.Send(command));
+    }
+
 }

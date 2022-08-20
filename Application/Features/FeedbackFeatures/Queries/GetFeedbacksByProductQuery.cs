@@ -26,7 +26,7 @@ public class GetFeedbackByProductHandler : IRequestHandler<GetFeedbacksByProduct
 
         return await Task.FromResult(new GetFeedbackByProductResponse()
         {
-            Feedbacks = _mapper.Map<ICollection<FeedbackDto>>(feedbacks)
+            Feedbacks = _mapper.Map<ICollection<FeedbackResponseDto>>(feedbacks)
         });
     }
 }

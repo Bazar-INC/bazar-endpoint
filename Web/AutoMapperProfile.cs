@@ -2,6 +2,7 @@
 using Application.Features.AuthFeatures.Commands;
 using Application.Features.AuthFeatures.Dtos;
 using Application.Features.CategoryFeatures.Dtos;
+using Application.Features.FeedbackFeatures.Commands;
 using Application.Features.FeedbackFeatures.Dtos;
 using Application.Features.ProductFeatures.Dtos;
 using AutoMapper;
@@ -25,10 +26,14 @@ namespace Web
             CreateMap<FilterValueEntity, FilterValueDto>().ReverseMap();
             CreateMap<FilterNameEntity, FilterNameDto>().ReverseMap();
 
-            CreateMap<FeedbackEntity, FeedbackDto>()
+            CreateMap<FeedbackEntity, FeedbackResponseDto>()
                 .ForMember(dest => dest.Answers, act => act.MapFrom(src => src.Answers.OrderBy(a => a.CreatedAt)))
                 .ForMember(dest => dest.CreatedAt, act => act.MapFrom(src => src.CreatedAt.ToString(Formats.CommentDateFormat)));
-            CreateMap<FeedbackAnswerEntity, FeedbackAnswerDto>();
+
+            CreateMap<FeedbackAnswerEntity, FeedbackAnswerResponseDto>()
+                .ForMember(dest => dest.CreatedAt, act => act.MapFrom(src => src.CreatedAt.ToString(Formats.CommentDateFormat)));
+
+            CreateMap<AddFeedbackCommand, FeedbackEntity>();
         }
     }
 }
