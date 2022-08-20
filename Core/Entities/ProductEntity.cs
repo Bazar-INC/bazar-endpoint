@@ -17,4 +17,6 @@ public class ProductEntity : BaseEntity
     public virtual ICollection<ImageEntity> Images { get; set; } = new HashSet<ImageEntity>();
     public virtual ICollection<FeedbackEntity> Feedbacks { get; set; } = new HashSet<FeedbackEntity>();
     public virtual ICollection<FeedbackAnswerEntity> FeedbackAnswers { get; set; } = new HashSet<FeedbackAnswerEntity>();
+    public virtual ICollection<QuestionEntity> Questions { get; set; } = new HashSet<QuestionEntity>();
+    public virtual ICollection<QuestionAnswerEntity> QuestionAnswers { get; set; } = new HashSet<QuestionAnswerEntity>();
 }
