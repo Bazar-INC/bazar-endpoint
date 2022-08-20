@@ -89,6 +89,7 @@ try
     {
         options.AddDefaultPolicy(policy => policy
             .WithOrigins("http://localhost:3000",
+                         "http://rozetka-clone.herokuapp.com",
                          "https://rozetka-clone.herokuapp.com")
             .AllowAnyHeader()
             .AllowAnyMethod()

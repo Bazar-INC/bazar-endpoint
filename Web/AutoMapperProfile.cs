@@ -2,6 +2,8 @@
 using Application.Features.AuthFeatures.Commands;
 using Application.Features.AuthFeatures.Dtos;
 using Application.Features.CategoryFeatures.Dtos;
+using Application.Features.FeedbackFeatures.Commands;
+using Application.Features.FeedbackFeatures.Dtos;
 using Application.Features.ProductFeatures.Dtos;
 using AutoMapper;
 using Core.Entities;
@@ -20,8 +22,25 @@ namespace Web
             CreateMap<ProductEntity, ProductDto>()
                 .ForMember(dest => dest.Images, act => act.MapFrom(src => src.Images.Select(i => i.Path)))
                 .ForMember(dest => dest.CategoryName, act => act.MapFrom(src => src.Category!.Name));
+
             CreateMap<FilterValueEntity, FilterValueDto>().ReverseMap();
             CreateMap<FilterNameEntity, FilterNameDto>().ReverseMap();
+
+            CreateMap<FeedbackEntity, FeedbackResponseDto>()
+                .ForMember(dest => dest.Answers, act => act.MapFrom(src => src.Answers.OrderBy(a => a.CreatedAt)))
+                .ForMember(dest => dest.CreatedAt, act => act.MapFrom(src => src.CreatedAt.ToString(Formats.CommentDateFormat)));
+
+            CreateMap<FeedbackAnswerEntity, FeedbackAnswerResponseDto>()
+                .ForMember(dest => dest.CreatedAt, act => act.MapFrom(src => src.CreatedAt.ToString(Formats.CommentDateFormat)));
+
+            CreateMap<AddFeedbackCommand, FeedbackEntity>();
+            CreateMap<AddFeedbackRequest, AddFeedbackCommand>();
+
+            CreateMap<AddFeedbackAnswerRequest, AddFeedbackAnswerCommand>();
+
+            CreateMap<UpdateFeedbackRequest, UpdateFeedbackCommand>();
+            CreateMap<UpdateFeedbackAnswerRequest, UpdateFeedbackAnswerCommand>();
+
         }
     }
 }

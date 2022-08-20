@@ -4,6 +4,7 @@ using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220819205701_AddFeedbackEntities")]
+    partial class AddFeedbackEntities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -107,13 +109,7 @@ namespace Infrastructure.Migrations
                     b.Property<Guid?>("FeedbackId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool>("IsEdited")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid>("OwnerId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("ProductEntityId")
+                    b.Property<Guid?>("OwnerId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Text")
@@ -130,9 +126,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("OwnerId");
 
-                    b.HasIndex("ProductEntityId");
-
-                    b.ToTable("UsrFeedbackAnswers");
+                    b.ToTable("FeedbackAnswerEntity");
                 });
 
             modelBuilder.Entity("Core.Entities.FeedbackEntity", b =>
@@ -146,17 +140,8 @@ namespace Infrastructure.Migrations
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getutcdate()");
 
-                    b.Property<bool>("IsEdited")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid>("OwnerId")
+                    b.Property<Guid?>("OwnerId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ProductId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Stars")
-                        .HasColumnType("int");
 
                     b.Property<string>("Text")
                         .HasColumnType("nvarchar(max)");
@@ -170,9 +155,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("OwnerId");
 
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("UsrFeedbacks");
+                    b.ToTable("FeedbackEntity");
                 });
 
             modelBuilder.Entity("Core.Entities.FilterNameEntity", b =>
@@ -559,13 +542,7 @@ namespace Infrastructure.Migrations
 
                     b.HasOne("Core.Entities.UserEntity", "Owner")
                         .WithMany("FeedbackAnswers")
-                        .HasForeignKey("OwnerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Core.Entities.ProductEntity", null)
-                        .WithMany("FeedbackAnswers")
-                        .HasForeignKey("ProductEntityId");
+                        .HasForeignKey("OwnerId");
 
                     b.Navigation("Feedback");
 
@@ -576,19 +553,9 @@ namespace Infrastructure.Migrations
                 {
                     b.HasOne("Core.Entities.UserEntity", "Owner")
                         .WithMany("Feedbacks")
-                        .HasForeignKey("OwnerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Core.Entities.ProductEntity", "Product")
-                        .WithMany("Feedbacks")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("OwnerId");
 
                     b.Navigation("Owner");
-
-                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Core.Entities.FilterNameEntity", b =>
@@ -718,10 +685,6 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Core.Entities.ProductEntity", b =>
                 {
-                    b.Navigation("FeedbackAnswers");
-
-                    b.Navigation("Feedbacks");
-
                     b.Navigation("Images");
                 });
 

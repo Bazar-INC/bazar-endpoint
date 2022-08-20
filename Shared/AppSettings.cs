@@ -60,16 +60,29 @@ public class AppSettings
         public const string NLogConfigPath = "Logging/nlog.config";
         /// <summary>
         /// default pagination items count per page
-        /// /// </summary>
+        /// </summary>
         public const int DefaultPerPage = 12;
         /// <summary>
         /// default pagination page
-        /// /// </summary>
+        /// </summary>
         public const int DefaultPage = 1;
+        /// <summary>
+        /// min count of stars for feedback
+        /// </summary>
+        public const int MinStarsCount = 1;
+        /// <summary>
+        /// max count of stars for feedback
+        /// </summary>
+        public const int MaxStarsCount = 5;
     }
 
     public static class CountryCodes
     {
         public const string Ukraine = "380";
+    }
+
+    public static class Formats
+    {
+        public const string CommentDateFormat = "dd.MM.yyyy";
     }
 }
