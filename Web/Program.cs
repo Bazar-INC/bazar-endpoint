@@ -114,6 +114,8 @@ try
     app.UseAuthentication();
     app.UseAuthorization();
 
+    app.UseCdn();
+
     app.MapControllers();
 
     app.Run();
