@@ -18,8 +18,11 @@ public class AutoMapperProfile : Profile
     public AutoMapperProfile()
     {
         CreateMap<AddCodeCommand, CodeEntity>().ForMember(dest => dest.PhoneNumber, act => act.MapFrom(src => src.Phone));
+
         CreateMap<UserEntity, UserDto>()
-            .ForMember(dest => dest.Name, act => act.MapFrom(src => CountryCodes.Ukraine + src.PhoneNumber));
+            .ForMember(dest => dest.Name, act => act.MapFrom(src => CountryCodes.Ukraine + src.PhoneNumber))
+            .ForMember(dest => dest.Image, act => act.MapFrom(src => Path.GetFileName(src.Image)));
+
         CreateMap<CategoryEntity, CategoryDto>().ForMember(dest => dest.ParentCode, act => act.MapFrom(src => src.Parent == null ? null : src.Parent.Code));
         CreateMap<ProductEntity, ProductDto>()
             .ForMember(dest => dest.Images, act => act.MapFrom(src => src.Images.Select(i => i.Path)))

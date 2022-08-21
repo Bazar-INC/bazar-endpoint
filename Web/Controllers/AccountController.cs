@@ -40,4 +40,12 @@ public class AccountController : BaseController
 
         return Ok(await _mediator.Send(command));
     }
+
+    [HttpPatch("avatar/delete/")]
+    public async Task<IActionResult> DeleteAvatarAsync()
+    {
+        var userId = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == "id")!.Value!);
+
+        return Ok(await _mediator.Send(new DeleteAvatarCommand(userId)));
+    }
 }

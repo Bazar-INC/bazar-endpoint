@@ -98,7 +98,7 @@ public class FileStorageService : IFileStorageService
 
         File.WriteAllBytes(filePath, Convert.FromBase64String(base64file));
 
-        return fileName;
+        return filePath;
     }
     #endregion
 }

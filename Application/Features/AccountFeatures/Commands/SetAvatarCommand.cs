@@ -35,6 +35,11 @@ public class SetAvatarHandler : IRequestHandler<SetAvatarCommand>
             throw new BadRequestRestException($"User with id {userId} wasn`t found");
         }
 
+        if(!string.IsNullOrEmpty(user.Image))
+        {
+            _fileStorageService.DeleteFile(user.Image);
+        }
+
         var actualPath = _fileStorageService.SaveUserAvatar(request.Avatar!, request.FileName!, userId);
 
         user.Image = actualPath;
