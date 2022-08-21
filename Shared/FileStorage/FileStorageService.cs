@@ -1,11 +1,12 @@
 ﻿
 using Shared.FileStorage.Abstract;
-using System.Reflection;
+using static Shared.AppSettings;
 
 namespace Shared.FileStorage;
 
 public class FileStorageService : IFileStorageService
 {
+    #region Public
     public void DeleteFile(string path)
     {
         if (File.Exists(path))
@@ -16,12 +17,12 @@ public class FileStorageService : IFileStorageService
 
     public string SaveCategoryIcon(string base64file, string oldFileName, Guid itemId)
     {
-        return saveItemWithCdnSubfolder(base64file, oldFileName, itemId, @"Categories\Icons\");
+        return saveItemWithCdnSubfolder(base64file, oldFileName, itemId, CdnPaths.CategoryIcons);
     }
 
     public string SaveCategoryImage(string base64file, string oldFileName, Guid itemId)
     {
-        return saveItemWithCdnSubfolder(base64file, oldFileName, itemId, @"Categories\Images\");
+        return saveItemWithCdnSubfolder(base64file, oldFileName, itemId, CdnPaths.CategoryImages);
     }
 
     public string SaveFile(string base64file, string oldFileName, Guid itemId)
@@ -31,14 +32,16 @@ public class FileStorageService : IFileStorageService
 
     public string SaveProductImage(string base64file, string oldFileName, Guid itemId)
     {
-        return saveItemWithCdnSubfolder(base64file, oldFileName, itemId, @"Products\Images\");
+        return saveItemWithCdnSubfolder(base64file, oldFileName, itemId, CdnPaths.ProductImages);
     }
+    #endregion
 
+    #region Private
     private string generateCdnPath()
     {
         string workingDirectory = Environment.CurrentDirectory;
 
-        string cdnDirectory = @"Cdn\";
+        string cdnDirectory = CdnPaths.CdnDirectory;
 
         string cdnPath = Path.Combine(workingDirectory, cdnDirectory);
 
@@ -92,4 +95,5 @@ public class FileStorageService : IFileStorageService
 
         return filePath;
     }
+    #endregion
 }
