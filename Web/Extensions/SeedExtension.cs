@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Shared;
 
-namespace Web;
+namespace Web.Extensions;
 
 public static partial class WebApplicationExtensions
 {
@@ -44,7 +44,7 @@ public static partial class WebApplicationExtensions
 
             var isRoleExist = await roleManager.RoleExistsAsync(role.Name);
 
-            if(!isRoleExist)
+            if (!isRoleExist)
             {
                 await roleManager.CreateAsync(role);
             }
