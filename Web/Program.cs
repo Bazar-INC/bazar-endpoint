@@ -13,6 +13,8 @@ using Microsoft.OpenApi.Models;
 using NLog;
 using NLog.Web;
 using Shared;
+using Shared.FileStorage;
+using Shared.FileStorage.Abstract;
 using Web;
 using Web.Extensions;
 using Web.Middlewares.ErrorsHandlingMiddleware;
@@ -41,6 +43,8 @@ try
 
     builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
     builder.Services.AddScoped<JwtService>();
+
+    builder.Services.AddTransient<IFileStorageService, FileStorageService>();
 
     builder.Services.AddMediatR(typeof(MediatrAssemblyReference).Assembly);
 

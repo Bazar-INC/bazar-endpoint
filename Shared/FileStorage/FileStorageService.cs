@@ -15,6 +15,11 @@ public class FileStorageService : IFileStorageService
         }
     }
 
+    public string SaveUserAvatar(string base64file, string oldFileName, Guid itemId)
+    {
+        return saveItemWithCdnSubfolder(base64file, oldFileName, itemId, CdnPaths.UsersAvatars);
+    }
+
     public string SaveCategoryIcon(string base64file, string oldFileName, Guid itemId)
     {
         return saveItemWithCdnSubfolder(base64file, oldFileName, itemId, CdnPaths.CategoryIcons);
@@ -93,7 +98,7 @@ public class FileStorageService : IFileStorageService
 
         File.WriteAllBytes(filePath, Convert.FromBase64String(base64file));
 
-        return filePath;
+        return fileName;
     }
     #endregion
 }
