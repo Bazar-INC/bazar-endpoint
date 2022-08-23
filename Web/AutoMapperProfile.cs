@@ -4,6 +4,7 @@ using Application.Features.AuthFeatures.Commands;
 using Application.Features.CategoryFeatures.Dtos;
 using Application.Features.FeedbackFeatures.Commands;
 using Application.Features.FeedbackFeatures.Dtos;
+using Application.Features.ProductFeatures.Commands;
 using Application.Features.ProductFeatures.Dtos;
 using Application.Features.QuestionFeatures.Commands;
 using Application.Features.QuestionFeatures.Dtos;
@@ -17,24 +18,30 @@ public class AutoMapperProfile : Profile
 {
     public AutoMapperProfile()
     {
+        /*                          Codes                             */
         CreateMap<AddCodeCommand, CodeEntity>().ForMember(dest => dest.PhoneNumber, act => act.MapFrom(src => src.Phone));
 
+        /*                          Users                             */
         CreateMap<UserEntity, UserDto>()
             .ForMember(dest => dest.Name, act => act.MapFrom(src => CountryCodes.Ukraine + src.PhoneNumber))
             .ForMember(dest => dest.Image, act => act.MapFrom(src => Path.GetFileName(src.Image)));
+        CreateMap<SetAvatarRequest, SetAvatarCommand>();
 
+        /*                          Categories                             */
         CreateMap<CategoryEntity, CategoryDto>().ForMember(dest => dest.ParentCode, act => act.MapFrom(src => src.Parent == null ? null : src.Parent.Code));
+
+        /*                          Products                             */
+        CreateMap<AddProductCommand, ProductEntity>();
+        
         CreateMap<ProductEntity, ProductDto>()
             .ForMember(dest => dest.Images, act => act.MapFrom(src => src.Images.Select(i => i.Path)))
             .ForMember(dest => dest.CategoryName, act => act.MapFrom(src => src.Category!.Name));
 
         /*                          Filters                             */
-
         CreateMap<FilterValueEntity, FilterValueDto>().ReverseMap();
         CreateMap<FilterNameEntity, FilterNameDto>().ReverseMap();
 
         /*                          Feedbacks                           */
-
         CreateMap<FeedbackEntity, FeedbackResponseDto>()
             .ForMember(dest => dest.Answers, act => act.MapFrom(src => src.Answers.OrderBy(a => a.CreatedAt)))
             .ForMember(dest => dest.CreatedAt, act => act.MapFrom(src => src.CreatedAt.ToString(Formats.CommentDateFormat)));
@@ -51,7 +58,6 @@ public class AutoMapperProfile : Profile
         CreateMap<UpdateFeedbackAnswerRequest, UpdateFeedbackAnswerCommand>();
 
         /*                          Questions                           */
-
         CreateMap<QuestionEntity, QuestionResponseDto>()
             .ForMember(dest => dest.Answers, act => act.MapFrom(src => src.Answers.OrderBy(a => a.CreatedAt)))
             .ForMember(dest => dest.CreatedAt, act => act.MapFrom(src => src.CreatedAt.ToString(Formats.CommentDateFormat)));
@@ -66,10 +72,6 @@ public class AutoMapperProfile : Profile
 
         CreateMap<UpdateQuestionRequest, UpdateQuestionCommand>();
         CreateMap<UpdateQuestionAnswerRequest, UpdateQuestionAnswerCommand>();
-
-        /*                          Avatar                           */
-
-        CreateMap<SetAvatarRequest, SetAvatarCommand>();
 
     }
 }

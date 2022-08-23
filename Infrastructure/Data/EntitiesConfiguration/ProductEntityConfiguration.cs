@@ -13,6 +13,7 @@ internal class ProductEntityConfiguration : BaseEntityConfiguration<ProductEntit
 
         builder.Property(p => p.Name).HasMaxLength(256);
         builder.Property(p => p.Price).HasColumnType("decimal(18,4)");
+        builder.Property(p => p.Discount).HasColumnType("decimal(18,4)");
 
         builder.HasOne(p => p.Category).WithMany(c => c.Products);
         builder.HasMany(p => p.Images).WithOne(i => i.Product);

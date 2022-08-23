@@ -1,4 +1,5 @@
-﻿using Application.Features.ProductFeatures.Queries;
+﻿using Application.Features.ProductFeatures.Commands;
+using Application.Features.ProductFeatures.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Web.Controllers.Abstract;
@@ -30,5 +31,11 @@ public class ProductsController : BaseController
     public async Task<IActionResult> GetProductsByIdsAsync([FromQuery] GetProductsByIdsQuery query)
     {
         return Ok(await _mediator.Send(query));
+    }
+
+    [HttpPost("add/")]
+    public async Task<IActionResult> AddProductAsync([FromBody] AddProductCommand command)
+    {
+        return Ok(await _mediator.Send(command));
     }
 }
