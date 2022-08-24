@@ -48,4 +48,11 @@ public class ProductsController : BaseController
     {
         return Ok(await _mediator.Send(command));
     }
+
+    [AuthorizeAdminManagerSeller]
+    [HttpDelete("delete/{id}")]
+    public async Task<ActionResult<Unit>> DeleteProductAsync([FromRoute] Guid id)
+    {
+        return Ok(await _mediator.Send(new DeleteProductCommand(id)));
+    }
 }
