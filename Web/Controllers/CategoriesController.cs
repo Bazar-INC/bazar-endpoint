@@ -49,4 +49,10 @@ public class CategoriesController : BaseController
         return Ok(await _mediator.Send(command));
     }
 
+    [AuthorizeAdminManager]
+    [HttpDelete("delete/{categoryId}")]
+    public async Task<ActionResult<Unit>> DeleteCategoryAsync([FromRoute] Guid categoryId)
+    {
+        return Ok(await _mediator.Send(new DeleteCategoryCommand(categoryId)));
+    }
 }
