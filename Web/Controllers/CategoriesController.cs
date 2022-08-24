@@ -1,4 +1,5 @@
-﻿using Application.Features.CategoryFeatures.Queries;
+﻿using Application.Features.CategoryFeatures.Commands;
+using Application.Features.CategoryFeatures.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Web.Controllers.Abstract;
@@ -25,4 +26,11 @@ public class CategoriesController : BaseController
     {
         return Ok(await _mediator.Send(new GetCategoryQuery(code)));
     }
+
+    [HttpPost("add/")]
+    public async Task<ActionResult<Unit>> AddCategoryAsync([FromBody] AddCategoryCommand command)
+    {
+        return Ok(await _mediator.Send(command));
+    }
+
 }

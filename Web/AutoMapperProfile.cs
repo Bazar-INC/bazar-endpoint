@@ -1,6 +1,7 @@
 ﻿using Application.Features.AccountFeatures.Commands;
 using Application.Features.AccountFeatures.Dtos;
 using Application.Features.AuthFeatures.Commands;
+using Application.Features.CategoryFeatures.Commands;
 using Application.Features.CategoryFeatures.Dtos;
 using Application.Features.FeedbackFeatures.Commands;
 using Application.Features.FeedbackFeatures.Dtos;
@@ -28,7 +29,12 @@ public class AutoMapperProfile : Profile
         CreateMap<SetAvatarRequest, SetAvatarCommand>();
 
         /*                          Categories                             */
-        CreateMap<CategoryEntity, CategoryDto>().ForMember(dest => dest.ParentCode, act => act.MapFrom(src => src.Parent == null ? null : src.Parent.Code));
+        CreateMap<CategoryEntity, CategoryDto>().
+            ForMember(dest => dest.ParentCode, act => act.MapFrom(src => src.Parent == null ? null : src.Parent.Code))
+            .ForMember(dest => dest.Image, act => act.MapFrom(src => Path.GetFileName(src.Image)))
+            .ForMember(dest => dest.Icon, act => act.MapFrom(src => Path.GetFileName(src.Icon)));
+
+        CreateMap<AddCategoryCommand, CategoryEntity>();
 
         /*                          Products                             */
         CreateMap<AddProductCommand, ProductEntity>();

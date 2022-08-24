@@ -12,6 +12,7 @@ internal class CategoryEntityConfiguration : BaseEntityConfiguration<CategoryEnt
         base.Configure(builder);
 
         builder.Property(p => p.Name).HasMaxLength(256).IsRequired();
+        builder.Property(p => p.Code).HasMaxLength(256).IsRequired();
 
         builder.HasMany(c => c.Products).WithOne(p => p.Category).IsRequired();
         builder.HasMany(c => c.Children).WithOne(c => c.Parent);
