@@ -1,4 +1,5 @@
 ﻿using Application.Features.CategoryFeatures.Commands;
+using Application.Features.CategoryFeatures.Dtos;
 using Application.Features.CategoryFeatures.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -21,10 +22,16 @@ public class CategoriesController : BaseController
         return Ok(await _mediator.Send(new GetCategoriesQuery()));
     }
 
-    [HttpGet("{code}")]
-    public async Task<IActionResult> GetCategoryAsync([FromRoute] string code)
+    [HttpGet("code/{code}")]
+    public async Task<IActionResult> GetCategoryByCodeAsync([FromRoute] string code)
     {
-        return Ok(await _mediator.Send(new GetCategoryQuery(code)));
+        return Ok(await _mediator.Send(new GetCategoryByCodeQuery(code)));
+    }
+
+    [HttpGet("id/{id}")]
+    public async Task<ActionResult<CategoryDto>> GetCategoryByIdAsync([FromRoute] Guid id)
+    {
+        return Ok(await _mediator.Send(new GetCategoryByIdQuery(id)));
     }
 
     [HttpPost("add/")]

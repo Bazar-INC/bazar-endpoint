@@ -7,35 +7,35 @@ using MediatR;
 using Shared.CommonExceptions;
 
 namespace Application.Features.CategoryFeatures.Queries;
-public record GetCategoryQuery(string Code) : IRequest<CategoryDto>;
+public record GetCategoryByCodeQuery(string Code) : IRequest<CategoryDto>;
 
-public class GetCategoryHandler : IRequestHandler<GetCategoryQuery, CategoryDto>
+public class GetCategoryByCodeHandler : IRequestHandler<GetCategoryByCodeQuery, CategoryDto>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
 
-    public GetCategoryHandler(IUnitOfWork unitOfWork, IMapper mapper)
+    public GetCategoryByCodeHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
     }
 
-    public Task<CategoryDto> Handle(GetCategoryQuery request, CancellationToken cancellationToken)
+    public Task<CategoryDto> Handle(GetCategoryByCodeQuery request, CancellationToken cancellationToken)
     {
         var category = _unitOfWork.Categories.Get(filter:c => c.Code == request.Code, includeProperties: "Children").FirstOrDefault();
         
         if(category == null)
         {
-            throw new BadRequestRestException($"Category with {request.Code} wasn`t found");
+            throw new BadRequestRestException($"Category with {request.Code} code wasn`t found");
         }
 
         return Task.FromResult(_mapper.Map<CategoryDto>(category));
     }
 }
 
-public class GetCategoryQueryValidator : AbstractValidator<GetCategoryQuery>
+public class GetCategoryByCodeQueryValidator : AbstractValidator<GetCategoryByCodeQuery>
 {
-    public GetCategoryQueryValidator()
+    public GetCategoryByCodeQueryValidator()
     {
         RuleFor(x => x.Code).NotNull();
     }
