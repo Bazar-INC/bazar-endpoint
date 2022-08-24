@@ -23,7 +23,7 @@ public class AccountController : BaseController
     }
 
     [HttpGet("profile")]
-    public async Task<IActionResult> GetUserAsync()
+    public async Task<ActionResult<UserDto>> GetUserAsync()
     {
         var userId = User.Claims.FirstOrDefault(c => c.Type == "id")?.Value;
 
@@ -31,7 +31,7 @@ public class AccountController : BaseController
     }
 
     [HttpPatch("avatar/upload/")]
-    public async Task<IActionResult> UploadAvatarAsync([FromBody] SetAvatarRequest request)
+    public async Task<ActionResult<Unit>> UploadAvatarAsync([FromBody] SetAvatarRequest request)
     {
         var userId = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == "id")!.Value!);
 
@@ -42,7 +42,7 @@ public class AccountController : BaseController
     }
 
     [HttpPatch("avatar/delete/")]
-    public async Task<IActionResult> DeleteAvatarAsync()
+    public async Task<ActionResult<Unit>> DeleteAvatarAsync()
     {
         var userId = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == "id")!.Value!);
 

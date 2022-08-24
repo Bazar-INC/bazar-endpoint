@@ -21,14 +21,14 @@ public class QuestionsController : BaseController
     }
 
     [HttpGet("{productId}")]
-    public async Task<IActionResult> GetQuestionsByProductAsync([FromRoute] Guid productId)
+    public async Task<ActionResult<GetQuestionsByProductResponse>> GetQuestionsByProductAsync([FromRoute] Guid productId)
     {
         return Ok(await _mediator.Send(new GetQuestionsByProductQuery(productId)));
     }
 
     [Authorize]
     [HttpPost("add-question/")]
-    public async Task<IActionResult> AddQuestionAsync([FromBody] AddQuestionRequest request)
+    public async Task<ActionResult<Unit>> AddQuestionAsync([FromBody] AddQuestionRequest request)
     {
         var userId = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == "id")!.Value!);
 
@@ -40,7 +40,7 @@ public class QuestionsController : BaseController
 
     [Authorize]
     [HttpPost("add-question-answer/")]
-    public async Task<IActionResult> AddQuestionAnswerAsync([FromBody] AddQuestionAnswerRequest request)
+    public async Task<ActionResult<Unit>> AddQuestionAnswerAsync([FromBody] AddQuestionAnswerRequest request)
     {
         var userId = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == "id")!.Value!);
 
@@ -52,7 +52,7 @@ public class QuestionsController : BaseController
 
     [Authorize]
     [HttpPatch("edit-question/")]
-    public async Task<IActionResult> EditQuestionAsync([FromBody] UpdateQuestionRequest request)
+    public async Task<ActionResult<Unit>> EditQuestionAsync([FromBody] UpdateQuestionRequest request)
     {
         var userId = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == "id")!.Value!);
 
@@ -64,7 +64,7 @@ public class QuestionsController : BaseController
 
     [Authorize]
     [HttpPatch("edit-question-answer/")]
-    public async Task<IActionResult> EditQuestionAnswerAsync([FromBody] UpdateQuestionAnswerRequest request)
+    public async Task<ActionResult<Unit>> EditQuestionAnswerAsync([FromBody] UpdateQuestionAnswerRequest request)
     {
         var userId = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == "id")!.Value!);
 

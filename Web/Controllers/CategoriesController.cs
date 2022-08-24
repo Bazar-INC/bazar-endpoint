@@ -17,13 +17,13 @@ public class CategoriesController : BaseController
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetCategoriesAsync()
+    public async Task<ActionResult<CategoriesResponseDto>> GetCategoriesAsync()
     {
         return Ok(await _mediator.Send(new GetCategoriesQuery()));
     }
 
     [HttpGet("code/{code}")]
-    public async Task<IActionResult> GetCategoryByCodeAsync([FromRoute] string code)
+    public async Task<ActionResult<CategoryDto>> GetCategoryByCodeAsync([FromRoute] string code)
     {
         return Ok(await _mediator.Send(new GetCategoryByCodeQuery(code)));
     }

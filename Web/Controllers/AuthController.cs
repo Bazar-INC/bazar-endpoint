@@ -1,4 +1,5 @@
 ﻿using Application.Features.AuthFeatures.Commands;
+using Application.Features.AuthFeatures.Dtos;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Web.Controllers.Abstract;
@@ -15,13 +16,13 @@ public class AuthController : BaseController
     }
 
     [HttpPost("request")]
-    public async Task<IActionResult> RequestAsync([FromBody] AddCodeCommand command)
+    public async Task<ActionResult<Unit>> RequestAsync([FromBody] AddCodeCommand command)
     {
         return Ok(await _mediator.Send(command));
     }
 
     [HttpPost("confirm")]
-    public async Task<IActionResult> ConfirmAsync([FromBody] ConfirmCodeCommand command)
+    public async Task<ActionResult<ConfirmResponseDto>> ConfirmAsync([FromBody] ConfirmCodeCommand command)
     {
         return Ok(await _mediator.Send(command));
     }
