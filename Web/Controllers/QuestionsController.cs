@@ -52,7 +52,7 @@ public class QuestionsController : BaseController
     }
 
     [Authorize]
-    [HttpPatch("edit-question/")]
+    [HttpPut("edit-question/")]
     public async Task<ActionResult<Unit>> EditQuestionAsync([FromBody] UpdateQuestionRequest request)
     {
         var userId = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == "id")!.Value!);
@@ -64,7 +64,7 @@ public class QuestionsController : BaseController
     }
 
     [AuthorizeAdminManagerSeller]
-    [HttpPatch("edit-question-answer/")]
+    [HttpPut("edit-question-answer/")]
     public async Task<ActionResult<Unit>> EditQuestionAnswerAsync([FromBody] UpdateQuestionAnswerRequest request)
     {
         var userId = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == "id")!.Value!);

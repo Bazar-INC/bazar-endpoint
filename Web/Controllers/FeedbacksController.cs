@@ -52,7 +52,7 @@ public class FeedbacksController : BaseController
     }
 
     [Authorize]
-    [HttpPatch("edit-feedback/")]
+    [HttpPut("edit-feedback/")]
     public async Task<ActionResult<Unit>> EditFeedbackAsync([FromBody] UpdateFeedbackRequest request)
     {
         var userId = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == "id")!.Value!);
@@ -64,7 +64,7 @@ public class FeedbacksController : BaseController
     }
 
     [AuthorizeAdminManagerSeller]
-    [HttpPatch("edit-feedback-answer/")]
+    [HttpPut("edit-feedback-answer/")]
     public async Task<ActionResult<Unit>> EditFeedbackAnswerAsync([FromBody] UpdateFeedbackAnswerRequest request)
     {
         var userId = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == "id")!.Value!);

@@ -42,4 +42,11 @@ public class CategoriesController : BaseController
         return Ok(await _mediator.Send(command));
     }
 
+    [AuthorizeAdminManager]
+    [HttpPut("edit/")]
+    public async Task<ActionResult<Unit>> EditCategoryAsync([FromBody] EditCategoryCommand command)
+    {
+        return Ok(await _mediator.Send(command));
+    }
+
 }
