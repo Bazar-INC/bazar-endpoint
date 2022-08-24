@@ -41,4 +41,11 @@ public class ProductsController : BaseController
     {
         return Ok(await _mediator.Send(command));
     }
+
+    [AuthorizeAdminManagerSeller]
+    [HttpPut("edit/")]
+    public async Task<ActionResult<Unit>> EditProductAsync([FromBody] EditProductCommand command)
+    {
+        return Ok(await _mediator.Send(command));
+    }
 }
