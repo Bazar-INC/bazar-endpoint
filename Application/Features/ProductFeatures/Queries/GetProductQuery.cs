@@ -23,7 +23,7 @@ public class GetProductCommand : IRequestHandler<GetProductQuery, ProductDto>
 
     public async Task<ProductDto> Handle(GetProductQuery request, CancellationToken cancellationToken)
     {
-        var product = await _unitOfWork.Products.Get(p => p.Id == request.Id, includeProperties: "Images").FirstOrDefaultAsync();
+        var product = await _unitOfWork.Products.Get(p => p.Id == request.Id, includeProperties: "Images,Category").FirstOrDefaultAsync();
 
         if(product == null)
         {

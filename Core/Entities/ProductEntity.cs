@@ -9,7 +9,11 @@ public class ProductEntity : BaseEntity
     // properties
     public string? Name { get; set; }
     public decimal Price { get; set; }
+    public decimal Discount { get; set; }
     public string? Description { get; set; }
+
+    // foreign keys
+    public Guid CategoryId { get; set; }
 
     // navigation properties
     public virtual CategoryEntity? Category { get; set; }

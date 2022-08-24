@@ -8,7 +8,18 @@ public class AppSettings
     public static class Roles
     {
         public const string Customer = "Customer";
+        public const string Seller = "Seller";
+        public const string Admin = "Admin";
+        public const string Manager = "Manager";
     }
+
+    public static class Users
+    {
+        public const string AdminUserPhone = "673630000";
+        public const string ManagerUserPhone = "673631100";
+        public const string SellerUserPhone = "673632200";
+    }
+
 
     /// <summary>
     /// sms service constants

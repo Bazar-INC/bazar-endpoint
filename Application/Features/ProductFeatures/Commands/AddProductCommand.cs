@@ -1,0 +1,48 @@
+﻿
+using AutoMapper;
+using Core.Entities;
+using FluentValidation;
+using Infrastructure.UnitOfWork.Abstract;
+using MediatR;
+
+namespace Application.Features.ProductFeatures.Commands;
+
+public record AddProductCommand : IRequest
+{
+    public string? Name { get; set; }
+    public decimal Price { get; set; }
+    public string? Description { get; set; }
+
+    public Guid CategoryId { get; set; }
+}
+
+public class AddProductHandler : IRequestHandler<AddProductCommand>
+{
+    private readonly IUnitOfWork _unitOfWork;
+    private readonly IMapper _mapper;
+
+    public AddProductHandler(IUnitOfWork unitOfWork, IMapper mapper)
+    {
+        _unitOfWork = unitOfWork;
+        _mapper = mapper;
+    }
+
+    public async Task<Unit> Handle(AddProductCommand request, CancellationToken cancellationToken)
+    {
+        var productEntity = _mapper.Map<ProductEntity>(request);
+
+        await _unitOfWork.Products.InsertAsync(productEntity);
+        await _unitOfWork.SaveChangesAsync();
+
+        return await Unit.Task;
+    }
+}
+
+public class AddProductCommandValidator : AbstractValidator<AddProductCommand>
+{
+    public AddProductCommandValidator()
+    {
+        RuleFor(f => f.Name).NotEmpty().NotNull();
+        RuleFor(f => f.Price).GreaterThanOrEqualTo(0);
+    }
+}

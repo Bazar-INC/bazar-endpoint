@@ -2,7 +2,6 @@ using Application;
 using Application.Features.AuthFeatures.Services;
 using Core.Entities;
 using FluentValidation;
-using FluentValidation.AspNetCore;
 using Infrastructure;
 using Infrastructure.UnitOfWork;
 using Infrastructure.UnitOfWork.Abstract;
@@ -56,7 +55,6 @@ try
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
 
-    builder.Services.AddFluentValidation();
     builder.Services.AddValidatorsFromAssemblyContaining<FluentValidationAssemblyReference>(ServiceLifetime.Transient);
 
     builder.Services.AddSwaggerGen(c =>
