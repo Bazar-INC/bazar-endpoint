@@ -5,6 +5,7 @@ using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Web.AuthorizeAttributes;
 using Web.Controllers.Abstract;
 
 namespace Web.Controllers;
@@ -38,7 +39,7 @@ public class FeedbacksController : BaseController
         return Ok(await _mediator.Send(command));
     }
 
-    [Authorize]
+    [AuthorizeAdminManagerSeller]
     [HttpPost("add-feedback-answer/")]
     public async Task<ActionResult<Unit>> AddFeedbackAnswerAsync([FromBody] AddFeedbackAnswerRequest request)
     {
@@ -62,7 +63,7 @@ public class FeedbacksController : BaseController
         return Ok(await _mediator.Send(command));
     }
 
-    [Authorize]
+    [AuthorizeAdminManagerSeller]
     [HttpPatch("edit-feedback-answer/")]
     public async Task<ActionResult<Unit>> EditFeedbackAnswerAsync([FromBody] UpdateFeedbackAnswerRequest request)
     {

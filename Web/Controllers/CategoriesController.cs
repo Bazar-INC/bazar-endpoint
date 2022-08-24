@@ -3,6 +3,7 @@ using Application.Features.CategoryFeatures.Dtos;
 using Application.Features.CategoryFeatures.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Web.AuthorizeAttributes;
 using Web.Controllers.Abstract;
 
 namespace Web.Controllers;
@@ -34,6 +35,7 @@ public class CategoriesController : BaseController
         return Ok(await _mediator.Send(new GetCategoryByIdQuery(id)));
     }
 
+    [AuthorizeAdminManager]
     [HttpPost("add/")]
     public async Task<ActionResult<Unit>> AddCategoryAsync([FromBody] AddCategoryCommand command)
     {

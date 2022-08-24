@@ -3,6 +3,7 @@ using Application.Features.ProductFeatures.Dtos;
 using Application.Features.ProductFeatures.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Web.AuthorizeAttributes;
 using Web.Controllers.Abstract;
 
 namespace Web.Controllers;
@@ -34,6 +35,7 @@ public class ProductsController : BaseController
         return Ok(await _mediator.Send(query));
     }
 
+    [AuthorizeAdminManagerSeller]
     [HttpPost("add/")]
     public async Task<ActionResult<Unit>> AddProductAsync([FromBody] AddProductCommand command)
     {
