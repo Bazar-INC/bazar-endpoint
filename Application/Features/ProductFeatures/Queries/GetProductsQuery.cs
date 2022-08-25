@@ -16,6 +16,7 @@ public record GetProductsQuery : IRequest<ProductsResponseDto>
     public int? PerPage { get; set; }
     public string? Category { get; set; }
     public string? FilterString { get; set; }
+    public string? SearchString { get; set; }
     public decimal? MinPrice { get; set; }
     public decimal? MaxPrice { get; set; }
 }
@@ -84,6 +85,7 @@ public class GetProductsHandler : IRequestHandler<GetProductsQuery, ProductsResp
         }
 
         products = FilterProductsByPrice(products, request!.MinPrice, request.MaxPrice);
+        products = FilterProductsBySearchString(products, request.SearchString);
         var prices = GetMinAndMaxPrices(products);
 
         products = Paginate(products,
@@ -132,6 +134,18 @@ public class GetProductsHandler : IRequestHandler<GetProductsQuery, ProductsResp
         }
 
         return products;
+    }
+
+    private IQueryable<ProductEntity> FilterProductsBySearchString(IQueryable<ProductEntity> products, string? searchString)
+    {
+        if(string.IsNullOrEmpty(searchString))
+        {
+            return products;
+        }
+
+        var filteredProducts = products.Where(p => p.Name!.ToLower().Contains(searchString.ToLower()));
+
+        return filteredProducts;
     }
 
     private IQueryable<ProductEntity> Filter(IQueryable<ProductEntity> products, string? filterString)
