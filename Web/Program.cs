@@ -91,6 +91,8 @@ try
     {
         options.AddDefaultPolicy(policy => policy
             .WithOrigins("http://localhost:3000",
+                         "http://bazar-client.herokuapp.com",
+                         "https://bazar-client.herokuapp.com",
                          "http://rozetka-clone.herokuapp.com",
                          "https://rozetka-clone.herokuapp.com")
             .AllowAnyHeader()
