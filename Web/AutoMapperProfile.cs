@@ -81,5 +81,8 @@ public class AutoMapperProfile : Profile
         CreateMap<UpdateQuestionRequest, UpdateQuestionCommand>();
         CreateMap<UpdateQuestionAnswerRequest, UpdateQuestionAnswerCommand>();
 
+        /*                                                  */
+        CreateMap<UploadImageRequest, UploadImageCommand>();
+        
     }
 }
