@@ -1,5 +1,5 @@
-﻿using Application.Features.AccountFeatures.Commands;
-using Application.Features.AccountFeatures.Dtos;
+﻿using Application.Features.AdminFeatures.Commands;
+using Application.Features.AdminFeatures.Dtos;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -21,13 +21,14 @@ public class AdminController : BaseController
     }
 
     [HttpPost("static/images/upload")]
-    public async Task<ActionResult<UploadImageResponse>> UploadImageAsync([FromBody] UploadImageRequest request)
+    public async Task<ActionResult<UploadImageResponse>> UploadImageAsync([FromBody] UploadImageCommand command)
     {
-        var userId = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == "id")!.Value!);
-
-        var command = _mapper.Map<UploadImageCommand>(request);
-        command.UserId = userId;
-
         return Ok(await _mediator.Send(command));
+    }
+
+    [HttpDelete("static/images/delete/fileName={fileName}")]
+    public async Task<ActionResult<Unit>> DeleteImageAsync([FromRoute] string fileName)
+    {
+        return Ok(await _mediator.Send(new DeleteImageCommand(fileName)));
     }
 }

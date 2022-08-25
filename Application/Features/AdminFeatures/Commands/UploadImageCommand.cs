@@ -1,21 +1,15 @@
-﻿
-using Application.Features.AccountFeatures.Dtos;
+﻿using Application.Features.AdminFeatures.Dtos;
 using FluentValidation;
 using MediatR;
 using Shared.CommonExceptions;
 using Shared.FileStorage.Abstract;
 
-namespace Application.Features.AccountFeatures.Commands;
+namespace Application.Features.AdminFeatures.Commands;
 
-public record UploadImageRequest
+public record UploadImageCommand : IRequest<UploadImageResponse>
 {
     public string? File { get; set; }
     public string? FileName { get; set; }
-}
-
-public record UploadImageCommand : UploadImageRequest, IRequest<UploadImageResponse>
-{
-    public Guid UserId { get; set; }
 }
 
 public class UploadImageHandler : IRequestHandler<UploadImageCommand, UploadImageResponse>

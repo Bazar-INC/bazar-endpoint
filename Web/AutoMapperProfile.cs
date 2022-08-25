@@ -1,5 +1,6 @@
 ﻿using Application.Features.AccountFeatures.Commands;
 using Application.Features.AccountFeatures.Dtos;
+using Application.Features.AdminFeatures.Commands;
 using Application.Features.AuthFeatures.Commands;
 using Application.Features.CategoryFeatures.Commands;
 using Application.Features.CategoryFeatures.Dtos;
@@ -81,8 +82,5 @@ public class AutoMapperProfile : Profile
         CreateMap<UpdateQuestionRequest, UpdateQuestionCommand>();
         CreateMap<UpdateQuestionAnswerRequest, UpdateQuestionAnswerCommand>();
 
-        /*                                                  */
-        CreateMap<UploadImageRequest, UploadImageCommand>();
-        
     }
 }

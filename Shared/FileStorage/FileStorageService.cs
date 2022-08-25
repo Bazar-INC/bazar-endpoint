@@ -13,6 +13,12 @@ public class FileStorageService : IFileStorageService
         {
             File.Delete(path);
         }
+
+        var fullPath = Path.Combine(generateCdnPath(), path);
+        if (IsFileExist(fullPath))
+        {
+            File.Delete(fullPath);
+        }
     }
 
     public string SaveUserAvatar(string base64file, string oldFileName, Guid itemId)
@@ -118,7 +124,6 @@ public class FileStorageService : IFileStorageService
 
     public bool IsFileExist(string path)
     {
-        var f = Path.Combine(generateCdnPath(), path);
         return File.Exists(path) || 
                File.Exists(Path.Combine(generateCdnPath(), path));
     }

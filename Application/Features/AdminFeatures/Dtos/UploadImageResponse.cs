@@ -1,5 +1,4 @@
-﻿
-namespace Application.Features.AccountFeatures.Dtos;
+﻿namespace Application.Features.AdminFeatures.Dtos;
 
 public record UploadImageResponse
 {
