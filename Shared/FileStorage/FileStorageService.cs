@@ -9,9 +9,15 @@ public class FileStorageService : IFileStorageService
     #region Public
     public void DeleteFile(string path)
     {
-        if (File.Exists(path))
+        if (IsFileExist(path))
         {
             File.Delete(path);
+        }
+
+        var fullPath = Path.Combine(generateCdnPath(), path);
+        if (IsFileExist(fullPath))
+        {
+            File.Delete(fullPath);
         }
     }
 
@@ -99,6 +105,27 @@ public class FileStorageService : IFileStorageService
         File.WriteAllBytes(filePath, Convert.FromBase64String(base64file));
 
         return filePath;
+    }
+
+    public string SaveFile(string base64file, string fileName)
+    {
+        var cdnPath = generateCdnPath();
+
+        var itemsPath = cdnPath;
+
+        createDirectoryIfNotExists(itemsPath);
+
+        var filePath = Path.Combine(itemsPath, fileName);
+
+        File.WriteAllBytes(filePath, Convert.FromBase64String(base64file));
+
+        return filePath;
+    }
+
+    public bool IsFileExist(string path)
+    {
+        return File.Exists(path) || 
+               File.Exists(Path.Combine(generateCdnPath(), path));
     }
     #endregion
 }
