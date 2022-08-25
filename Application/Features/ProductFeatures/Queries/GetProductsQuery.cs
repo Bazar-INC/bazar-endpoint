@@ -40,13 +40,6 @@ public class GetProductsHandler : IRequestHandler<GetProductsQuery, ProductsResp
             .ThenInclude(f => f.FilterName)
             .AsQueryable();
 
-        if(string.IsNullOrEmpty(request.Category))
-        {
-            return Task.FromResult(GenerateProductsResponse(products, request));
-        }
-
-        products = products.Where(p => p.Category!.Code == request.Category);
-
         return Task.FromResult(GenerateProductsResponse(products, request));
     }
 
@@ -59,7 +52,26 @@ public class GetProductsHandler : IRequestHandler<GetProductsQuery, ProductsResp
             return new ProductsResponseDto();
         }
 
-        var allProductsFilters = GetProductsFilters(products);
+        var filters = new List<FilterNameEntity>();
+
+        if (!string.IsNullOrEmpty(request!.Category))
+        {
+            // filter products by category
+            products = products.Where(p => p.Category!.Code == request.Category);
+
+            // get all filterNames and filterValues from category
+            filters = _unitOfWork.Categories.Get(c => c.Code == request!.Category)
+                .Include(c => c.FilterNames)
+                .ThenInclude(c => c.FilterValues)
+           .Select(c => c.FilterNames)
+           .FirstOrDefault()!.ToList();
+        }
+        else // if category is null
+        {
+            // return all filterNames containing all filterValues
+            filters = _unitOfWork.FilterNames.Get().Include(f => f.FilterValues).ToList();
+        }
+
 
         if (!string.IsNullOrEmpty(request!.FilterString) && !string.IsNullOrEmpty(request.Category))
         {
@@ -82,7 +94,8 @@ public class GetProductsHandler : IRequestHandler<GetProductsQuery, ProductsResp
         var response = new ProductsResponseDto()
         {
             Products = _mapper.Map<ICollection<ProductDto>>(products),
-            Filters = allProductsFilters
+            Filters = _mapper.Map<ICollection<FilterNameDto>>(filters.Where(f => f.FilterValues.Any())
+            .OrderByDescending(f => f.FilterValues.Count()))
         };
 
         response.TotalPages = totalPages;
@@ -255,35 +268,35 @@ public class GetProductsHandler : IRequestHandler<GetProductsQuery, ProductsResp
         return filterTuple;
     }
 
-    private ICollection<FilterNameDto> GetProductsFilters(IQueryable<ProductEntity> products)
-    {
-        var filters = new List<FilterNameDto>();
+    //private ICollection<FilterNameDto> GetProductsFilters(IQueryable<ProductEntity> products)
+    //{
+    //    var filters = new List<FilterNameDto>();
 
-        var filterValues = products.Select(p => p.FilterValues);
+    //    var filterValues = products.Select(p => p.FilterValues);
 
-        var allFilters = new List<FilterValueEntity>();
+    //    var allFilters = new List<FilterValueEntity>();
 
-        foreach (var f in filterValues)
-        {
-            allFilters.AddRange(f);
-        }
+    //    foreach (var f in filterValues)
+    //    {
+    //        allFilters.AddRange(f);
+    //    }
 
-        allFilters = allFilters.Distinct().ToList();
+    //    allFilters = allFilters.Distinct().ToList();
 
-        var grouped = allFilters.GroupBy(f => f.FilterName);
+    //    var grouped = allFilters.GroupBy(f => f.FilterName);
 
-        foreach (var group in grouped)
-        {
-            var filterName = group.Select(g => g.FilterName).FirstOrDefault();
-            filters.Add(new FilterNameDto()
-            {
-                Name = filterName!.Name,
-                Code = filterName!.Code,
-                Options = _mapper.Map<ICollection<FilterValueDto>>(group.Select(g => g))
-            });
-        }
+    //    foreach (var group in grouped)
+    //    {
+    //        var filterName = group.Select(g => g.FilterName).FirstOrDefault();
+    //        filters.Add(new FilterNameDto()
+    //        {
+    //            Name = filterName!.Name,
+    //            Code = filterName!.Code,
+    //            Options = _mapper.Map<ICollection<FilterValueDto>>(group.Select(g => g))
+    //        });
+    //    }
 
-        return filters;
-    }
+    //    return filters;
+    //}
     #endregion
 }

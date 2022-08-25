@@ -45,8 +45,9 @@ public class AutoMapperProfile : Profile
             .ForMember(dest => dest.CategoryName, act => act.MapFrom(src => src.Category!.Name));
 
         /*                          Filters                             */
-        CreateMap<FilterValueEntity, FilterValueDto>().ReverseMap();
-        CreateMap<FilterNameEntity, FilterNameDto>().ReverseMap();
+        CreateMap<FilterValueEntity, FilterValueDto>();
+        CreateMap<FilterNameEntity, FilterNameDto>()
+            .ForMember(dest => dest.Options, act => act.MapFrom(src => src.FilterValues));
 
         /*                          Feedbacks                           */
         CreateMap<FeedbackEntity, FeedbackResponseDto>()
