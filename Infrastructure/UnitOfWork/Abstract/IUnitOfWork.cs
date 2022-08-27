@@ -9,6 +9,7 @@ public interface IUnitOfWork
     IRepository<ProductEntity> Products { get; }
     IRepository<CategoryEntity> Categories { get; }
     IRepository<FilterNameEntity> FilterNames { get; }
+    IRepository<FilterValueEntity> FilterValues { get; }
     IRepository<FeedbackEntity> Feedbacks { get; }
     IRepository<FeedbackAnswerEntity> FeedbackAnswers { get; }
     IRepository<QuestionEntity> Questions { get; }
