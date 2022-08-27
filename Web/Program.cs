@@ -49,6 +49,8 @@ try
 
     builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
+    builder.Services.AddSession();
+    builder.Services.AddMvc();
 
     builder.Services.AddControllers();
 
@@ -105,6 +107,7 @@ try
     var app = builder.Build();
 
     app.UseSeed();
+    app.UseSession();
 
     app.UseSwagger();
     app.UseSwaggerUI();

@@ -63,6 +63,16 @@ public class AppSettings
         public static readonly TimeSpan LongerExpirationTime = TimeSpan.FromDays(7);
     }
 
+    public static class OAuth
+    {
+        public static class Scopes
+        {
+            public const string ReadPhoneNumbers = "https://www.googleapis.com/auth/user.phonenumbers.read";
+            public const string ViewPrimaryUserEmail = "https://www.googleapis.com/auth/userinfo.email";
+            public const string ViewCustomerRelatedInformation = "https://www.googleapis.com/auth/admin.directory.customer.readonly";
+        }
+    }
+
     public static class Constants
     {
         /// <summary>
