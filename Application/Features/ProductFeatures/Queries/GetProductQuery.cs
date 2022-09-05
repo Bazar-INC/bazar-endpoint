@@ -10,12 +10,12 @@ namespace Application.Features.ProductFeatures.Queries;
 
 public record GetProductQuery (Guid Id) : IRequest<ProductDto>;
 
-public class GetProductCommand : IRequestHandler<GetProductQuery, ProductDto>
+public class GetProductHandler : IRequestHandler<GetProductQuery, ProductDto>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
 
-    public GetProductCommand(IUnitOfWork unitOfWork, IMapper mapper)
+    public GetProductHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
