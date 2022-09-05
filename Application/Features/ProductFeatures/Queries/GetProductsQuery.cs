@@ -61,11 +61,17 @@ public class GetProductsHandler : IRequestHandler<GetProductsQuery, ProductsResp
             products = products.Where(p => p.Category!.Code == request.Category);
 
             // get all filterNames and filterValues from category
-            filters = _unitOfWork.Categories.Get(c => c.Code == request!.Category)
+            var categoryFilters = _unitOfWork.Categories.Get(c => c.Code == request!.Category)
                 .Include(c => c.FilterNames)
                 .ThenInclude(c => c.FilterValues)
            .Select(c => c.FilterNames)
-           .FirstOrDefault()!.ToList();
+           .FirstOrDefault();
+
+            // if the name of category was wrong
+            if(categoryFilters != null)
+            {
+                filters = categoryFilters.ToList();
+            }
         }
         else // if category is null
         {
