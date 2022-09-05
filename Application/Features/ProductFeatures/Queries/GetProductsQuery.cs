@@ -6,6 +6,7 @@ using Infrastructure.UnitOfWork.Abstract;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Shared;
+using Shared.CommonUtils;
 using System.Collections.Generic;
 
 namespace Application.Features.ProductFeatures.Queries;
@@ -96,7 +97,7 @@ public class GetProductsHandler : IRequestHandler<GetProductsQuery, ProductsResp
         products = FilterProductsBySearchString(products, request.SearchString);
         var prices = GetMinAndMaxPrices(products);
 
-        products = Paginate(products,
+        products = CommonUtils.Paginate(products,
             request!.PerPage ?? AppSettings.Constants.DefaultPerPage,
             request!.Page ?? AppSettings.Constants.DefaultPage,
             out int totalPages);
@@ -213,29 +214,6 @@ public class GetProductsHandler : IRequestHandler<GetProductsQuery, ProductsResp
         }
 
         return result.AsQueryable();
-    }
-
-    private IQueryable<ProductEntity> Paginate(IQueryable<ProductEntity> products, int perPage, int page, out int totalPages)
-    {
-        var count = products.Count();
-
-        products = products.OrderBy(p => p.Name);
-
-        products = products.Skip((page - 1) * perPage).Take(perPage);
-
-        if(count <= perPage && count != 0)
-        {
-            totalPages = 1;
-            return products;
-        }
-
-        totalPages = count / perPage;
-
-        if (totalPages % perPage > 0)
-        {
-            ++totalPages;
-        }
-        return products;
     }
 
     /// <summary>
