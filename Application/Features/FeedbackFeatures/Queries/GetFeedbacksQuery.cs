@@ -54,6 +54,7 @@ public class GetFeedbacksHandler : IRequestHandler<GetFeedbacksQuery, GetFeedbac
             Feedbacks = _mapper.Map<ICollection<FeedbackResponseDto>>(feedbacks)
         });
     }
+
     private IQueryable<FeedbackEntity> FilterFeedbacksBySearchString(IQueryable<FeedbackEntity> feedbacks, string? searchString)
     {
         if (string.IsNullOrEmpty(searchString))

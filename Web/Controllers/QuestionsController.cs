@@ -21,6 +21,12 @@ public class QuestionsController : BaseController
         _mapper = mapper;
     }
 
+    [HttpGet]
+    public async Task<ActionResult<GetQuestionsResponse>> GetQuestionsAsync([FromQuery] GetQuestionsQuery query)
+    {
+        return Ok(await _mediator.Send(query));
+    }
+
     [HttpGet("{productId}")]
     public async Task<ActionResult<GetQuestionsByProductResponse>> GetQuestionsByProductAsync([FromRoute] Guid productId)
     {
