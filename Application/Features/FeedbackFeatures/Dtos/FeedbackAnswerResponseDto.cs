@@ -7,5 +7,5 @@ public class FeedbackAnswerResponseDto
 {
     public string? CreatedAt { get; set; }
     public string? Text { get; set; }
-    public virtual UserDto? Owner { get; set; }
+    public UserDto? Owner { get; set; }
 }

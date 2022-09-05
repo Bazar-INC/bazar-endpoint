@@ -8,4 +8,5 @@ public record ProductsResponseDto
     public ICollection<FilterNameDto> Filters { get; set; } = new HashSet<FilterNameDto>();
     public decimal MinPrice { get; set; }
     public decimal MaxPrice { get; set; }
+    public string? CategoryName { get; set; }
 }

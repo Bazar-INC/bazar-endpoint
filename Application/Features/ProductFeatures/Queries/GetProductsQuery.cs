@@ -6,6 +6,7 @@ using Infrastructure.UnitOfWork.Abstract;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Shared;
+using Shared.CommonUtils;
 using System.Collections.Generic;
 
 namespace Application.Features.ProductFeatures.Queries;
@@ -55,17 +56,25 @@ public class GetProductsHandler : IRequestHandler<GetProductsQuery, ProductsResp
 
         var filters = new List<FilterNameEntity>();
 
+        string categoryName = "";
         if (!string.IsNullOrEmpty(request!.Category))
         {
             // filter products by category
             products = products.Where(p => p.Category!.Code == request.Category);
 
             // get all filterNames and filterValues from category
-            filters = _unitOfWork.Categories.Get(c => c.Code == request!.Category)
+            var categoryFilters = _unitOfWork.Categories.Get(c => c.Code == request!.Category)
                 .Include(c => c.FilterNames)
                 .ThenInclude(c => c.FilterValues)
            .Select(c => c.FilterNames)
-           .FirstOrDefault()!.ToList();
+           .FirstOrDefault();
+
+            // if the category was found
+            if(categoryFilters != null)
+            {
+                filters = categoryFilters.ToList();
+                categoryName = _unitOfWork.Categories.Get(c => c.Code == request!.Category).FirstOrDefault()!.Name!;
+            }
         }
         else // if category is null
         {
@@ -88,7 +97,7 @@ public class GetProductsHandler : IRequestHandler<GetProductsQuery, ProductsResp
         products = FilterProductsBySearchString(products, request.SearchString);
         var prices = GetMinAndMaxPrices(products);
 
-        products = Paginate(products,
+        products = CommonUtils.Paginate(products,
             request!.PerPage ?? AppSettings.Constants.DefaultPerPage,
             request!.Page ?? AppSettings.Constants.DefaultPage,
             out int totalPages);
@@ -97,7 +106,8 @@ public class GetProductsHandler : IRequestHandler<GetProductsQuery, ProductsResp
         {
             Products = _mapper.Map<ICollection<ProductDto>>(products),
             Filters = _mapper.Map<ICollection<FilterNameDto>>(filters.Where(f => f.FilterValues.Any())
-            .OrderByDescending(f => f.FilterValues.Count()))
+            .OrderByDescending(f => f.FilterValues.Count())),
+            CategoryName = categoryName
         };
 
         response.TotalPages = totalPages;
@@ -204,29 +214,6 @@ public class GetProductsHandler : IRequestHandler<GetProductsQuery, ProductsResp
         }
 
         return result.AsQueryable();
-    }
-
-    private IQueryable<ProductEntity> Paginate(IQueryable<ProductEntity> products, int perPage, int page, out int totalPages)
-    {
-        var count = products.Count();
-
-        products = products.OrderBy(p => p.Name);
-
-        products = products.Skip((page - 1) * perPage).Take(perPage);
-
-        if(count <= perPage && count != 0)
-        {
-            totalPages = 1;
-            return products;
-        }
-
-        totalPages = count / perPage;
-
-        if (totalPages % perPage > 0)
-        {
-            ++totalPages;
-        }
-        return products;
     }
 
     /// <summary>

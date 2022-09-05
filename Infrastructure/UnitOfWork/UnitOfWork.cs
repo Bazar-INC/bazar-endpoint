@@ -13,6 +13,7 @@ public class UnitOfWork : IUnitOfWork, IDisposable
     public IRepository<ProductEntity> Products { get; }
     public IRepository<CategoryEntity> Categories { get; }
     public IRepository<FilterNameEntity> FilterNames { get; }
+    public IRepository<FilterValueEntity> FilterValues { get; }
     public IRepository<FeedbackEntity> Feedbacks { get; }
     public IRepository<FeedbackAnswerEntity> FeedbackAnswers { get; }
     public IRepository<QuestionEntity> Questions { get; }
@@ -26,6 +27,7 @@ public class UnitOfWork : IUnitOfWork, IDisposable
         Products = new Repository<ProductEntity>(_context);
         Categories = new Repository<CategoryEntity>(_context);
         FilterNames = new Repository<FilterNameEntity>(_context);
+        FilterValues = new Repository<FilterValueEntity>(_context);
         Feedbacks = new Repository<FeedbackEntity>(_context);
         FeedbackAnswers = new Repository<FeedbackAnswerEntity>(_context);
         Questions = new Repository<QuestionEntity>(_context);

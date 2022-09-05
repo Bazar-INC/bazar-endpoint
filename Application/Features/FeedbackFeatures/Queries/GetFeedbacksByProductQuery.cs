@@ -24,6 +24,7 @@ public class GetFeedbackByProductHandler : IRequestHandler<GetFeedbacksByProduct
     {
         var feedbacks = _unitOfWork.Feedbacks.Get(f => f.Product!.Id == request.ProductId)
             .Include(f => f.Owner)
+            .Include(f => f.Product)
             .Include(e => e.Answers)
             .ThenInclude(e => e.Owner);
 

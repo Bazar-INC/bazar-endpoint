@@ -14,6 +14,7 @@ public record AddProductCommand : IRequest
     public string? Description { get; set; }
 
     public Guid CategoryId { get; set; }
+    public ICollection<Guid>? FiltersIds { get; set; }
 }
 
 public class AddProductHandler : IRequestHandler<AddProductCommand>
@@ -30,6 +31,16 @@ public class AddProductHandler : IRequestHandler<AddProductCommand>
     public async Task<Unit> Handle(AddProductCommand request, CancellationToken cancellationToken)
     {
         var productEntity = _mapper.Map<ProductEntity>(request);
+
+        if (request.FiltersIds != null && request.FiltersIds.Any())
+        {
+            var filters = _unitOfWork.FilterValues.Get(f => request.FiltersIds.Contains(f.Id));
+
+            if(filters.Any())
+            {
+                productEntity.FilterValues = filters.ToList();
+            }
+        }
 
         await _unitOfWork.Products.InsertAsync(productEntity);
         await _unitOfWork.SaveChangesAsync();

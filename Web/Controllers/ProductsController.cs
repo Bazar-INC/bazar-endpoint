@@ -29,6 +29,12 @@ public class ProductsController : BaseController
         return Ok(await _mediator.Send(new GetProductQuery(id)));
     }
 
+    [HttpGet("{id}/filters")]
+    public async Task<ActionResult<Dictionary<string, string>>> GetProductFiltersAsync([FromRoute] Guid id)
+    {
+        return Ok(await _mediator.Send(new GetProductFiltersQuery(id)));
+    }
+
     [HttpGet("ids/")]
     public async Task<ActionResult<GetProductsByIdsResponse>> GetProductsByIdsAsync([FromQuery] GetProductsByIdsQuery query)
     {

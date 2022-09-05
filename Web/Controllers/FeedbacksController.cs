@@ -21,6 +21,12 @@ public class FeedbacksController : BaseController
         _mapper = mapper;
     }
 
+    [HttpGet]
+    public async Task<ActionResult<GetFeedbacksResponse>> GetFeedbacksAsync([FromQuery] GetFeedbacksQuery query)
+    {
+        return Ok(await _mediator.Send(query));
+    }
+
     [HttpGet("{productId}")]
     public async Task<ActionResult<GetFeedbackByProductResponse>> GetFeedbacksByProductAsync([FromRoute] Guid productId)
     {
