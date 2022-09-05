@@ -55,6 +55,7 @@ public class GetProductsHandler : IRequestHandler<GetProductsQuery, ProductsResp
 
         var filters = new List<FilterNameEntity>();
 
+        string categoryName = "";
         if (!string.IsNullOrEmpty(request!.Category))
         {
             // filter products by category
@@ -67,10 +68,11 @@ public class GetProductsHandler : IRequestHandler<GetProductsQuery, ProductsResp
            .Select(c => c.FilterNames)
            .FirstOrDefault();
 
-            // if the name of category was wrong
+            // if the category was found
             if(categoryFilters != null)
             {
                 filters = categoryFilters.ToList();
+                categoryName = _unitOfWork.Categories.Get(c => c.Code == request!.Category).FirstOrDefault()!.Name!;
             }
         }
         else // if category is null
@@ -103,7 +105,8 @@ public class GetProductsHandler : IRequestHandler<GetProductsQuery, ProductsResp
         {
             Products = _mapper.Map<ICollection<ProductDto>>(products),
             Filters = _mapper.Map<ICollection<FilterNameDto>>(filters.Where(f => f.FilterValues.Any())
-            .OrderByDescending(f => f.FilterValues.Count()))
+            .OrderByDescending(f => f.FilterValues.Count())),
+            CategoryName = categoryName
         };
 
         response.TotalPages = totalPages;
