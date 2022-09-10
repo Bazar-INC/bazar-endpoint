@@ -7,14 +7,15 @@ public static partial class WebApplicationExtensions
 {
     public static void UseCdn(this WebApplication app)
     {
-        if(!Directory.Exists(CdnPaths.CdnDirectory))
+        var cdnDirectoryPath = Path.Combine(Directory.GetCurrentDirectory(), CdnPaths.CdnDirectory);
+        if (!Directory.Exists(cdnDirectoryPath))
         {
-            Directory.CreateDirectory(CdnPaths.CdnDirectory);
+            Directory.CreateDirectory(cdnDirectoryPath);
         }
 
         app.UseStaticFiles(new StaticFileOptions
         {
-            FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), CdnPaths.CdnDirectory)),
+            FileProvider = new PhysicalFileProvider(Path.Combine(cdnDirectoryPath)),
             RequestPath = CdnPaths.RequestCdnPath
         });
     }
