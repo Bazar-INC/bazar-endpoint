@@ -102,7 +102,7 @@ public class AppSettings
         public const string CdnDirectory = @"Cdn\";
         public const string CategoryIcons = @"Categories\Icons\";
         public const string CategoryImages = @"Categories\Images\";
-        public const string ProductImages = @"Products\Images\";
+        public const string ProductImages = @"Products/Images/";
         public const string UsersAvatars = @"Users\Avatars\";
 
         public const string RequestCdnPath = "/cdn";
