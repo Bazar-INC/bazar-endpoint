@@ -10,6 +10,7 @@ using Application.Features.ProductFeatures.Commands;
 using Application.Features.ProductFeatures.Dtos;
 using Application.Features.QuestionFeatures.Commands;
 using Application.Features.QuestionFeatures.Dtos;
+using Application.Features.TownFeatures.Dtos;
 using AutoMapper;
 using Core.Entities;
 using static Shared.AppSettings;
@@ -81,6 +82,9 @@ public class AutoMapperProfile : Profile
 
         CreateMap<UpdateQuestionRequest, UpdateQuestionCommand>();
         CreateMap<UpdateQuestionAnswerRequest, UpdateQuestionAnswerCommand>();
+
+        /*                          Towns                           */
+        CreateMap<TownEntity, TownDto>();
 
     }
 }
