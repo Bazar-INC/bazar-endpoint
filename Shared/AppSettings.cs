@@ -102,9 +102,9 @@ public class AppSettings
         // Item1 - folder path
         // Item2 - request path
         public static Tuple<string, string> CdnDirectory = Tuple.Create(@"Cdn\", @"/cdn");
-        public static Tuple<string, string> CategoryIcons = Tuple.Create(@"Categories\Icons\", @"/categories/icons");
-        public static Tuple<string, string> CategoryImages = Tuple.Create(@"Categories\Images\", @"/categories/images");
-        public static Tuple<string, string> ProductImages = Tuple.Create(@"Products/Images/", @"/products/images");
-        public static Tuple<string, string> UsersAvatars = Tuple.Create(@"Users/Avatars/", @"/users/avatars");
+        public static Tuple<string, string> CategoryIcons = Tuple.Create(@"Categories\Icons\", @"/cdn/categories/icons");
+        public static Tuple<string, string> CategoryImages = Tuple.Create(@"Categories\Images\", @"/cdn/categories/images");
+        public static Tuple<string, string> ProductImages = Tuple.Create(@"Products/Images/", @"/cdn/products/images");
+        public static Tuple<string, string> UsersAvatars = Tuple.Create(@"Users/Avatars/", @"/cdn/users/avatars");
     }
 }
