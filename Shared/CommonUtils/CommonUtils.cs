@@ -24,5 +24,23 @@ public class CommonUtils
         }
         return items;
     }
+
+    public static bool IsStringHasBase64Format(string base64)
+    {
+        if(base64 == null)
+        {
+            return false;
+        }
+
+        try
+        {
+            Span<byte> buffer = new Span<byte>(new byte[base64.Length]);
+            return Convert.TryFromBase64String(base64, buffer, out int bytesParsed);
+        }
+        catch (ArgumentNullException)
+        {
+            return false;
+        }
+    }
     #endregion
 }

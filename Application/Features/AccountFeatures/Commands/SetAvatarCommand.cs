@@ -5,6 +5,7 @@ using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Shared.CommonExceptions;
+using Shared.CommonUtils;
 using Shared.FileStorage.Abstract;
 
 namespace Application.Features.AccountFeatures.Commands;
@@ -27,6 +28,11 @@ public class SetAvatarHandler : IRequestHandler<SetAvatarCommand>
 
     public async Task<Unit> Handle(SetAvatarCommand request, CancellationToken cancellationToken)
     {
+        if(!CommonUtils.IsStringHasBase64Format(request.Avatar!))
+        {
+            throw new BadRequestRestException("Input string was not in base64 format");
+        }
+
         var userId = request.UserId;
         var user = await _userManager.FindByIdAsync(userId.ToString());
 

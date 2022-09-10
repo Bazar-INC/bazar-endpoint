@@ -5,6 +5,7 @@ using Infrastructure.UnitOfWork.Abstract;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Shared.CommonExceptions;
+using Shared.CommonUtils;
 using Shared.FileStorage.Abstract;
 
 namespace Application.Features.ProductFeatures.Commands;
@@ -34,6 +35,11 @@ public class AddProductImageHandler : IRequestHandler<AddProductImageCommand>
 
     public async Task<Unit> Handle(AddProductImageCommand request, CancellationToken cancellationToken)
     {
+        if (!CommonUtils.IsStringHasBase64Format(request.Image!))
+        {
+            throw new BadRequestRestException("Input string was not in base64 format");
+        }
+
         var productId = request.ProductId;
         var product = await _unitOfWork.Products.FindAsync(productId);
 
