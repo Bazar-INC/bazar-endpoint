@@ -9,5 +9,5 @@ public record ProductDto
     public decimal Price { get; set; }
     public string? CategoryName { get; set; }
 
-    public ICollection<string> Images { get; set; } = new List<string>();
+    public ICollection<ImageDto> Images { get; set; } = new List<ImageDto>();
 }
