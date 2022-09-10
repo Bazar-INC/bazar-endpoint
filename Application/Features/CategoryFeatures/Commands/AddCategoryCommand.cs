@@ -4,6 +4,8 @@ using Core.Entities;
 using FluentValidation;
 using Infrastructure.UnitOfWork.Abstract;
 using MediatR;
+using Shared.CommonExceptions;
+using Shared.CommonUtils;
 using Shared.FileStorage.Abstract;
 
 namespace Application.Features.CategoryFeatures.Commands;
@@ -38,12 +40,22 @@ public class AddCategoryHandler : IRequestHandler<AddCategoryCommand>
 
         if(!string.IsNullOrEmpty(request.Image))
         {
+            if(!CommonUtils.IsStringHasBase64Format(request.Image))
+            {
+                throw new BadRequestRestException("Input string was not in base64 format");
+            }
+
             var actualImagePath = _fileStorageService.SaveCategoryImage(request.Image!, request.ImageName!, Guid.NewGuid());
             categoryEntity.Image = actualImagePath;
         }
 
         if (!string.IsNullOrEmpty(request.Icon))
         {
+            if (!CommonUtils.IsStringHasBase64Format(request.Icon))
+            {
+                throw new BadRequestRestException("Input string was not in base64 format");
+            }
+
             var actualIconPath = _fileStorageService.SaveCategoryIcon(request.Icon!, request.IconName!, Guid.NewGuid());
             categoryEntity.Icon = actualIconPath;
         }
