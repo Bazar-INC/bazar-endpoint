@@ -59,6 +59,6 @@ public class AddProductImageHandler : IRequestHandler<AddProductImageCommand>
         _unitOfWork.Products.Update(product);
         await _unitOfWork.SaveChangesAsync();
 
-        return await Task.FromResult(await Unit.Task);
+        return await Unit.Task;
     }
 }

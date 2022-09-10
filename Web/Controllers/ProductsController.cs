@@ -68,6 +68,13 @@ public class ProductsController : BaseController
     }
 
     [AuthorizeAdminManagerSeller]
+    [HttpPut("{productId}/images/remove/{fileName}")]
+    public async Task<ActionResult<Unit>> RemoveProductImageAsync([FromRoute] DeleteProductImageCommand command)
+    {
+        return Ok(await _mediator.Send(command));
+    }
+
+    [AuthorizeAdminManagerSeller]
     [HttpDelete("delete/{id}")]
     public async Task<ActionResult<Unit>> DeleteProductAsync([FromRoute] Guid id)
     {
