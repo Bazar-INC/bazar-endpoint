@@ -99,12 +99,12 @@ public class AppSettings
 
     public static class CdnPaths
     {
-        public const string CdnDirectory = @"Cdn\";
-        public const string CategoryIcons = @"Categories\Icons\";
-        public const string CategoryImages = @"Categories\Images\";
-        public const string ProductImages = @"Products/Images/";
-        public const string UsersAvatars = @"Users\Avatars\";
-
-        public const string RequestCdnPath = "/cdn";
+        // Item1 - folder path
+        // Item2 - request path
+        public static Tuple<string, string> CdnDirectory = Tuple.Create(@"Cdn\", @"/cdn");
+        public static Tuple<string, string> CategoryIcons = Tuple.Create(@"Categories\Icons\", @"/categories/icons");
+        public static Tuple<string, string> CategoryImages = Tuple.Create(@"Categories\Images\", @"/categories/images");
+        public static Tuple<string, string> ProductImages = Tuple.Create(@"Products\Images\", @"/products/images");
+        public static Tuple<string, string> UsersAvatars = Tuple.Create(@"Users\Avatars\", @"/users/avatars");
     }
 }
