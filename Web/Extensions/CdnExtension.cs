@@ -16,13 +16,8 @@ public static partial class WebApplicationExtensions
         // use base Cdn path
         UseStatisFiles(app, cdnDirectoryPath, CdnPaths.CdnDirectory.Item2);
 
-        UseStatisFiles(app, Path.Combine(cdnDirectoryPath, CdnPaths.CategoryIcons.Item1), CdnPaths.CategoryIcons.Item2);
-        UseStatisFiles(app, Path.Combine(cdnDirectoryPath, CdnPaths.CategoryImages.Item1), CdnPaths.CategoryImages.Item2);
-        UseStatisFiles(app, Path.Combine(Path.Combine(Directory.GetCurrentDirectory(), "Cdn/"), CdnPaths.ProductImages.Item1), CdnPaths.ProductImages.Item2);
-        UseStatisFiles(app, Path.Combine(Path.Combine(Directory.GetCurrentDirectory(), "Cdn/"), CdnPaths.UsersAvatars.Item1), CdnPaths.UsersAvatars.Item2);
-
-        //// use other children paths
-        //UseAllCdnStaticFiles(app, cdnDirectoryPath);
+        // use other children paths
+        UseAllCdnStaticFiles(app, cdnDirectoryPath);
     }
 
     /// <summary>
