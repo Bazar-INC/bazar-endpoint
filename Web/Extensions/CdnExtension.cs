@@ -15,8 +15,14 @@ public static partial class WebApplicationExtensions
 
         app.UseStaticFiles(new StaticFileOptions
         {
-            FileProvider = new PhysicalFileProvider(Path.Combine(cdnDirectoryPath)),
+            FileProvider = new PhysicalFileProvider(cdnDirectoryPath),
             RequestPath = CdnPaths.RequestCdnPath
+        });
+
+        app.UseStaticFiles(new StaticFileOptions
+        {
+            FileProvider = new PhysicalFileProvider(Path.Combine(cdnDirectoryPath, CdnPaths.ProductImages)),
+            RequestPath = CdnPaths.RequestCdnPath + "/products/images"
         });
     }
 }
