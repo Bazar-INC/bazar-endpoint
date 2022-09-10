@@ -4,6 +4,7 @@ using Core.Entities;
 using FluentValidation;
 using Infrastructure.UnitOfWork.Abstract;
 using MediatR;
+using Shared.CommonExceptions;
 
 namespace Application.Features.ProductFeatures.Commands;
 
@@ -30,6 +31,14 @@ public class AddProductHandler : IRequestHandler<AddProductCommand>
 
     public async Task<Unit> Handle(AddProductCommand request, CancellationToken cancellationToken)
     {
+        var categoryId = request.CategoryId;
+        var category = _unitOfWork.Categories.FindAsync(categoryId);
+
+        if(category == null)
+        {
+            throw new BadRequestRestException($"Category with id {category} wasn`t found");
+        }
+        
         var productEntity = _mapper.Map<ProductEntity>(request);
 
         if (request.FiltersIds != null && request.FiltersIds.Any())
