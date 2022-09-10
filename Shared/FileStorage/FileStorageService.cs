@@ -41,9 +41,9 @@ public class FileStorageService : IFileStorageService
         return saveItemWithCdnSubfolder(base64file, oldFileName, itemId);
     }
 
-    public string SaveProductImage(string base64file, string oldFileName, Guid itemId)
+    public string SaveProductImage(string base64file, string oldFileName)
     {
-        return saveItemWithCdnSubfolder(base64file, oldFileName, itemId, CdnPaths.ProductImages);
+        return saveItemWithCdnSubfolder(base64file, oldFileName, Guid.NewGuid(), CdnPaths.ProductImages);
     }
     #endregion
 

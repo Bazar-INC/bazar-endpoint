@@ -15,5 +15,6 @@ public interface IUnitOfWork
     IRepository<QuestionEntity> Questions { get; }
     IRepository<QuestionAnswerEntity> QuestionAnswers { get; }
     IRepository<TownEntity> Towns { get; }
+    IRepository<ImageEntity> Images { get; }
     Task<int> SaveChangesAsync();
 }

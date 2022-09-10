@@ -41,7 +41,8 @@ public class AutoMapperProfile : Profile
         /*                          Products                             */
         CreateMap<AddProductCommand, ProductEntity>();
         CreateMap<EditProductCommand, ProductEntity>();
-        
+        CreateMap<AddProductImageRequest, AddProductImageCommand>();
+
         CreateMap<ProductEntity, ProductDto>()
             .ForMember(dest => dest.Images, act => act.MapFrom(src => src.Images.Select(i => i.Path)))
             .ForMember(dest => dest.CategoryName, act => act.MapFrom(src => src.Category!.Name));
