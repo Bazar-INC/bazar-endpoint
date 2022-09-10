@@ -8,21 +8,23 @@ public static partial class WebApplicationExtensions
     public static void UseCdn(this WebApplication app)
     {
         var cdnDirectoryPath = Path.Combine(Directory.GetCurrentDirectory(), CdnPaths.CdnDirectory);
-        if (!Directory.Exists(cdnDirectoryPath))
+
+        UseStatisFiles(app, cdnDirectoryPath, CdnPaths.RequestCdnPath);
+
+        UseStatisFiles(app, Path.Combine(cdnDirectoryPath, CdnPaths.ProductImages), CdnPaths.RequestCdnPath + "/products/images");
+    }
+
+    private static void UseStatisFiles(WebApplication app, string filePath, string requestPath)
+    {
+        if (!Directory.Exists(filePath))
         {
-            Directory.CreateDirectory(cdnDirectoryPath);
+            Directory.CreateDirectory(filePath);
         }
 
         app.UseStaticFiles(new StaticFileOptions
         {
-            FileProvider = new PhysicalFileProvider(cdnDirectoryPath),
-            RequestPath = CdnPaths.RequestCdnPath
-        });
-
-        app.UseStaticFiles(new StaticFileOptions
-        {
-            FileProvider = new PhysicalFileProvider(Path.Combine(cdnDirectoryPath, CdnPaths.ProductImages)),
-            RequestPath = CdnPaths.RequestCdnPath + "/products/images"
+            FileProvider = new PhysicalFileProvider(filePath),
+            RequestPath = requestPath
         });
     }
 }
