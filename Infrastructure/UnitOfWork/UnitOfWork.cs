@@ -18,6 +18,8 @@ public class UnitOfWork : IUnitOfWork, IDisposable
     public IRepository<FeedbackAnswerEntity> FeedbackAnswers { get; }
     public IRepository<QuestionEntity> Questions { get; }
     public IRepository<QuestionAnswerEntity> QuestionAnswers { get; }
+    public IRepository<TownEntity> Towns { get; }
+    public IRepository<ImageEntity> Images { get; }
 
     public UnitOfWork(ApplicationDbContext context)
     {
@@ -32,6 +34,8 @@ public class UnitOfWork : IUnitOfWork, IDisposable
         FeedbackAnswers = new Repository<FeedbackAnswerEntity>(_context);
         Questions = new Repository<QuestionEntity>(_context);
         QuestionAnswers = new Repository<QuestionAnswerEntity>(_context);
+        Towns = new Repository<TownEntity>(_context);
+        Images = new Repository<ImageEntity>(_context);
     }
 
     public async Task<int> SaveChangesAsync()

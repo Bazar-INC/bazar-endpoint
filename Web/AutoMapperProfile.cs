@@ -1,6 +1,5 @@
 ﻿using Application.Features.AccountFeatures.Commands;
 using Application.Features.AccountFeatures.Dtos;
-using Application.Features.AdminFeatures.Commands;
 using Application.Features.AuthFeatures.Commands;
 using Application.Features.CategoryFeatures.Commands;
 using Application.Features.CategoryFeatures.Dtos;
@@ -10,6 +9,7 @@ using Application.Features.ProductFeatures.Commands;
 using Application.Features.ProductFeatures.Dtos;
 using Application.Features.QuestionFeatures.Commands;
 using Application.Features.QuestionFeatures.Dtos;
+using Application.Features.TownFeatures.Dtos;
 using AutoMapper;
 using Core.Entities;
 using static Shared.AppSettings;
@@ -40,9 +40,9 @@ public class AutoMapperProfile : Profile
         /*                          Products                             */
         CreateMap<AddProductCommand, ProductEntity>();
         CreateMap<EditProductCommand, ProductEntity>();
-        
+        CreateMap<AddProductImageRequest, AddProductImageCommand>();
+
         CreateMap<ProductEntity, ProductDto>()
-            .ForMember(dest => dest.Images, act => act.MapFrom(src => src.Images.Select(i => i.Path)))
             .ForMember(dest => dest.CategoryName, act => act.MapFrom(src => src.Category!.Name));
 
         /*                          Filters                             */
@@ -81,6 +81,13 @@ public class AutoMapperProfile : Profile
 
         CreateMap<UpdateQuestionRequest, UpdateQuestionCommand>();
         CreateMap<UpdateQuestionAnswerRequest, UpdateQuestionAnswerCommand>();
+
+        /*                          Towns                           */
+        CreateMap<TownEntity, TownDto>();
+
+        /*                          Image                           */
+        CreateMap<ImageEntity, ImageDto>()
+            .ForMember(dest => dest.Image, act => act.MapFrom(src => Path.GetFileName(src.Path)));
 
     }
 }

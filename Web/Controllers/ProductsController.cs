@@ -1,6 +1,7 @@
 ﻿using Application.Features.ProductFeatures.Commands;
 using Application.Features.ProductFeatures.Dtos;
 using Application.Features.ProductFeatures.Queries;
+using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Web.AuthorizeAttributes;
@@ -11,10 +12,12 @@ namespace Web.Controllers;
 public class ProductsController : BaseController
 {
     private readonly IMediator _mediator;
+    private readonly IMapper _mapper;
 
-    public ProductsController(IMediator mediator)
+    public ProductsController(IMediator mediator, IMapper mapper)
     {
         _mediator = mediator;
+        _mapper = mapper;
     }
 
     [HttpGet]
@@ -51,6 +54,22 @@ public class ProductsController : BaseController
     [AuthorizeAdminManagerSeller]
     [HttpPut("edit/")]
     public async Task<ActionResult<Unit>> EditProductAsync([FromBody] EditProductCommand command)
+    {
+        return Ok(await _mediator.Send(command));
+    }
+
+    [AuthorizeAdminManagerSeller]
+    [HttpPut("{productId}/images/add")]
+    public async Task<ActionResult<Unit>> AddProductImageAsync([FromRoute] Guid productId, [FromBody] AddProductImageRequest request)
+    {
+        var command = _mapper.Map<AddProductImageCommand>(request);
+        command.ProductId = productId;
+        return Ok(await _mediator.Send(command));
+    }
+
+    [AuthorizeAdminManagerSeller]
+    [HttpPut("{productId}/images/remove/{fileName}")]
+    public async Task<ActionResult<Unit>> RemoveProductImageAsync([FromRoute] DeleteProductImageCommand command)
     {
         return Ok(await _mediator.Send(command));
     }
