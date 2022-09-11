@@ -40,9 +40,9 @@ public class AddCategoryHandler : IRequestHandler<AddCategoryCommand>
 
         if(!string.IsNullOrEmpty(request.Image))
         {
-            if(!CommonUtils.IsStringHasBase64Format(request.Image))
+            if (!CommonUtils.IsStringHasBase64Format(request.Image))
             {
-                throw new BadRequestRestException("Input string was not in base64 format");
+                throw new BadRequestRestException("Input image string was not in base64 format");
             }
 
             var actualImagePath = _fileStorageService.SaveCategoryImage(request.Image!, request.ImageName!, Guid.NewGuid());
@@ -53,7 +53,7 @@ public class AddCategoryHandler : IRequestHandler<AddCategoryCommand>
         {
             if (!CommonUtils.IsStringHasBase64Format(request.Icon))
             {
-                throw new BadRequestRestException("Input string was not in base64 format");
+                throw new BadRequestRestException("Input icon string was not in base64 format");
             }
 
             var actualIconPath = _fileStorageService.SaveCategoryIcon(request.Icon!, request.IconName!, Guid.NewGuid());

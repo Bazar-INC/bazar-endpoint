@@ -23,17 +23,17 @@ public class FileStorageService : IFileStorageService
 
     public string SaveUserAvatar(string base64file, string oldFileName, Guid itemId)
     {
-        return saveItemWithCdnSubfolder(base64file, oldFileName, itemId, CdnPaths.UsersAvatars);
+        return saveItemWithCdnSubfolder(base64file, oldFileName, itemId, CdnPaths.UsersAvatars.Item1);
     }
 
     public string SaveCategoryIcon(string base64file, string oldFileName, Guid itemId)
     {
-        return saveItemWithCdnSubfolder(base64file, oldFileName, itemId, CdnPaths.CategoryIcons);
+        return saveItemWithCdnSubfolder(base64file, oldFileName, itemId, CdnPaths.CategoryIcons.Item1);
     }
 
     public string SaveCategoryImage(string base64file, string oldFileName, Guid itemId)
     {
-        return saveItemWithCdnSubfolder(base64file, oldFileName, itemId, CdnPaths.CategoryImages);
+        return saveItemWithCdnSubfolder(base64file, oldFileName, itemId, CdnPaths.CategoryImages.Item1);
     }
 
     public string SaveFile(string base64file, string oldFileName, Guid itemId)
@@ -43,7 +43,7 @@ public class FileStorageService : IFileStorageService
 
     public string SaveProductImage(string base64file, string oldFileName)
     {
-        return saveItemWithCdnSubfolder(base64file, oldFileName, Guid.NewGuid(), CdnPaths.ProductImages);
+        return saveItemWithCdnSubfolder(base64file, oldFileName, Guid.NewGuid(), CdnPaths.ProductImages.Item1);
     }
     #endregion
 
@@ -52,7 +52,7 @@ public class FileStorageService : IFileStorageService
     {
         string workingDirectory = Environment.CurrentDirectory;
 
-        string cdnDirectory = CdnPaths.CdnDirectory;
+        string cdnDirectory = CdnPaths.CdnDirectory.Item1;
 
         string cdnPath = Path.Combine(workingDirectory, cdnDirectory);
 
