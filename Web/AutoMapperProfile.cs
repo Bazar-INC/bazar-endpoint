@@ -5,6 +5,7 @@ using Application.Features.CategoryFeatures.Commands;
 using Application.Features.CategoryFeatures.Dtos;
 using Application.Features.FeedbackFeatures.Commands;
 using Application.Features.FeedbackFeatures.Dtos;
+using Application.Features.FiltersFeatures.Dtos;
 using Application.Features.ProductFeatures.Commands;
 using Application.Features.ProductFeatures.Dtos;
 using Application.Features.QuestionFeatures.Commands;
@@ -47,6 +48,7 @@ public class AutoMapperProfile : Profile
 
         /*                          Filters                             */
         CreateMap<FilterValueEntity, FilterValueDto>();
+        CreateMap<FilterNameEntity, FilterDto>();
         CreateMap<FilterNameEntity, FilterNameDto>()
             .ForMember(dest => dest.Options, act => act.MapFrom(src => src.FilterValues));
 
