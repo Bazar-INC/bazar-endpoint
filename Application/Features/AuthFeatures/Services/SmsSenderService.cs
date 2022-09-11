@@ -12,9 +12,9 @@ public static class SmsSenderService
     {
         var values = new Dictionary<string, string>
         {
-            { "recipient", recipient },
+            { "recipient", AppSettings.CountryCodes.Ukraine + recipient },
             { "text", code },
-            { "from", "" }
+            { "from", "Bazar" }
         };
 
         var content = new FormUrlEncodedContent(values);

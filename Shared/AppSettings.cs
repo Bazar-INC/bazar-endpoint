@@ -107,4 +107,16 @@ public class AppSettings
         public static Tuple<string, string> ProductImages = Tuple.Create(@"Products/Images/", @"/cdn/products/images");
         public static Tuple<string, string> UsersAvatars = Tuple.Create(@"Users/Avatars/", @"/cdn/users/avatars");
     }
+
+    public static class SortOrder
+    {
+        public const string Asc = "asc";
+        public const string Desc = "desc";
+
+        public static class By
+        {
+            public const string Price = "price";
+            public const string Date = "date";
+        }
+    }
 }

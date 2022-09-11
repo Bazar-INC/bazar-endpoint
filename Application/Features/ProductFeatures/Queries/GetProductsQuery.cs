@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Shared;
 using Shared.CommonUtils;
 using System.Collections.Generic;
+using static Shared.AppSettings;
 
 namespace Application.Features.ProductFeatures.Queries;
 
@@ -18,6 +19,8 @@ public record GetProductsQuery : IRequest<ProductsResponseDto>
     public string? Category { get; set; }
     public string? FilterString { get; set; }
     public string? SearchString { get; set; }
+    public string? OrderBy { get; set; }
+    public string? Order { get; set; }
     public decimal? MinPrice { get; set; }
     public decimal? MaxPrice { get; set; }
 }
@@ -82,7 +85,6 @@ public class GetProductsHandler : IRequestHandler<GetProductsQuery, ProductsResp
             filters = _unitOfWork.FilterNames.Get().Include(f => f.FilterValues).ToList();
         }
 
-
         if (!string.IsNullOrEmpty(request!.FilterString) && !string.IsNullOrEmpty(request.Category))
         {
             products = Filter(products, request.FilterString);
@@ -95,6 +97,14 @@ public class GetProductsHandler : IRequestHandler<GetProductsQuery, ProductsResp
 
         products = FilterProductsByPrice(products, request!.MinPrice, request.MaxPrice);
         products = FilterProductsBySearchString(products, request.SearchString);
+
+        var orderBy = request.OrderBy;
+        var order = request.Order;
+        if(!string.IsNullOrEmpty(orderBy) && !string.IsNullOrEmpty(order))
+        {
+            products = SortProducts(products, orderBy, order);
+        }
+
         var prices = GetMinAndMaxPrices(products);
 
         products = CommonUtils.Paginate(products,
@@ -156,6 +166,36 @@ public class GetProductsHandler : IRequestHandler<GetProductsQuery, ProductsResp
         var filteredProducts = products.Where(p => p.Name!.ToLower().Contains(searchString.ToLower()));
 
         return filteredProducts;
+    }
+
+    private IQueryable<ProductEntity> SortProducts(IQueryable<ProductEntity> products, string orderBy, string order)
+    {
+        switch (orderBy)
+        {
+            case SortOrder.By.Price:
+                switch (order)
+                {
+                    case SortOrder.Asc:
+                        products = products.OrderBy(p => p.Price);
+                        break;
+                    case SortOrder.Desc:
+                        products = products.OrderByDescending(p => p.Price);
+                        break;
+                }
+                break;
+            case SortOrder.By.Date:
+                switch (order)
+                {
+                    case SortOrder.Asc:
+                        products = products.OrderBy(p => p.CreatedAt);
+                        break;
+                    case SortOrder.Desc:
+                        products = products.OrderByDescending(p => p.CreatedAt);
+                        break;
+                }
+                break;
+        }
+        return products;
     }
 
     private IQueryable<ProductEntity> Filter(IQueryable<ProductEntity> products, string? filterString)
