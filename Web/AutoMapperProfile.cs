@@ -1,5 +1,6 @@
 ﻿using Application.Features.AccountFeatures.Commands;
 using Application.Features.AccountFeatures.Dtos;
+using Application.Features.AccountFeatures.Queries;
 using Application.Features.AuthFeatures.Commands;
 using Application.Features.CategoryFeatures.Commands;
 using Application.Features.CategoryFeatures.Dtos;
