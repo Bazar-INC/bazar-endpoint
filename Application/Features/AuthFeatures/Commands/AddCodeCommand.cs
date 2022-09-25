@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Application.Features.AuthFeatures.Services;
+using AutoMapper;
 using Core.Entities;
 using FluentValidation;
 using Infrastructure.UnitOfWork.Abstract;
@@ -25,12 +26,12 @@ public class AddCodeHandler : IRequestHandler<AddCodeCommand>
     {
         var entity = _mapper.Map<CodeEntity>(request);
 
-        var code = "1234"; // TODO: delete line
-        //var code = CodeGeneratorService.GenerateCode();  // TODO: uncomment line
+        //var code = "1234"; // TODO: delete line
+        var code = CodeGeneratorService.GenerateCode();  // TODO: uncomment line
 
         entity.Code = code;
 
-        //await SmsSenderService.SendMessageAsync("1234", request.Phone); // TODO: uncomment line
+        await SmsSenderService.SendMessageAsync(code, request.Phone); // TODO: uncomment line
         await _unitOfWork.Codes.InsertAsync(entity);
 
         await _unitOfWork.SaveChangesAsync();
