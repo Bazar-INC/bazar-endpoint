@@ -94,7 +94,10 @@ try
                          "http://bazar-client.herokuapp.com",
                          "https://bazar-client.herokuapp.com",
                          "http://rozetka-clone.herokuapp.com",
-                         "https://rozetka-clone.herokuapp.com")
+                         "https://rozetka-clone.herokuapp.com",
+                         "http://bazarchik.vercel.app",
+                         "https://bazarchik.vercel.app")
+
             .AllowAnyHeader()
             .AllowAnyMethod()
             .AllowCredentials()
