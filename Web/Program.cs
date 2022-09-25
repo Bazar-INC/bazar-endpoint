@@ -95,6 +95,8 @@ try
                          "https://bazar-client.herokuapp.com",
                          "http://rozetka-clone.herokuapp.com",
                          "https://rozetka-clone.herokuapp.com",
+                         "http://bazar-git-dev-bazar-inc.vercel.app",
+                         "https://bazar-git-dev-bazar-inc.vercel.app",
                          "http://bazarchik.vercel.app",
                          "https://bazarchik.vercel.app")
 
